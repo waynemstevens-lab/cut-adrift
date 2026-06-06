@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your plan — Cut Adrift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c1520;
+      --bg-card:   #111e2c;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #ede8df;
+      --text-muted:rgba(237,232,223,0.75);
+      --text-dim:  rgba(237,232,223,0.5);
+      --amber:     #d2a864;
+      --amber-dim: rgba(210,168,100,0.15);
+      --radius:    12px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(93,158,168,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 95% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav ──────────────────────────────────────── */
+    nav {
+      width: 100%;
+      max-width: 720px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .start-over {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .start-over:hover { color: var(--text-muted); }
+
+    /* ── Loading ──────────────────────────────────── */
+    #loading {
+      width: 100%;
+      max-width: 720px;
+      padding-top: 80px;
+      text-align: center;
+    }
+
+    .loading-pulse {
+      display: inline-flex;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .loading-pulse span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0.3;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .loading-pulse span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-pulse span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+      0%, 80%, 100% { opacity: 0.2; transform: scale(0.85); }
+      40%            { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .loading-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: opacity 0.4s;
+    }
+
+    .loading-sub {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 10px;
+    }
+
+    /* ── Plan output ──────────────────────────────── */
+    #plan {
+      display: none;
+      width: 100%;
+      max-width: 720px;
+      padding-top: 56px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Markdown styles */
+    #plan-content p:first-child {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #plan-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 500;
+      color: var(--amber);
+      margin-top: 48px;
+      margin-bottom: 18px;
+      letter-spacing: 0.01em;
+    }
+
+    #plan-content h3 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 32px;
+      margin-bottom: 14px;
+    }
+
+    #plan-content p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    #plan-content ol {
+      padding-left: 0;
+      list-style: none;
+      counter-reset: plan-counter;
+      margin-bottom: 20px;
+    }
+
+    #plan-content ol li {
+      counter-increment: plan-counter;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text);
+      margin-bottom: 14px;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    #plan-content ol li::before {
+      content: counter(plan-counter);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--amber);
+      min-width: 22px;
+      padding-top: 1px;
+    }
+
+    #plan-content ul {
+      padding-left: 0;
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    #plan-content ul li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 8px;
+    }
+
+    #plan-content ul li::before {
+      content: '—';
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    #plan-content strong {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    #plan-content a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    #plan-content a:hover {
+      text-decoration: underline;
+    }
+
+    #plan-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── Error ────────────────────────────────────── */
+    #error {
+      display: none;
+      width: 100%;
+      max-width: 720px;
+      padding-top: 80px;
+      text-align: center;
+    }
+
+    .error-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .error-msg {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-retry {
+      background: var(--amber);
+      color: #0c1520;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+
+    .btn-retry:hover { opacity: 0.85; }
+
+    /* ── Footer ───────────────────────────────────── */
+    #plan-footer {
+      display: none;
+      width: 100%;
+      max-width: 720px;
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    #plan-footer p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .footer-actions { display: flex; gap: 12px; }
+
+    .btn-outline {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(210,168,100,0.3);
+      color: var(--text);
+    }
+
+    @media print {
+      body { background: white; color: #111; padding: 0; }
+      nav, #plan-footer { display: none !important; }
+      #plan { display: block !important; padding-top: 20px; }
+      #plan-content h2 { color: #333; }
+      #plan-content ol li { background: #f9f9f9; border-color: #ddd; color: #222; }
+    }
+
+    @media (max-width: 600px) {
+      #plan-footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+  <a href="/when-someone-dies/" class="start-over">Start over</a>
+</nav>
+
+<!-- Loading state -->
+<div id="loading">
+  <div class="loading-pulse">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="loading-text" id="loading-text">Building your plan</div>
+  <div class="loading-sub" id="loading-sub">This takes about 15 seconds</div>
+</div>
+
+<!-- Final rendered plan -->
+<div id="plan">
+  <div id="plan-content"></div>
+</div>
+
+<!-- Error state -->
+<div id="error">
+  <div class="error-title" id="error-title">Something went wrong</div>
+  <div class="error-msg" id="error-msg">We weren't able to build your plan. Please try again.</div>
+  <a href="/when-someone-dies/" class="btn-retry">Try again</a>
+</div>
+
+<!-- Plan footer -->
+<div id="plan-footer">
+  <p>This plan is for guidance only — not legal or financial advice.</p>
+  <div class="footer-actions">
+    <button class="btn-outline" onclick="window.print()">Print / Save PDF</button>
+    <a href="/when-someone-dies/" class="btn-outline">Start over</a>
+  </div>
+</div>
+
+<div id="feedback-section" style="display:none; margin: 2rem auto 0; max-width: 680px; padding: 1.5rem; border-top: 1px solid rgba(237,232,223,0.15);">
+  <p style="font-size: 0.85rem; color: rgba(237,232,223,0.6); margin-bottom: 1rem;">Help us improve — this tool is free and built based on what people actually need.</p>
+  <div id="feedback-prompt">
+    <p style="font-weight: 500; margin-bottom: 0.75rem; font-size: 0.9rem; color: rgba(237,232,223,0.85);">Was this helpful?</p>
+    <div style="display:flex; gap:0.75rem; margin-bottom:1.25rem;">
+      <button onclick="caFeedback(true)" style="padding:0.5rem 1.25rem; border:1px solid rgba(237,232,223,0.2); background:rgba(237,232,223,0.08); color:rgba(237,232,223,0.85); border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Yes, helpful</button>
+      <button onclick="caFeedback(false)" style="padding:0.5rem 1.25rem; border:1px solid rgba(237,232,223,0.2); background:rgba(237,232,223,0.08); color:rgba(237,232,223,0.85); border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Not really</button>
+    </div>
+    <p style="font-weight:500; margin-bottom:0.5rem; font-size:0.9rem; color:rgba(237,232,223,0.85);">What would make this better?</p>
+    <textarea id="ca-feedback-text" placeholder="Missing something? Not right for your situation? Any tools you wish existed?" style="width:100%; min-height:80px; padding:0.75rem; border:1px solid rgba(237,232,223,0.2); border-radius:4px; font-family:inherit; font-size:0.85rem; background:rgba(237,232,223,0.06); color:rgba(237,232,223,0.85); resize:vertical; margin-bottom:0.75rem;"></textarea>
+    <button onclick="caSubmitFeedback()" style="padding:0.5rem 1.5rem; background:#3d7a54; color:white; border:none; border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Send feedback</button>
+  </div>
+  <div id="ca-feedback-thanks" style="display:none; color:rgba(237,232,223,0.6); font-size:0.85rem;">Thanks — that genuinely helps.</div>
+</div>
+<script>
+var caFeedbackHelpful = null;
+function caFeedback(helpful) { caFeedbackHelpful = helpful; }
+function caSubmitFeedback() {
+  var suggestion = document.getElementById('ca-feedback-text').value.trim();
+  fetch('https://script.google.com/macros/s/AKfycbz1Th9nzyk4ISnmWfKqIoPdN7_SJ5ikrshdfNDfC4ODDveuvtEa-tnVG1-BfwzdNMIJrw/exec', {
+    method: 'POST',
+    body: JSON.stringify({ helpful: caFeedbackHelpful, suggestion: '[Cut Adrift] ' + suggestion })
+  }).catch(function() {});
+  document.getElementById('feedback-prompt').style.display = 'none';
+  document.getElementById('ca-feedback-thanks').style.display = 'block';
+}
+</script>
+<script>
+  const WORKER_URL = 'https://cutadrift-engine.waynemstevens.workers.dev';
+
+  // Loading message cycling — reassures user something is happening
+  const loadingMessages = [
+    ['Building your plan', 'This takes about 15 seconds'],
+    ['Reading your answers', 'Almost there'],
+    ['Putting it together', 'Nearly ready'],
+  ];
+  let msgIndex = 0;
+  let loadingInterval = null;
+
+  function startLoadingCycle() {
+    loadingInterval = setInterval(() => {
+      msgIndex = (msgIndex + 1) % loadingMessages.length;
+      const textEl = document.getElementById('loading-text');
+      const subEl  = document.getElementById('loading-sub');
+      if (textEl) textEl.textContent = loadingMessages[msgIndex][0];
+      if (subEl)  subEl.textContent  = loadingMessages[msgIndex][1];
+    }, 5000);
+  }
+
+  function stopLoadingCycle() {
+    if (loadingInterval) clearInterval(loadingInterval);
+  }
+
+  function show(id) { document.getElementById(id).style.display = 'block'; }
+  function hide(id) { document.getElementById(id).style.display = 'none'; }
+  function flex(id) { document.getElementById(id).style.display = 'flex'; }
+
+  async function run() {
+    // Read intake from sessionStorage
+    const raw = sessionStorage.getItem('cutadrift_intake');
+    if (!raw) {
+      window.location.href = '/when-someone-dies/';
+      return;
+    }
+
+    let intake;
+    try { intake = JSON.parse(raw); }
+    catch (_) { window.location.href = '/when-someone-dies/'; return; }
+
+    // Check for cached plan
+    const cached = sessionStorage.getItem('cutadrift_plan');
+    if (cached) {
+      renderFinal(cached);
+      return;
+    }
+
+    // Start loading message cycle
+    startLoadingCycle();
+
+    // Fetch from worker
+    let response;
+    try {
+      response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(intake)
+      });
+    } catch (_) {
+      stopLoadingCycle();
+      showError('Connection failed', "We couldn't reach the server. Please check your connection and try again.");
+      return;
+    }
+
+    if (response.status === 429) {
+      stopLoadingCycle();
+      showError("You've used a lot of requests today", "Please come back tomorrow — the tool will be here when you need it.");
+      return;
+    }
+
+    if (!response.ok) {
+      stopLoadingCycle();
+      showError('Something went wrong', "We weren't able to build your plan. Please try again in a moment.");
+      return;
+    }
+
+    // Stream silently — accumulate text, show nothing until complete
+    const reader  = response.body.getReader();
+    const decoder = new TextDecoder();
+    let sseBuffer = '';
+    let fullText  = '';
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        sseBuffer += decoder.decode(value, { stream: true });
+        const lines = sseBuffer.split('\n');
+        sseBuffer = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const payload = line.slice(6).trim();
+          if (payload === '[DONE]') continue;
+
+          try {
+            const evt = JSON.parse(payload);
+
+            if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+              fullText += evt.delta.text;
+            }
+
+            if (evt.type === 'message_stop') {
+              stopLoadingCycle();
+              sessionStorage.setItem('cutadrift_plan', fullText);
+              renderFinal(fullText);
+              return;
+            }
+          } catch (_) { /* skip malformed */ }
+        }
+      }
+
+      // Stream ended without message_stop — render what we have if substantial
+      stopLoadingCycle();
+      if (fullText.length > 100) {
+        sessionStorage.setItem('cutadrift_plan', fullText);
+        renderFinal(fullText);
+      } else {
+        showError('Connection interrupted', 'The connection dropped before your plan was complete. Please try again.');
+      }
+
+    } catch (err) {
+      stopLoadingCycle();
+      if (fullText.length > 100) {
+        sessionStorage.setItem('cutadrift_plan', fullText);
+        renderFinal(fullText);
+      } else {
+        showError('Connection interrupted', 'The connection dropped before your plan was complete. Please try again.');
+      }
+    }
+  }
+
+  function renderFinal(text) {
+    hide('loading');
+
+    marked.setOptions({ breaks: true, gfm: true });
+    document.getElementById('plan-content').innerHTML = marked.parse(text);
+    show('plan');
+    flex('plan-footer');
+    document.getElementById('feedback-section').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showError(title, msg) {
+    hide('loading');
+    document.getElementById('error-title').textContent = title;
+    document.getElementById('error-msg').textContent   = msg;
+    show('error');
+  }
+
+  run();
+</script>
+
+</body>
+</html>

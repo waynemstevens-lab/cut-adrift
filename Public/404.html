@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found — Cut Adrift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0c1520;
+      --border:     rgba(255,255,255,0.07);
+      --text:       #ede8df;
+      --text-muted: rgba(237,232,223,0.75);
+      --text-dim:   rgba(237,232,223,0.5);
+      --amber:      #d2a864;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(93,158,168,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 95% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    nav {
+      width: 100%;
+      max-width: 720px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 720px;
+      padding-top: 120px;
+      text-align: center;
+    }
+
+    .four-oh-four {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      line-height: 1;
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 420px;
+      margin: 0 auto 40px;
+    }
+
+    .btn {
+      background: var(--amber);
+      color: #0c1520;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+</nav>
+
+<div class="content">
+  <div class="four-oh-four">404</div>
+  <h1>This page doesn't exist</h1>
+  <p>You may have followed a broken link, or this page may have moved. Let's get you back to somewhere useful.</p>
+  <a href="/" class="btn">Back to Cut Adrift</a>
+</div>
+
+</body>
+</html>

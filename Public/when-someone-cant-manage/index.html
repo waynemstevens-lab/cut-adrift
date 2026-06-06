@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When someone can no longer manage — Cut Adrift</title>
+  <meta name="description" content="A free, personalised guide for what to do when someone you love can no longer look after themselves.">
+  <meta property="og:title" content="When someone can no longer manage — Cut Adrift">
+  <meta property="og:description" content="What to do when someone you love can no longer look after themselves. Free, practical guidance on EPA, care options and more.">
+  <meta property="og:url" content="https://cutadrift.org/when-someone-cant-manage/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cutadrift.org/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cutadrift.org/og-image.png">
+  <link rel="canonical" href="https://cutadrift.org/when-someone-cant-manage/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0c1520;
+      --bg-card:      #111e2c;
+      --bg-hover:     #162538;
+      --bg-selected:  #1a2f44;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(210,168,100,0.4);
+      --border-sel:   rgba(210,168,100,0.7);
+      --text:         #ede8df;
+      --text-muted:   rgba(237,232,223,0.75);
+      --text-dim:     rgba(237,232,223,0.5);
+      --amber:        #d2a864;
+      --radius:       12px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(93,158,168,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav ──────────────────────────────────────── */
+    nav {
+      width: 100%;
+      max-width: 640px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .back-btn {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 0;
+      transition: color 0.2s;
+      display: none;
+    }
+
+    .back-btn:hover { color: var(--text-muted); }
+    .back-btn.visible { display: block; }
+
+    /* ── Progress ─────────────────────────────────── */
+    .progress-track {
+      width: 100%;
+      max-width: 640px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 28px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--amber);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      opacity: 0.5;
+    }
+
+    /* ── Step ─────────────────────────────────────── */
+    .step-wrap {
+      width: 100%;
+      max-width: 640px;
+      padding-top: 52px;
+    }
+
+    .step { display: none; }
+
+    .step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Question text ────────────────────────────── */
+    .step-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .step-q {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .step-hint {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 500px;
+    }
+
+    /* ── Options ──────────────────────────────────── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .opt:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .opt.selected {
+      background: var(--bg-selected);
+      border-color: var(--border-sel);
+    }
+
+    /* Multi-select checked state */
+    .opt.checked {
+      background: var(--bg-selected);
+      border-color: var(--border-sel);
+    }
+
+    .opt-text { flex: 1; }
+
+    .opt-main {
+      font-size: 0.97rem;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .opt-sub {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ── Multi-select continue ────────────────────── */
+    .multi-continue {
+      display: none;
+      margin-top: 16px;
+    }
+
+    /* ── Textarea step ────────────────────────────── */
+    .free-text-area {
+      width: 100%;
+      min-height: 120px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.6;
+      padding: 18px 20px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .free-text-area::placeholder { color: var(--text-dim); }
+    .free-text-area:focus { border-color: rgba(210,168,100,0.3); }
+
+    .free-text-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #0c1520;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-skip {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-skip:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      .step-wrap { padding-top: 36px; }
+      .opt { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+  <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>
+</nav>
+
+<div class="progress-track">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="step-wrap" id="stepWrap">
+
+  <!-- Q1: What happened -->
+  <div class="step" id="step-what_happened">
+    <div class="step-label">What happened</div>
+    <div class="step-q">What's happened?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('what_happened','stroke')"><div class="opt-text"><div class="opt-main">They had a stroke</div></div></button>
+      <button class="opt" onclick="answer('what_happened','fall_accident')"><div class="opt-text"><div class="opt-main">A serious fall or accident</div></div></button>
+      <button class="opt" onclick="answer('what_happened','dementia')"><div class="opt-text"><div class="opt-main">They've been diagnosed with dementia</div><div class="opt-sub">Or memory loss has become impossible to ignore</div></div></button>
+      <button class="opt" onclick="answer('what_happened','other_health_event')"><div class="opt-text"><div class="opt-main">Another serious health event</div></div></button>
+      <button class="opt" onclick="answer('what_happened','not_sure')"><div class="opt-text"><div class="opt-main">It's complicated</div><div class="opt-sub">Not sure how to describe it</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q2: Who -->
+  <div class="step" id="step-who">
+    <div class="step-label">Who this is about</div>
+    <div class="step-q">Who is this person to you?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('who','parent')"><div class="opt-text"><div class="opt-main">A parent</div></div></button>
+      <button class="opt" onclick="answer('who','partner')"><div class="opt-text"><div class="opt-main">My partner or spouse</div></div></button>
+      <button class="opt" onclick="answer('who','family_member')"><div class="opt-text"><div class="opt-main">Another family member</div></div></button>
+      <button class="opt" onclick="answer('who','close_friend')"><div class="opt-text"><div class="opt-main">A close friend</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q3: Location -->
+  <div class="step" id="step-location">
+    <div class="step-label">Where they are now</div>
+    <div class="step-q">Where are they right now?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('location','in_hospital')"><div class="opt-text"><div class="opt-main">Still in hospital</div></div></button>
+      <button class="opt" onclick="answer('location','discharged_home')"><div class="opt-text"><div class="opt-main">Just been discharged — going home</div><div class="opt-sub">Or recently arrived home from hospital</div></div></button>
+      <button class="opt" onclick="answer('location','discharged_no_home')"><div class="opt-text"><div class="opt-main">Just been discharged — but there's no suitable home to go to</div></div></button>
+      <button class="opt" onclick="answer('location','at_home_struggling')"><div class="opt-text"><div class="opt-main">At home, but can no longer manage</div><div class="opt-sub">Things have reached a point where something needs to change</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q4: Capacity -->
+  <div class="step" id="step-capacity">
+    <div class="step-label">Their ability to decide</div>
+    <div class="step-q">Can they still make decisions for themselves?</div>
+    <div class="step-hint">Things like where they live, who looks after them, and how their money is managed.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('capacity','yes_clearly')"><div class="opt-text"><div class="opt-main">Yes, clearly</div><div class="opt-sub">They understand their situation and can make decisions</div></div></button>
+      <button class="opt" onclick="answer('capacity','possibly_unclear')"><div class="opt-text"><div class="opt-main">It's hard to tell</div><div class="opt-sub">They have some capacity but it's uncertain</div></div></button>
+      <button class="opt" onclick="answer('capacity','varies_day_to_day')"><div class="opt-text"><div class="opt-main">It varies day to day</div><div class="opt-sub">Sometimes clear, sometimes not</div></div></button>
+      <button class="opt" onclick="answer('capacity','no_longer')"><div class="opt-text"><div class="opt-main">No — they can no longer make decisions for themselves</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q5: EPA -->
+  <div class="step" id="step-epa_in_place">
+    <div class="step-label">Legal authority</div>
+    <div class="step-q">Is there an Enduring Power of Attorney in place?</div>
+    <div class="step-hint">An Enduring Power of Attorney (EPA) is a legal document that lets someone manage affairs on their behalf when they can't. There are two types — one for finances, one for personal care.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('epa_in_place','yes')"><div class="opt-text"><div class="opt-main">Yes — an EPA is already set up</div></div></button>
+      <button class="opt" onclick="answer('epa_in_place','no')"><div class="opt-text"><div class="opt-main">No — there isn't one</div></div></button>
+      <button class="opt" onclick="answer('epa_in_place','dont_know')"><div class="opt-text"><div class="opt-main">I'm not sure</div><div class="opt-sub">Or I don't know what that is</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q6: Assets -->
+  <div class="step" id="step-assets">
+    <div class="step-label">Their financial situation</div>
+    <div class="step-q">Do they own their home or have significant assets?</div>
+    <div class="step-hint">This helps us include the right information about care costs and government subsidies.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('assets','yes')"><div class="opt-text"><div class="opt-main">Yes — they own property or have significant savings</div></div></button>
+      <button class="opt" onclick="answer('assets','no')"><div class="opt-text"><div class="opt-main">No — not that I know of</div></div></button>
+      <button class="opt" onclick="answer('assets','not_sure')"><div class="opt-text"><div class="opt-main">I'm not sure</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q7: Carer situation (multi-select) -->
+  <div class="step" id="step-carer_situation">
+    <div class="step-label">Your situation</div>
+    <div class="step-q">How are you placed to help?</div>
+    <div class="step-hint">Select all that apply.</div>
+    <div class="options">
+      <button class="opt" onclick="toggleMulti('carer_situation','able_willing_main',this)"><div class="opt-text"><div class="opt-main">I'm able and willing to be their main support</div></div></button>
+      <button class="opt" onclick="toggleMulti('carer_situation','want_but_limits',this)"><div class="opt-text"><div class="opt-main">I want to help but I have limits</div><div class="opt-sub">Work, distance, health, or family commitments</div></div></button>
+      <button class="opt" onclick="toggleMulti('carer_situation','not_primary',this)"><div class="opt-text"><div class="opt-main">I'm not in a position to be their primary carer</div></div></button>
+      <button class="opt" onclick="toggleMulti('carer_situation','not_able',this)"><div class="opt-text"><div class="opt-main">I'm not able to help at all</div></div></button>
+      <button class="opt" onclick="toggleMulti('carer_situation','other_family_involved',this)"><div class="opt-text"><div class="opt-main">Other family members are involved too</div></div></button>
+    </div>
+    <div class="multi-continue" id="continue-carer_situation">
+      <button class="btn-primary" onclick="submitMulti('carer_situation')">Continue →</button>
+    </div>
+  </div>
+
+  <!-- Q8: Free text (optional) -->
+  <div class="step" id="step-free_text">
+    <div class="step-label">Almost done</div>
+    <div class="step-q">Is there something specific worrying you?</div>
+    <div class="step-hint">If there's a particular situation you're not sure how to handle — tell us here. This is optional.</div>
+    <textarea class="free-text-area" id="freeTextInput" placeholder="e.g. I'm worried about getting power of attorney set up in time, or I don't know how we'll afford a rest home…"></textarea>
+    <div class="free-text-actions">
+      <button class="btn-primary" onclick="submitFreeText()">Build my plan →</button>
+      <button class="btn-skip" onclick="skipFreeText()">Skip this</button>
+    </div>
+  </div>
+
+</div><!-- /step-wrap -->
+
+<script>
+  const answers = {};
+  const history = [];
+  const multiAnswers = {};
+
+  const SEQ = ['what_happened','who','location','capacity','epa_in_place','assets','carer_situation','free_text'];
+
+  let currentStep = 'what_happened';
+  showStep('what_happened');
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('step-' + id);
+    if (el) el.classList.add('active');
+    currentStep = id;
+    document.getElementById('backBtn').classList.toggle('visible', history.length > 0);
+    updateProgress();
+  }
+
+  function answer(field, value) {
+    answers[field] = value;
+    history.push(currentStep);
+    const next = getNext(currentStep);
+    if (next === 'submit') {
+      submit();
+    } else {
+      showStep(next);
+    }
+  }
+
+  function toggleMulti(field, value, el) {
+    if (!multiAnswers[field]) multiAnswers[field] = [];
+    const arr = multiAnswers[field];
+    const idx = arr.indexOf(value);
+    if (idx === -1) {
+      arr.push(value);
+      el.classList.add('checked');
+    } else {
+      arr.splice(idx, 1);
+      el.classList.remove('checked');
+    }
+    const btn = document.getElementById('continue-' + field);
+    if (btn) btn.style.display = arr.length > 0 ? 'block' : 'none';
+  }
+
+  function submitMulti(field) {
+    const arr = multiAnswers[field];
+    if (!arr || arr.length === 0) return;
+    answers[field] = arr;
+    history.push(currentStep);
+    const next = getNext(currentStep);
+    if (next === 'submit') {
+      submit();
+    } else {
+      showStep(next);
+    }
+  }
+
+  function getNext(step) {
+    const idx = SEQ.indexOf(step);
+    if (idx >= 0 && idx < SEQ.length - 1) return SEQ[idx + 1];
+    return 'submit';
+  }
+
+  function goBack() {
+    if (history.length === 0) return;
+    const prev = history.pop();
+    delete answers[currentStep];
+    // Reset multi-select state if going back to it
+    if (multiAnswers[currentStep]) {
+      multiAnswers[currentStep] = [];
+      document.querySelectorAll('#step-' + currentStep + ' .opt').forEach(el => el.classList.remove('checked'));
+      const btn = document.getElementById('continue-' + currentStep);
+      if (btn) btn.style.display = 'none';
+    }
+    showStep(prev);
+  }
+
+  function submitFreeText() {
+    const val = document.getElementById('freeTextInput').value.trim();
+    if (val) answers.free_text = val;
+    submit();
+  }
+
+  function skipFreeText() {
+    submit();
+  }
+
+  function submit() {
+    answers.tool = 'incapacity';
+    sessionStorage.setItem('cutadrift_intake', JSON.stringify(answers));
+    window.location.href = '/plan/';
+  }
+
+  function updateProgress() {
+    const idx = SEQ.indexOf(currentStep);
+    const pct = idx < 0 ? 0 : Math.round((idx / (SEQ.length - 1)) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+</script>
+
+</body>
+</html>

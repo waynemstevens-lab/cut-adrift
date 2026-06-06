@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Use myTrove to Notify Agencies After a Death in New Zealand | Cut Adrift</title>
+  <meta name="description" content="myTrove is a free New Zealand service that lets you notify Inland Revenue, the Passport Office, banks, and insurers of a death in one place. Here's how to use it and what it covers.">
+  <link rel="canonical" href="https://cutadrift.org/mytrove-nz-guide/">
+  <meta property="og:title" content="How to Use myTrove to Notify Agencies After a Death in New Zealand | Cut Adrift">
+  <meta property="og:description" content="myTrove is a free NZ service that lets you notify IRD, the Passport Office, banks, and insurers of a death in one place. Here's how to use it.">
+  <meta property="og:url" content="https://cutadrift.org/mytrove-nz-guide/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://cutadrift.org/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cutadrift.org/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:          #0c1520;
+      --navy-light:    #121e2e;
+      --amber:         #d2a864;
+      --amber-muted:   #a07f4a;
+      --text:          #bdb5a4;
+      --text-strong:   #e4ddd0;
+      --text-muted:    #6a6255;
+      --border:        rgba(210,168,100,0.13);
+      --border-mid:    rgba(210,168,100,0.22);
+      --border-strong: rgba(210,168,100,0.32);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    .nav-wrap { border-bottom: 1px solid var(--border); }
+    nav {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      color: var(--amber);
+      text-decoration: none;
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      border: none;
+    }
+    .nav-logo svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .nav-cta {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      border: none;
+      transition: color 0.2s;
+    }
+    .nav-cta:hover { color: var(--amber); }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .hero {
+      padding: 3.5rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber-muted);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
+      font-weight: 500;
+      color: var(--text-strong);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+    .hero-intro {
+      font-size: 1.02rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+    .hero-meta { font-size: 0.78rem; color: var(--text-muted); }
+
+    .quick-facts {
+      background: var(--navy-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 4px;
+      padding: 1.4rem 1.7rem;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+    }
+    .fact-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber-muted);
+      margin-bottom: 0.2rem;
+    }
+    .fact-value {
+      font-size: 1rem;
+      color: var(--text-strong);
+      font-weight: 600;
+    }
+
+    h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-strong);
+      margin: 2.2rem 0 0.7rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    p { margin-bottom: 1rem; color: var(--text); }
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol { padding-left: 1.35rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.4rem; color: var(--text); }
+
+    a {
+      color: var(--amber);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(210,168,100,0.3);
+      transition: border-color 0.15s;
+    }
+    a:hover { border-color: var(--amber); }
+
+    strong { color: var(--text-strong); font-weight: 600; }
+
+    .info-box {
+      background: rgba(210,168,100,0.055);
+      border-left: 3px solid var(--amber-muted);
+      padding: 0.9rem 1.2rem;
+      margin: 1.2rem 0;
+      border-radius: 0 3px 3px 0;
+    }
+    .info-box p { font-size: 0.91rem; margin-bottom: 0; }
+
+    .steps { margin: 1rem 0; padding: 0; list-style: none; }
+    .steps li {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      background: var(--navy-light);
+      border: 1px solid var(--border-mid);
+      color: var(--amber);
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .step-text { flex: 1; font-size: 0.97rem; }
+
+    .cta-section {
+      background: var(--navy-light);
+      border: 1px solid var(--border-strong);
+      border-radius: 5px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+    }
+    .cta-section h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text-strong);
+      margin: 0 0 0.6rem;
+      padding: 0;
+      border: none;
+    }
+    .cta-section p { font-size: 0.93rem; margin-bottom: 1.2rem; }
+    .cta-links { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--navy);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 3px;
+      text-decoration: none;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.88; }
+    .cta-link-secondary {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-link-secondary:hover { color: var(--amber); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand { color: var(--amber-muted); font-family: 'Lora', serif; font-size: 0.88rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: var(--text-muted); font-size: 0.78rem; text-decoration: none; border: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--amber); }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 1.25rem 4rem; }
+      nav { padding: 1rem 1.25rem; }
+      .hero { padding: 2.5rem 0 1.75rem; }
+      .quick-facts { grid-template-columns: 1fr; gap: 0.85rem; }
+      footer { padding: 1.5rem 1.25rem; }
+    }
+  
+    .page-disclaimer {
+      margin: 2.5rem auto 0;
+      max-width: 680px;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(237,232,223,0.15);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: rgba(237,232,223,0.55);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <nav>
+      <a href="/" class="nav-logo" aria-label="Cut Adrift home">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L13.8 10.2L22 12L13.8 13.8L12 22L10.2 13.8L2 12L10.2 10.2L12 2Z" fill="#d2a864"/>
+          <circle cx="12" cy="12" r="2.2" fill="#0c1520"/>
+        </svg>
+        Cut Adrift
+      </a>
+      <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
+    </nav>
+  </div>
+
+  <main class="container">
+    <article>
+
+      <header class="hero">
+        <p class="hero-label">New Zealand · Estate Administration</p>
+        <h1>Using myTrove to Notify Agencies After a Death in New Zealand</h1>
+        <p class="hero-intro">After someone dies, one of the most time-consuming tasks is notifying every organisation they had a relationship with — from IRD and the Passport Office to banks and insurers. myTrove is a free New Zealand service that lets you do much of this in one place, saving significant time and paperwork.</p>
+        <p class="hero-meta">Last updated June 2026 · mytrove.co.nz</p>
+      </header>
+
+      <div class="quick-facts" aria-label="Key facts">
+        <div class="fact">
+          <p class="fact-label">Website</p>
+          <p class="fact-value">mytrove.co.nz</p>
+        </div>
+        <div class="fact">
+          <p class="fact-label">Cost</p>
+          <p class="fact-value">Free to use</p>
+        </div>
+        <div class="fact">
+          <p class="fact-label">Time saving</p>
+          <p class="fact-value">~52 hours of admin</p>
+        </div>
+        <div class="fact">
+          <p class="fact-label">Who can use it</p>
+          <p class="fact-value">Executor or next of kin</p>
+        </div>
+      </div>
+
+      <h2>What is myTrove?</h2>
+      <p>myTrove is a New Zealand online service designed to reduce the administrative burden on families and executors following a death. It was developed in partnership with Inland Revenue and other government agencies, and is funded by the organisations you notify — so it costs nothing to the person using it.</p>
+      <p>Without a service like myTrove, winding up a person's affairs typically involves contacting each organisation separately, providing the same information multiple times, and waiting for each to respond on its own timeline. Research suggests this process takes executors an average of <strong>52 hours</strong> — spread over months. myTrove consolidates much of this into a single form.</p>
+
+      <h2>Who myTrove can notify</h2>
+      <p>myTrove can notify a range of organisations on your behalf, including:</p>
+      <ul>
+        <li><strong>Inland Revenue (IRD)</strong> — to finalise the deceased's tax affairs, write off any student loan, and close their IRD account</li>
+        <li><strong>Department of Internal Affairs</strong> — to cancel the deceased's passport</li>
+        <li><strong>Banks</strong> — multiple participating banks to begin the account closure or transfer process</li>
+        <li><strong>Insurers</strong> — fire, general and life insurers to start a claim with participating providers</li>
+        <li><strong>Work and Income</strong> — to notify MSD if the deceased was receiving a benefit or pension</li>
+        <li><strong>Loyalty programmes</strong> — including Fly Buys, Airpoints, and the AA</li>
+        <li><strong>NZTA</strong> — to cancel the deceased's driver licence</li>
+        <li><strong>Computershare</strong> — for any shareholdings managed through Computershare</li>
+      </ul>
+      <p>The list of participating organisations grows over time. Check <a href="https://mytrove.co.nz" rel="noopener noreferrer">mytrove.co.nz</a> for the most current list before you start.</p>
+
+      <div class="info-box">
+        <p><strong>IRD note:</strong> You do not need a New Zealand death certificate to notify IRD through myTrove. IRD uses its own data systems. However, you will need proof that you are authorised to act on behalf of the deceased.</p>
+      </div>
+
+      <h2>What you'll need before you start</h2>
+      <p>To use myTrove, you need to be able to demonstrate that you are authorised to act on behalf of the person who has died. Acceptable forms of proof include:</p>
+      <ul>
+        <li>A <strong>will</strong> appointing you as executor</li>
+        <li><strong>Probate</strong> (court confirmation of the will)</li>
+        <li><strong>Letters of Administration</strong> (if there is no will)</li>
+        <li>A solicitor's letter confirming your authority</li>
+      </ul>
+      <p>If none of the above exist and you need to notify IRD about a small refund (under $40,000), you can also use IRD's <strong>IR625 Declaration form</strong> instead — though this has more limited scope.</p>
+      <p>You'll also need the basic personal details of the person who died: full name, date of birth, date of death, IRD number if known.</p>
+
+      <h2>How to use myTrove — step by step</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text"><strong>Go to <a href="https://mytrove.co.nz" rel="noopener noreferrer">mytrove.co.nz</a></strong> and create a free account. You'll use this account to track the status of each notification.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text"><strong>Enter details about the person who has died</strong> — their full name, date of birth, date of death, and any known account or reference numbers for the organisations you're notifying.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text"><strong>Select which organisations to notify</strong> — you choose which ones are relevant. If the deceased didn't hold a passport or wasn't insured with a participating insurer, simply leave those out.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text"><strong>Upload your authority documents</strong> — a scanned copy of the will, probate, letters of administration, or solicitor's letter. PDFs are accepted.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text"><strong>Submit the notification</strong> — myTrove sends the relevant information to each organisation. Each will then contact you separately to progress their part of the process.</span>
+        </li>
+      </ol>
+
+      <div class="info-box">
+        <p><strong>IRD processing time:</strong> Once IRD receives proof of death and authority documents, it can take up to 10 weeks to fully process the deceased's tax affairs. Other organisations may move faster.</p>
+      </div>
+
+      <h2>What myTrove doesn't cover</h2>
+      <p>myTrove is a significant time-saver, but it doesn't replace all the notifications you'll need to make. You will still need to contact the following separately:</p>
+      <ul>
+        <li><strong>Your local council</strong> — to remove the deceased from rates notices, the electoral roll, and any council-administered services</li>
+        <li><strong>Utilities</strong> — electricity, gas, and water providers need to be notified and accounts transferred or closed</li>
+        <li><strong>Phone and internet</strong> — contact providers directly to cancel or transfer services</li>
+        <li><strong>KiwiSaver provider</strong> — the deceased's KiwiSaver balance is part of the estate; contact the provider directly, as this falls outside the IRD process handled via myTrove</li>
+        <li><strong>NZTA</strong> — to transfer or deregister any vehicles in the deceased's name</li>
+        <li><strong>Employer</strong> — to ensure final pay, superannuation, and any group insurance is processed</li>
+        <li><strong>Social media accounts</strong> — Facebook, Instagram, and other platforms each have their own memorial or removal processes</li>
+        <li><strong>Subscriptions</strong> — streaming services, gym memberships, professional associations, magazines, and similar recurring payments</li>
+      </ul>
+
+      <div class="info-box">
+        <p>myTrove's website also has reference links to help you close social media accounts and check for unclaimed money at IRD, which can be a useful checklist as you work through the estate.</p>
+      </div>
+
+      <h2>Can a solicitor use myTrove on your behalf?</h2>
+      <p>Yes. If you have engaged a solicitor or lawyer to help administer the estate, they can use myTrove on your behalf. This may be included in the estate administration fee, or charged separately — check with your solicitor.</p>
+      <p>Using myTrove yourself is straightforward for most people, but if the estate is complex or you would prefer professional help, delegating to a solicitor is a reasonable option.</p>
+
+      <div class="cta-section">
+        <h2>Not sure what else needs doing?</h2>
+        <p>Notifying agencies is one step in a longer process. Our free tool helps you map out everything that needs to happen after someone dies — and in what order.</p>
+        <div class="cta-links">
+          <a href="/when-someone-dies/" class="cta-btn">Get your personalised plan →</a>
+          <a href="/what-to-do-when-someone-dies-nz/" class="cta-link-secondary">Read the full NZ guide</a>
+        </div>
+      </div>
+
+    </article>
+    <div class="page-disclaimer">
+    <p>This guide provides general information only — not legal, financial, or tax advice. Entitlements, rates, and processes are subject to change. Verify current figures with the relevant agency before making decisions. For advice specific to your situation, contact a lawyer, financial adviser, or <a href="https://www.cab.org.nz" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Citizens Advice Bureau</a>. Information current as of June 2026.</p>
+  </div>
+  </main>
+
+  <footer>
+    <span class="footer-brand">Cut Adrift</span>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://notredundant.com">Not Redundant</a>
+    </div>
+  </footer>
+
+</body>
+</html>

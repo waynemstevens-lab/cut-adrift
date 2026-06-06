@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When someone dies — Cut Adrift</title>
+  <meta property="og:title" content="When someone dies — Cut Adrift">
+  <meta property="og:description" content="What to do in the hours, days and weeks after losing someone. Free, practical, tailored to your country.">
+  <meta property="og:url" content="https://cutadrift.org/when-someone-dies/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cutadrift.org/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cutadrift.org/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="description" content="A free, personalised guide for what to do when someone you love has died.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0c1520;
+      --bg-card:      #111e2c;
+      --bg-hover:     #162538;
+      --bg-selected:  #1a2f44;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(210,168,100,0.4);
+      --border-sel:   rgba(210,168,100,0.7);
+      --text:         #ede8df;
+      --text-muted:   rgba(237,232,223,0.75);
+      --text-dim:     rgba(237,232,223,0.5);
+      --amber:        #d2a864;
+      --radius:       12px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(93,158,168,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav ──────────────────────────────────────── */
+    nav {
+      width: 100%;
+      max-width: 640px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .back-btn {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 0;
+      transition: color 0.2s;
+      display: none;
+    }
+
+    .back-btn:hover { color: var(--text-muted); }
+    .back-btn.visible { display: block; }
+
+    /* ── Progress ─────────────────────────────────── */
+    .progress-track {
+      width: 100%;
+      max-width: 640px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 28px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--amber);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      opacity: 0.5;
+    }
+
+    /* ── Step ─────────────────────────────────────── */
+    .step-wrap {
+      width: 100%;
+      max-width: 640px;
+      padding-top: 52px;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Question text ────────────────────────────── */
+    .step-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .step-q {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .step-hint {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 500px;
+    }
+
+    /* Bridge callout ─────────────────────────────── */
+    .bridge-note {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      background: rgba(210,168,100,0.06);
+      border: 1px solid rgba(210,168,100,0.12);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 32px;
+    }
+
+    /* ── Options ──────────────────────────────────── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .opt:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .opt.selected {
+      background: var(--bg-selected);
+      border-color: var(--border-sel);
+    }
+
+    .opt-text {
+      flex: 1;
+    }
+
+    .opt-main {
+      font-size: 0.97rem;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .opt-sub {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ── Textarea step ────────────────────────────── */
+    .free-text-area {
+      width: 100%;
+      min-height: 120px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.6;
+      padding: 18px 20px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .free-text-area::placeholder { color: var(--text-dim); }
+    .free-text-area:focus { border-color: rgba(210,168,100,0.3); }
+
+    .free-text-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #0c1520;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-skip {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-skip:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text);
+    }
+
+    /* ── Weeks-ago intro ──────────────────────────── */
+    .weeks-intro {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 32px;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 600px) {
+      .step-wrap { padding-top: 36px; }
+      .opt { padding: 16px; }
+    }
+  </style>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+  <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>
+</nav>
+
+<div class="progress-track">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="step-wrap" id="stepWrap">
+
+  <!-- Q1: Country -->
+  <div class="step" id="step-country">
+    <div class="step-label">Where you are</div>
+    <div class="step-q">Where are you based?</div>
+    <div class="step-hint">This helps us give you the right contacts and legal guidance.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('country','nz')"><div class="opt-text"><div class="opt-main">New Zealand</div></div></button>
+      <button class="opt" onclick="answer('country','au')"><div class="opt-text"><div class="opt-main">Australia</div></div></button>
+      <button class="opt" onclick="answer('country','uk')"><div class="opt-text"><div class="opt-main">United Kingdom</div></div></button>
+      <button class="opt" onclick="answer('country','ie')"><div class="opt-text"><div class="opt-main">Ireland</div></div></button>
+      <button class="opt" onclick="answer('country','other')"><div class="opt-text"><div class="opt-main">Somewhere else</div><div class="opt-sub">We'll do our best with general guidance</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q2: Timing -->
+  <div class="step" id="step-timing">
+    <div class="step-label">When this happened</div>
+    <div class="step-q">When did this happen?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('timing','recent_sudden')"><div class="opt-text"><div class="opt-main">Very recently — and it was sudden or unexpected</div><div class="opt-sub">In the last day or two</div></div></button>
+      <button class="opt" onclick="answer('timing','recent_expected')"><div class="opt-text"><div class="opt-main">Very recently — it was expected</div><div class="opt-sub">Illness, hospice care — in the last day or two</div></div></button>
+      <button class="opt" onclick="answer('timing','week_ago')"><div class="opt-text"><div class="opt-main">About a week ago</div></div></button>
+      <button class="opt" onclick="answer('timing','weeks_ago')"><div class="opt-text"><div class="opt-main">A few weeks ago or more</div><div class="opt-sub">I'm working through everything now</div></div></button>
+    </div>
+  </div>
+
+  <!-- Weeks-ago acknowledgement -->
+  <div class="step" id="step-weeks-intro">
+    <div class="step-q">Let's focus on what needs doing.</div>
+    <div class="weeks-intro">It sounds like you're past the immediate shock and working through everything that still needs to be sorted. A few quick questions and we'll put a practical plan together for you.</div>
+    <div class="options">
+      <button class="opt" onclick="skipTo('funeral_status')"><div class="opt-text"><div class="opt-main">OK, let's go →</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q3: Relationship (Layer 1) -->
+  <div class="step" id="step-relationship">
+    <div class="step-label">Who you lost</div>
+    <div class="step-q">Who was this person to you?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('relationship','partner')"><div class="opt-text"><div class="opt-main">My partner or spouse</div></div></button>
+      <button class="opt" onclick="answer('relationship','parent')"><div class="opt-text"><div class="opt-main">A parent</div></div></button>
+      <button class="opt" onclick="answer('relationship','child')"><div class="opt-text"><div class="opt-main">A child</div></div></button>
+      <button class="opt" onclick="answer('relationship','sibling')"><div class="opt-text"><div class="opt-main">A sibling</div></div></button>
+      <button class="opt" onclick="answer('relationship','grandparent')"><div class="opt-text"><div class="opt-main">A grandparent</div></div></button>
+      <button class="opt" onclick="answer('relationship','other')"><div class="opt-text"><div class="opt-main">Someone else close to me</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q4: Emotional state -->
+  <div class="step" id="step-emotional_state">
+    <div class="step-label">How you're doing</div>
+    <div class="step-q">Before we go any further — how are you holding up?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('emotional_state','barely_functioning')"><div class="opt-text"><div class="opt-main">Barely holding it together</div><div class="opt-sub">Shocked, not thinking clearly</div></div></button>
+      <button class="opt" onclick="answer('emotional_state','holding_together')"><div class="opt-text"><div class="opt-main">I'm managing, but overwhelmed</div><div class="opt-sub">There's a lot and I don't know where to start</div></div></button>
+      <button class="opt" onclick="answer('emotional_state','need_the_list')"><div class="opt-text"><div class="opt-main">OK — I just need to know what to do</div></div></button>
+      <button class="opt" onclick="answer('emotional_state','not_sure')"><div class="opt-text"><div class="opt-main">I'm not sure how I feel</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q5: Support -->
+  <div class="step" id="step-support_situation">
+    <div class="step-label">Who's around you</div>
+    <div class="step-q">Are you going through this alone, or do you have people around you?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('support_situation','has_support')"><div class="opt-text"><div class="opt-main">Family and friends are helping</div></div></button>
+      <button class="opt" onclick="answer('support_situation','some_support')"><div class="opt-text"><div class="opt-main">I have some support, but a lot is falling on me</div></div></button>
+      <button class="opt" onclick="answer('support_situation','mostly_alone')"><div class="opt-text"><div class="opt-main">I'm mostly doing this on my own</div></div></button>
+      <button class="opt" onclick="answer('support_situation','complicated')"><div class="opt-text"><div class="opt-main">It's complicated</div><div class="opt-sub">There's family around, but it's not straightforward</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q6: Children -->
+  <div class="step" id="step-children_affected">
+    <div class="step-label">Children and young people</div>
+    <div class="step-q">Are there children or young people affected by this?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('children_affected','their_children_at_home')"><div class="opt-text"><div class="opt-main">Yes — their children, who are still at home</div></div></button>
+      <button class="opt" onclick="answer('children_affected','own_grieving_children')"><div class="opt-text"><div class="opt-main">Yes — my own children, who are grieving too</div></div></button>
+      <button class="opt" onclick="answer('children_affected','both')"><div class="opt-text"><div class="opt-main">Yes — both of the above</div></div></button>
+      <button class="opt" onclick="answer('children_affected','no')"><div class="opt-text"><div class="opt-main">No</div></div></button>
+      <button class="opt" onclick="answer('children_affected','dont_know')"><div class="opt-text"><div class="opt-main">I'm not sure</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q7: Notifications -->
+  <div class="step" id="step-notifications_needed">
+    <div class="step-label">Letting people know</div>
+    <div class="step-q">Have you been able to let the important people know?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('notifications_needed','most_told')"><div class="opt-text"><div class="opt-main">Most people who need to know have been told</div></div></button>
+      <button class="opt" onclick="answer('notifications_needed','havent_started')"><div class="opt-text"><div class="opt-main">I haven't really started yet</div><div class="opt-sub">Not sure where to begin</div></div></button>
+      <button class="opt" onclick="answer('notifications_needed','think_all_told')"><div class="opt-text"><div class="opt-main">I think everyone who needs to know has heard</div></div></button>
+      <button class="opt" onclick="answer('notifications_needed','dont_know')"><div class="opt-text"><div class="opt-main">I'm not sure</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q8: Dependants -->
+  <div class="step" id="step-dependants">
+    <div class="step-label">People and animals who relied on them</div>
+    <div class="step-q">Was there anyone who depended on them day to day?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('dependants','yes_caring_for_someone')"><div class="opt-text"><div class="opt-main">Yes — they were caring for someone who now needs support</div></div></button>
+      <button class="opt" onclick="answer('dependants','yes_pets')"><div class="opt-text"><div class="opt-main">Yes — they had pets that need looking after</div></div></button>
+      <button class="opt" onclick="answer('dependants','yes_other')"><div class="opt-text"><div class="opt-main">Yes — someone else relied on them regularly</div></div></button>
+      <button class="opt" onclick="answer('dependants','no')"><div class="opt-text"><div class="opt-main">No</div></div></button>
+      <button class="opt" onclick="answer('dependants','not_sure')"><div class="opt-text"><div class="opt-main">Not sure</div></div></button>
+    </div>
+  </div>
+
+  <!-- Bridge: practical opt-in -->
+  <div class="step" id="step-bridge">
+    <div class="step-q">One more thing before your plan.</div>
+    <div class="bridge-note">As well as the immediate priorities, there are practical matters to work through — the funeral, their belongings, any estate or financial affairs. We can cover all of that too. Would you like to include it now, or focus on the immediate things first?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('practical_opted_in','yes')"><div class="opt-text"><div class="opt-main">Yes — include the practical steps too</div></div></button>
+      <button class="opt" onclick="answer('practical_opted_in','no')"><div class="opt-text"><div class="opt-main">Not yet — just the immediate priorities for now</div><div class="opt-sub">You can come back for the practical steps any time</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q9: Funeral -->
+  <div class="step" id="step-funeral_status">
+    <div class="step-label">The funeral</div>
+    <div class="step-q">Has the funeral or burial been arranged yet?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('funeral_status','not_started')"><div class="opt-text"><div class="opt-main">Not yet — I need help with this</div></div></button>
+      <button class="opt" onclick="answer('funeral_status','in_progress')"><div class="opt-text"><div class="opt-main">It's being arranged but I need guidance</div></div></button>
+      <button class="opt" onclick="answer('funeral_status','done')"><div class="opt-text"><div class="opt-main">The funeral has already happened</div></div></button>
+      <button class="opt" onclick="answer('funeral_status','someone_else')"><div class="opt-text"><div class="opt-main">Someone else is handling this</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q10: Will -->
+  <div class="step" id="step-has_will">
+    <div class="step-label">Their will</div>
+    <div class="step-q">Do you know whether they made a will?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('has_will','yes_executor')"><div class="opt-text"><div class="opt-main">Yes — and I'm named as executor</div></div></button>
+      <button class="opt" onclick="answer('has_will','yes_not_executor')"><div class="opt-text"><div class="opt-main">Yes — but someone else is the executor</div></div></button>
+      <button class="opt" onclick="answer('has_will','yes_unknown_executor')"><div class="opt-text"><div class="opt-main">Yes — but I don't know who the executor is</div><div class="opt-sub">We'll help you find out</div></div></button>
+      <button class="opt" onclick="answer('has_will','no_will')"><div class="opt-text"><div class="opt-main">I don't think there was a will</div></div></button>
+      <button class="opt" onclick="answer('has_will','dont_know')"><div class="opt-text"><div class="opt-main">I don't know</div><div class="opt-sub">We'll help you find out</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q11: Assets -->
+  <div class="step" id="step-assets">
+    <div class="step-label">Their financial situation</div>
+    <div class="step-q">Do you know much about their financial situation?</div>
+    <div class="step-hint">Whether they owned property, had savings or investments — it's fine if you're not sure.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('assets','yes')"><div class="opt-text"><div class="opt-main">Yes — they had property or significant assets</div></div></button>
+      <button class="opt" onclick="answer('assets','no')"><div class="opt-text"><div class="opt-main">No — mainly personal belongings</div></div></button>
+      <button class="opt" onclick="answer('assets','dont_know')"><div class="opt-text"><div class="opt-main">I don't know</div><div class="opt-sub">We'll help you find out</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q12: Free text (optional) -->
+  <div class="step" id="step-free_text">
+    <div class="step-label">Almost done</div>
+    <div class="step-q">Is there something specific worrying you?</div>
+    <div class="step-hint">If there's something you're not sure how to handle — a particular situation or concern — tell us here. This is optional.</div>
+    <textarea class="free-text-area" id="freeTextInput" placeholder="e.g. I don't know how to pay for the funeral, or I have no idea where to start with their bank accounts…"></textarea>
+    <div class="free-text-actions">
+      <button class="btn-primary" onclick="submitFreeText()">Build my plan →</button>
+      <button class="btn-skip" onclick="skipFreeText()">Skip this</button>
+    </div>
+  </div>
+
+</div><!-- /step-wrap -->
+
+<script>
+  const answers = {};
+  const history = [];
+
+  // Step sequence — determines order and which steps exist
+  const LAYER1  = ['relationship','emotional_state','support_situation','children_affected','notifications_needed','dependants'];
+  const LAYER2  = ['funeral_status','has_will','assets'];
+  const FULL_SEQ = ['country','timing','relationship','emotional_state','support_situation',
+                    'children_affected','notifications_needed','dependants','bridge',
+                    'funeral_status','has_will','assets','free_text'];
+
+  let currentStep = 'country';
+  showStep('country');
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('step-' + id);
+    if (el) el.classList.add('active');
+    currentStep = id;
+
+    // Back button
+    document.getElementById('backBtn').classList.toggle('visible', history.length > 0);
+
+    // Progress
+    updateProgress();
+  }
+
+  function answer(field, value) {
+    answers[field] = value;
+    history.push(currentStep);
+
+    const next = getNext(currentStep, answers);
+    if (next === 'submit') {
+      submit();
+    } else {
+      showStep(next);
+    }
+  }
+
+  function getNext(step, ans) {
+    // Special routing after timing
+    if (step === 'timing' && ans.timing === 'weeks_ago') {
+      return 'weeks-intro';
+    }
+    if (step === 'weeks-intro') {
+      answers.practical_opted_in = 'yes'; // auto opt-in for weeks_ago path
+      return 'funeral_status';
+    }
+
+    // Bridge routing
+    if (step === 'bridge') {
+      return ans.practical_opted_in === 'yes' ? 'funeral_status' : 'free_text';
+    }
+
+    // Walk the full sequence, skip steps not applicable
+    const idx = FULL_SEQ.indexOf(step);
+    for (let i = idx + 1; i < FULL_SEQ.length; i++) {
+      const candidate = FULL_SEQ[i];
+
+      // Skip Layer 1 for weeks_ago
+      if (LAYER1.includes(candidate) && ans.timing === 'weeks_ago') continue;
+      if (candidate === 'bridge' && ans.timing === 'weeks_ago') continue;
+
+      // Skip Layer 2 if not opted in
+      if (LAYER2.includes(candidate) && ans.practical_opted_in === 'no') continue;
+
+      return candidate;
+    }
+    return 'submit';
+  }
+
+  function skipTo(stepId) {
+    // Used by weeks-intro button
+    answers.practical_opted_in = 'yes';
+    history.push(currentStep);
+    showStep(stepId);
+  }
+
+  function goBack() {
+    if (history.length === 0) return;
+    const prev = history.pop();
+    // Remove the answer for current step
+    delete answers[currentStep];
+    showStep(prev);
+  }
+
+  function submitFreeText() {
+    const val = document.getElementById('freeTextInput').value.trim();
+    if (val) answers.free_text = val;
+    submit();
+  }
+
+  function skipFreeText() {
+    submit();
+  }
+
+  function submit() {
+    answers.tool = 'bereavement';
+    sessionStorage.setItem('cutadrift_intake', JSON.stringify(answers));
+    window.location.href = '/plan/';
+  }
+
+  function updateProgress() {
+    // Compute approximate progress
+    const seq = answers.timing === 'weeks_ago'
+      ? ['country','timing','funeral_status','has_will','assets','free_text']
+      : answers.practical_opted_in === 'no'
+        ? ['country','timing','relationship','emotional_state','support_situation',
+           'children_affected','notifications_needed','dependants','bridge','free_text']
+        : FULL_SEQ;
+
+    const idx  = seq.indexOf(currentStep);
+    const pct  = idx < 0 ? 0 : Math.round((idx / (seq.length - 1)) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+</script>
+
+</body>
+</html>

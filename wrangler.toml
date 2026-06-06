@@ -1,0 +1,10 @@
+name = "cutadrift-engine"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "3a74818b39634ca494158c8dc55d8cd9"
+
+[vars]
+ALLOWED_ORIGIN = "https://cutadrift.org"

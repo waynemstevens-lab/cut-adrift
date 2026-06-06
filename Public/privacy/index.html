@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy — Cut Adrift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0c1520;
+      --bg-card:    #111e2c;
+      --border:     rgba(255,255,255,0.07);
+      --text:       #ede8df;
+      --text-muted: rgba(237,232,223,0.75);
+      --text-dim:   rgba(237,232,223,0.5);
+      --amber:      #d2a864;
+      --radius:     12px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(93,158,168,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 95% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      width: 100%;
+      max-width: 720px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text-muted); }
+
+    /* ── Content ── */
+    .content {
+      width: 100%;
+      max-width: 720px;
+      padding-top: 64px;
+    }
+
+    .page-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--amber);
+      margin-top: 40px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      margin-bottom: 0;
+    }
+
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .updated {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+  <a href="/" class="nav-back">← Home</a>
+</nav>
+
+<div class="content">
+
+  <div class="page-label">Privacy</div>
+  <h1>What we do with your information</h1>
+  <p class="intro">Cut Adrift is a free tool. We don't have accounts, we don't send emails, and we don't sell data. Here's exactly what happens when you use this site.</p>
+
+  <h2>What you type stays in your browser</h2>
+  <p>Your answers to the intake questions are stored only in your browser's session storage — a temporary space that is cleared automatically when you close the tab. Nothing you enter is saved to a database or linked to your identity.</p>
+  <p>Your generated plan is also stored in session storage so you can scroll back through it without reloading. It disappears when the tab closes.</p>
+
+  <h2>Your answers are sent to an AI to generate your plan</h2>
+  <p>When you reach the plan page, your intake answers are sent to our AI backend, which uses them to generate a personalised plan. The AI is provided by <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic</a>. Your answers are processed to generate a response and are not used to train AI models.</p>
+  <p>Anthropic's privacy policy applies to that processing: <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>.</p>
+
+  <h2>We temporarily record your IP address for rate limiting</h2>
+  <p>To prevent abuse and keep the tool free and available for everyone, we limit the number of plans that can be generated from a single IP address per day. Your IP address is stored temporarily for this purpose and deleted automatically after 24 hours. It is not linked to your answers or your plan.</p>
+
+  <h2>No cookies. No tracking. No analytics.</h2>
+  <p>Cut Adrift does not use cookies. We do not run advertising trackers, social media pixels, or analytics scripts. We do not know who you are, where you came from, or what you searched for to find us.</p>
+
+  <h2>Infrastructure</h2>
+  <p>This site is hosted on <a href="https://www.cloudflare.com" target="_blank" rel="noopener">Cloudflare</a>. Network-level data — such as IP addresses and request metadata — may be processed by Cloudflare in the normal course of serving web traffic. Cloudflare's privacy policy applies: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a>.</p>
+
+  <h2>Questions</h2>
+  <p>If you have questions about how this site handles data, you can reach us at <a href="mailto:privacy@cutadrift.org">privacy@cutadrift.org</a>.</p>
+
+  <p class="updated">Last updated: June 2026</p>
+
+</div>
+
+</body>
+</html>
