@@ -284,6 +284,36 @@
       .step-wrap { padding-top: 36px; }
       .opt { padding: 16px; }
     }
+
+    .other-country-wrap {
+      display: none;
+      margin-top: 12px;
+      gap: 10px;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    .other-country-wrap.visible {
+      display: flex;
+    }
+
+    .other-country-input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 300;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .other-country-input::placeholder { color: var(--text-dim); }
+    .other-country-input:focus { border-color: rgba(210,168,100,0.3); }
   </style>
 </head>
 <body>
@@ -309,7 +339,11 @@
       <button class="opt" onclick="answer('country','au')"><div class="opt-text"><div class="opt-main">Australia</div></div></button>
       <button class="opt" onclick="answer('country','uk')"><div class="opt-text"><div class="opt-main">United Kingdom</div></div></button>
       <button class="opt" onclick="answer('country','ie')"><div class="opt-text"><div class="opt-main">Ireland</div></div></button>
-      <button class="opt" onclick="answer('country','other')"><div class="opt-text"><div class="opt-main">Somewhere else</div><div class="opt-sub">We'll do our best with general guidance</div></div></button>
+      <button class="opt" id="otherCountryBtn" onclick="selectOther(this)"><div class="opt-text"><div class="opt-main">Somewhere else</div><div class="opt-sub">Type your country and we'll do our best</div></div></button>
+    </div>
+    <div class="other-country-wrap" id="otherCountryWrap">
+      <input type="text" class="other-country-input" id="otherCountryInput" placeholder="Which country?" onkeydown="if(event.key==='Enter') submitOtherCountry()" />
+      <button class="btn-primary" onclick="submitOtherCountry()">Continue →</button>
     </div>
   </div>
 
@@ -446,6 +480,20 @@
     } else {
       showStep(next);
     }
+  }
+
+  function selectOther(el) {
+    document.querySelectorAll('#step-country .opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const wrap = document.getElementById('otherCountryWrap');
+    wrap.classList.add('visible');
+    document.getElementById('otherCountryInput').focus();
+  }
+
+  function submitOtherCountry() {
+    const val = document.getElementById('otherCountryInput').value.trim();
+    if (!val) return;
+    answer('country', val);
   }
 
   function toggleMulti(field, value, el) {
