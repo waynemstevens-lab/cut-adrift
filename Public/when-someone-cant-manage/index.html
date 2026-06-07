@@ -299,7 +299,21 @@
 
 <div class="step-wrap" id="stepWrap">
 
-  <!-- Q1: What happened -->
+  <!-- Q1: Country -->
+  <div class="step" id="step-country">
+    <div class="step-label">Where you are</div>
+    <div class="step-q">Where are you based?</div>
+    <div class="step-hint">This helps us give you the right contacts and legal guidance.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('country','nz')"><div class="opt-text"><div class="opt-main">New Zealand</div></div></button>
+      <button class="opt" onclick="answer('country','au')"><div class="opt-text"><div class="opt-main">Australia</div></div></button>
+      <button class="opt" onclick="answer('country','uk')"><div class="opt-text"><div class="opt-main">United Kingdom</div></div></button>
+      <button class="opt" onclick="answer('country','ie')"><div class="opt-text"><div class="opt-main">Ireland</div></div></button>
+      <button class="opt" onclick="answer('country','other')"><div class="opt-text"><div class="opt-main">Somewhere else</div><div class="opt-sub">We'll do our best with general guidance</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q2: What happened -->
   <div class="step" id="step-what_happened">
     <div class="step-label">What happened</div>
     <div class="step-q">What's happened?</div>
@@ -409,10 +423,10 @@
   const history = [];
   const multiAnswers = {};
 
-  const SEQ = ['what_happened','who','location','capacity','epa_in_place','assets','carer_situation','free_text'];
+  const SEQ = ['country','what_happened','who','location','capacity','epa_in_place','assets','carer_situation','free_text'];
 
-  let currentStep = 'what_happened';
-  showStep('what_happened');
+  let currentStep = 'country';
+  showStep('country');
 
   function showStep(id) {
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));

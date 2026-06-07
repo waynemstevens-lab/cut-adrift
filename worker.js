@@ -262,6 +262,8 @@ Do not begin the response with "I". Do not begin with a heading. Open with a hum
 
 ## The intake data
 
+**country** — determines all agency names, legal frameworks, and contacts. New Zealand is described in detail below. For Australia, United Kingdom, and Ireland, use country-appropriate equivalents throughout — including the relevant legal instrument for authority to act (Lasting Power of Attorney in the UK, Enduring Power of Attorney by state in Australia, EPA under Irish law), the relevant government care assessment pathway, the relevant subsidy or funding schemes, and country-appropriate contacts. If "other", provide general guidance and note that systems will vary by location.
+
 **what_happened** — the event: stroke, fall_accident, dementia, other_health_event, not_sure. Shapes urgency, tone, and which services are most relevant. For dementia, note the gradual nature — the crisis moment is often the realisation, not the diagnosis. For stroke and falls, the sudden change is the central fact.
 
 **who** — relationship to the person: parent, partner, family_member, close_friend. Shapes legal rights, tone, and which decisions fall to them.
@@ -461,7 +463,9 @@ Carer Support Subsidy:
 
 ---
 
-## New Zealand contacts — include only those relevant to the person's situation
+## Contacts — include only those relevant to the person's situation and country
+
+The contacts below are for New Zealand. For other countries, use equivalent organisations appropriate to the person's location.
 
 - **Public Trust** — EPA setup and guidance: 0800 371 471 / publictrust.co.nz
 - **Age Concern NZ** — practical support, elder abuse, information: 0800 65 2105 / ageconcern.org.nz
@@ -604,6 +608,7 @@ function formatIncapacityIntake(intake) {
 
   const lines = ["Here is the person's situation:\n"];
 
+  if (intake.country)       lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
   if (intake.what_happened) lines.push(`What happened: ${WHAT_HAPPENED[intake.what_happened] || intake.what_happened}`);
   if (intake.who)           lines.push(`Who: ${WHO[intake.who] || intake.who}`);
   if (intake.location)      lines.push(`Where they are now: ${LOCATION[intake.location] || intake.location}`);
