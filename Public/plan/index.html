@@ -552,6 +552,10 @@ function caSubmitFeedback() {
 
     marked.setOptions({ breaks: true, gfm: true });
     document.getElementById('plan-content').innerHTML = marked.parse(text);
+    var disc = document.createElement('p');
+    disc.style.cssText = 'font-size:0.78rem;color:rgba(237,232,223,0.35);margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(237,232,223,0.1);line-height:1.6;';
+    disc.textContent = 'This plan is a starting point, not legal, financial, or health advice. Always verify details with the relevant government agency or a qualified professional.';
+    document.getElementById('plan-content').appendChild(disc);
     show('plan');
     flex('plan-footer');
     document.getElementById('feedback-section').style.display = 'block';
