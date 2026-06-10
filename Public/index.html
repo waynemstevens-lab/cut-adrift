@@ -128,19 +128,19 @@
     .cards {
       width: 100%;
       max-width: 720px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 14px;
     }
 
     .card {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      gap: 24px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px 20px;
+      padding: 28px 32px;
       text-decoration: none;
       color: var(--text);
       cursor: pointer;
@@ -168,7 +168,6 @@
       justify-content: center;
       font-size: 1.4rem;
       flex-shrink: 0;
-      margin-bottom: 16px;
       transition: background 0.22s ease;
     }
 
@@ -187,7 +186,6 @@
     .card-body {
       flex: 1;
       min-width: 0;
-      width: 100%;
     }
 
     .card-title {
@@ -223,9 +221,6 @@
       color: var(--text-dim);
       font-size: 1.2rem;
       flex-shrink: 0;
-      align-self: flex-end;
-      margin-top: auto;
-      padding-top: 16px;
       transition: color 0.22s ease, transform 0.22s ease;
     }
 
@@ -238,7 +233,7 @@
     .guides {
       width: 100%;
       max-width: 720px;
-      margin-top: 40px;
+      margin-top: 48px;
       opacity: 0;
       animation: rise 0.6s 0.74s ease forwards;
     }
@@ -249,65 +244,32 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(237,232,223,0.6);
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
-    .guide-country {
+    .guides-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
       border-top: 1px solid var(--border);
-      padding: 12px 0;
-      cursor: pointer;
-      user-select: none;
+      padding-top: 20px;
     }
 
-    .guide-country:last-child {
-      border-bottom: 1px solid var(--border);
+    .guides-col {
+      padding-right: 28px;
     }
 
-    .guide-country-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .guides-col:last-child {
+      padding-right: 0;
     }
 
-    .guide-country-name {
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
-
-    .guide-country:hover .guide-country-name {
-      color: var(--amber);
-    }
-
-    .guide-country-arrow {
-      color: var(--text-dim);
-      font-size: 0.85rem;
-      display: inline-block;
-      transition: color 0.2s, transform 0.25s ease;
-    }
-
-    .guide-country:hover .guide-country-arrow {
-      color: var(--amber);
-    }
-
-    .guide-country.open .guide-country-arrow {
-      transform: rotate(90deg);
-      color: var(--amber);
-    }
-
-    .guide-country.open .guide-country-name {
-      color: var(--amber);
-    }
-
-    .guide-country-links {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.3s ease;
-    }
-
-    .guide-country.open .guide-country-links {
-      max-height: 400px;
+    .guides-col-name {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 12px;
     }
 
     .guide-link {
@@ -317,12 +279,8 @@
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.2s;
-      padding: 5px 0;
-      margin-top: 6px;
-    }
-
-    .guide-link:last-child {
-      margin-bottom: 6px;
+      padding: 4px 0;
+      line-height: 1.45;
     }
 
     .guide-link:hover { color: var(--amber); }
@@ -367,9 +325,10 @@
     @media (max-width: 600px) {
       header  { padding-top: 32px; }
       .hero   { padding: 48px 0 40px; }
-      .cards  { grid-template-columns: 1fr; }
-      .card   { padding: 22px 20px; }
-      .card-icon { width: 40px; height: 40px; font-size: 1.2rem; margin-bottom: 12px; }
+      .card   { padding: 22px 20px; gap: 16px; }
+      .card-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+      .guides-row { grid-template-columns: 1fr; gap: 28px; }
+      .guides-col { padding-right: 0; }
       footer  { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
@@ -426,49 +385,36 @@
 
   <div class="guides">
     <p class="guides-label">Guides</p>
+    <div class="guides-row">
 
-    <div class="guide-country" onclick="toggleCountry(this)">
-      <div class="guide-country-row">
-        <span class="guide-country-name">New Zealand</span>
-        <span class="guide-country-arrow">→</span>
-      </div>
-      <div class="guide-country-links">
+      <div class="guides-col">
+        <div class="guides-col-name">New Zealand</div>
         <a href="/what-to-do-when-someone-dies-nz/" class="guide-link">What to do when someone dies →</a>
         <a href="/how-to-apply-funeral-grant-nz/" class="guide-link">How to apply for a Funeral Grant →</a>
         <a href="/nz-bereavement-leave-entitlements/" class="guide-link">Bereavement leave entitlements →</a>
         <a href="/nz-surviving-spouse-benefit/" class="guide-link">Financial support for bereaved partners →</a>
         <a href="/mytrove-nz-guide/" class="guide-link">Using myTrove to notify agencies after a death →</a>
       </div>
-    </div>
 
-    <div class="guide-country" onclick="toggleCountry(this)">
-      <div class="guide-country-row">
-        <span class="guide-country-name">United Kingdom</span>
-        <span class="guide-country-arrow">→</span>
-      </div>
-      <div class="guide-country-links">
+      <div class="guides-col">
+        <div class="guides-col-name">United Kingdom</div>
         <a href="/what-to-do-when-someone-dies-uk/" class="guide-link">What to do when someone dies →</a>
         <a href="/uk-bereavement-support-payment/" class="guide-link">Bereavement Support Payment →</a>
         <a href="/uk-funeral-expenses-payment/" class="guide-link">Funeral Expenses Payment →</a>
         <a href="/uk-bereavement-leave/" class="guide-link">Bereavement leave entitlements →</a>
         <a href="/tell-us-once-uk-guide/" class="guide-link">Using Tell Us Once to notify government agencies →</a>
       </div>
-    </div>
 
-    <div class="guide-country" onclick="toggleCountry(this)">
-      <div class="guide-country-row">
-        <span class="guide-country-name">United States</span>
-        <span class="guide-country-arrow">→</span>
-      </div>
-      <div class="guide-country-links">
+      <div class="guides-col">
+        <div class="guides-col-name">United States</div>
         <a href="/what-to-do-when-someone-dies-us/" class="guide-link">What to do when someone dies →</a>
         <a href="/us-social-security-survivor-benefits/" class="guide-link">Social Security survivor benefits →</a>
         <a href="/us-funeral-financial-assistance/" class="guide-link">Help with funeral costs →</a>
         <a href="/us-bereavement-leave/" class="guide-link">Bereavement leave in the US →</a>
         <a href="/us-notify-agencies-after-death/" class="guide-link">Notifying government agencies after a death →</a>
       </div>
-    </div>
 
+    </div>
   </div>
 
   </main>
@@ -482,11 +428,6 @@
     </div>
   </footer>
 
-  <script>
-    function toggleCountry(el) {
-      el.classList.toggle('open');
-    }
-  </script>
 
 </body>
 </html>
