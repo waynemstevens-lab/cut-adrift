@@ -158,8 +158,6 @@
       transform: translateY(-2px);
     }
 
-
-
     .card-icon {
       width: 48px;
       height: 48px;
@@ -219,7 +217,6 @@
       line-height: 1.5;
     }
 
-
     .card-arrow {
       color: var(--text-dim);
       font-size: 1.2rem;
@@ -231,6 +228,99 @@
       color: var(--amber);
       transform: translateX(4px);
     }
+
+    /* ── Guides ──────────────────────────────────────── */
+    .guides {
+      width: 100%;
+      max-width: 720px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: rise 0.6s 0.74s ease forwards;
+    }
+
+    .guides-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(237,232,223,0.6);
+      margin-bottom: 10px;
+    }
+
+    .guide-country {
+      border-top: 1px solid var(--border);
+      padding: 12px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .guide-country:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .guide-country-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .guide-country-name {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .guide-country:hover .guide-country-name {
+      color: var(--amber);
+    }
+
+    .guide-country-arrow {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      display: inline-block;
+      transition: color 0.2s, transform 0.25s ease;
+    }
+
+    .guide-country:hover .guide-country-arrow {
+      color: var(--amber);
+    }
+
+    .guide-country.open .guide-country-arrow {
+      transform: rotate(90deg);
+      color: var(--amber);
+    }
+
+    .guide-country.open .guide-country-name {
+      color: var(--amber);
+    }
+
+    .guide-country-links {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+    }
+
+    .guide-country.open .guide-country-links {
+      max-height: 400px;
+    }
+
+    .guide-link {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 5px 0;
+      margin-top: 6px;
+    }
+
+    .guide-link:last-child {
+      margin-bottom: 6px;
+    }
+
+    .guide-link:hover { color: var(--amber); }
 
     /* ── Footer ──────────────────────────────────────── */
     footer {
@@ -268,37 +358,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-
-    /* ── Guides ──────────────────────────────────────── */
-    .guides {
-      width: 100%;
-      max-width: 720px;
-      margin-top: 40px;
-      opacity: 0;
-      animation: rise 0.6s 0.74s ease forwards;
-    }
-
-    .guides-label {
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(237,232,223,0.6);
-      margin-bottom: 10px;
-    }
-
-    .guide-link {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-      padding: 3px 0;
-    }
-
-    .guide-link:hover { color: var(--amber); }
-
     /* ── Mobile ──────────────────────────────────────── */
     @media (max-width: 600px) {
       header  { padding-top: 32px; }
@@ -308,7 +367,7 @@
       footer  { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
 
@@ -360,12 +419,22 @@
   </div>
 
   <div class="guides">
-    <p class="guides-label">Bereavement guides</p>
-    <a href="/what-to-do-when-someone-dies-nz/" class="guide-link">What to do when someone dies in New Zealand →</a>
-    <a href="/how-to-apply-funeral-grant-nz/" class="guide-link">How to apply for a Funeral Grant in New Zealand →</a>
-    <a href="/nz-bereavement-leave-entitlements/" class="guide-link">Bereavement leave entitlements in New Zealand →</a>
-    <a href="/nz-surviving-spouse-benefit/" class="guide-link">Financial support for bereaved partners in New Zealand →</a>
-    <a href="/mytrove-nz-guide/" class="guide-link">Using myTrove to notify agencies after a death →</a>
+    <p class="guides-label">Guides</p>
+
+    <div class="guide-country" onclick="toggleCountry(this)">
+      <div class="guide-country-row">
+        <span class="guide-country-name">New Zealand</span>
+        <span class="guide-country-arrow">→</span>
+      </div>
+      <div class="guide-country-links">
+        <a href="/what-to-do-when-someone-dies-nz/" class="guide-link">What to do when someone dies →</a>
+        <a href="/how-to-apply-funeral-grant-nz/" class="guide-link">How to apply for a Funeral Grant →</a>
+        <a href="/nz-bereavement-leave-entitlements/" class="guide-link">Bereavement leave entitlements →</a>
+        <a href="/nz-surviving-spouse-benefit/" class="guide-link">Financial support for bereaved partners →</a>
+        <a href="/mytrove-nz-guide/" class="guide-link">Using myTrove to notify agencies after a death →</a>
+      </div>
+    </div>
+
   </div>
 
   </main>
@@ -378,6 +447,12 @@
       <a href="mailto:hello@cutadrift.org">Contact</a>
     </div>
   </footer>
+
+  <script>
+    function toggleCountry(el) {
+      el.classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>
