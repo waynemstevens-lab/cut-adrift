@@ -244,46 +244,26 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(237,232,223,0.6);
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
 
     .guides-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+      display: flex;
+      gap: 28px;
       border-top: 1px solid var(--border);
-      padding-top: 20px;
+      padding-top: 14px;
+      flex-wrap: wrap;
     }
 
-    .guides-col {
-      padding-right: 28px;
-    }
-
-    .guides-col:last-child {
-      padding-right: 0;
-    }
-
-    .guides-col-name {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .guide-link {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 300;
+    .guides-country-link {
+      font-size: 0.85rem;
+      font-weight: 400;
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.2s;
-      padding: 4px 0;
-      line-height: 1.45;
     }
 
-    .guide-link:hover { color: var(--amber); }
+    .guides-country-link:hover { color: var(--amber); }
 
     /* ── Footer ──────────────────────────────────────── */
     footer {
@@ -327,8 +307,6 @@
       .hero   { padding: 48px 0 40px; }
       .card   { padding: 22px 20px; gap: 16px; }
       .card-icon { width: 40px; height: 40px; font-size: 1.2rem; }
-      .guides-row { grid-template-columns: 1fr; gap: 28px; }
-      .guides-col { padding-right: 0; }
       footer  { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
@@ -386,34 +364,9 @@
   <div class="guides">
     <p class="guides-label">Guides</p>
     <div class="guides-row">
-
-      <div class="guides-col">
-        <div class="guides-col-name">New Zealand</div>
-        <a href="/what-to-do-when-someone-dies-nz/" class="guide-link">What to do when someone dies →</a>
-        <a href="/how-to-apply-funeral-grant-nz/" class="guide-link">How to apply for a Funeral Grant →</a>
-        <a href="/nz-bereavement-leave-entitlements/" class="guide-link">Bereavement leave entitlements →</a>
-        <a href="/nz-surviving-spouse-benefit/" class="guide-link">Financial support for bereaved partners →</a>
-        <a href="/mytrove-nz-guide/" class="guide-link">Using myTrove to notify agencies after a death →</a>
-      </div>
-
-      <div class="guides-col">
-        <div class="guides-col-name">United Kingdom</div>
-        <a href="/what-to-do-when-someone-dies-uk/" class="guide-link">What to do when someone dies →</a>
-        <a href="/uk-bereavement-support-payment/" class="guide-link">Bereavement Support Payment →</a>
-        <a href="/uk-funeral-expenses-payment/" class="guide-link">Funeral Expenses Payment →</a>
-        <a href="/uk-bereavement-leave/" class="guide-link">Bereavement leave entitlements →</a>
-        <a href="/tell-us-once-uk-guide/" class="guide-link">Using Tell Us Once to notify government agencies →</a>
-      </div>
-
-      <div class="guides-col">
-        <div class="guides-col-name">United States</div>
-        <a href="/what-to-do-when-someone-dies-us/" class="guide-link">What to do when someone dies →</a>
-        <a href="/us-social-security-survivor-benefits/" class="guide-link">Social Security survivor benefits →</a>
-        <a href="/us-funeral-financial-assistance/" class="guide-link">Help with funeral costs →</a>
-        <a href="/us-bereavement-leave/" class="guide-link">Bereavement leave in the US →</a>
-        <a href="/us-notify-agencies-after-death/" class="guide-link">Notifying government agencies after a death →</a>
-      </div>
-
+      <a href="/guides-nz/" target="_blank" rel="noopener" class="guides-country-link">New Zealand →</a>
+      <a href="/guides-uk/" target="_blank" rel="noopener" class="guides-country-link">United Kingdom →</a>
+      <a href="/guides-us/" target="_blank" rel="noopener" class="guides-country-link">United States →</a>
     </div>
   </div>
 
