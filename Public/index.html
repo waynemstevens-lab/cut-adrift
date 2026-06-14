@@ -448,6 +448,346 @@
       .suggest-btn { width: 100%; text-align: center; }
       footer  { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+  
+    
+    /* ---- Desktop: 3-col grid + hero width ---- */
+    @media (min-width: 641px) {
+      .cards {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 1.5rem !important;
+        align-items: start !important;
+      }
+      .hero {
+        max-width: 660px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+
+    
+    /* ---- Spacing fixes ---- */
+    body > * , .container, main {
+      padding-top: 0 !important;
+    }
+    header, .site-header {
+      padding-top: 2rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+    .hero {
+      margin-top: 1rem !important;
+      margin-bottom: 2rem !important;
+    }
+    .question {
+      margin-bottom: 1.25rem !important;
+    }
+    .cards {
+      margin-bottom: 2rem !important;
+    }
+
+    /* ---- Card inner layout fix for 3-col ---- */
+    @media (min-width: 641px) {
+      .card {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+        padding: 1.5rem 1.25rem 1.25rem !important;
+      }
+      .card-icon {
+        margin-bottom: 0.25rem !important;
+      }
+      .card-body {
+        width: 100% !important;
+      }
+      .card-title {
+        font-size: 1rem !important;
+        margin-bottom: 0.4rem !important;
+      }
+      .card-desc {
+        font-size: 0.85rem !important;
+        line-height: 1.55 !important;
+      }
+      .card-arrow {
+        align-self: flex-end !important;
+        margin-top: 0.75rem !important;
+      }
+    }
+
+    /* ---- Suggestion form / textarea ---- */
+    .suggestion-section, .missing-section, [class*="suggest"], [class*="missing"] {
+      color: #4A3010 !important;
+    }
+    textarea, input[type="text"], input[type="email"] {
+      background: rgba(255,255,255,0.7) !important;
+      color: #1E1408 !important;
+      border: 1px solid #C8A870 !important;
+      border-radius: 3px !important;
+    }
+    textarea::placeholder {
+      color: #9A8060 !important;
+    }
+    button[type="submit"], .submit-btn, [class*="send"] {
+      background: #7A5020 !important;
+      color: #FBF6EC !important;
+      border: none !important;
+    }
+
+    /* ---- Footer text on cork ---- */
+    footer {
+      color: #6A4E28 !important;
+      border-top-color: rgba(0,0,0,0.15) !important;
+    }
+    footer a {
+      color: #5A3E18 !important;
+    }
+
+    
+    /* ---- Guides section: pinned tag treatment ---- */
+    .guides {
+      padding: 1.5rem 1.5rem 1.25rem !important;
+    }
+    .guides-label {
+      font-size: 0.7rem !important;
+      letter-spacing: 0.14em !important;
+      text-transform: uppercase !important;
+      color: #8A6A30 !important;
+      margin-bottom: 1rem !important;
+      font-family: 'Source Sans 3', sans-serif !important;
+    }
+    .guides-row {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 0.6rem !important;
+    }
+    .guides-country-link {
+      display: inline-block !important;
+      background: #FBF6EC !important;
+      color: #4A3010 !important;
+      border: 0.5px solid #C8A860 !important;
+      border-radius: 2px !important;
+      padding: 0.35rem 0.75rem !important;
+      font-family: 'Source Sans 3', sans-serif !important;
+      font-size: 0.82rem !important;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.12) !important;
+      text-decoration: none !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    }
+    .guides-country-link:nth-child(odd) {
+      transform: rotate(-0.8deg) !important;
+    }
+    .guides-country-link:nth-child(even) {
+      transform: rotate(0.6deg) !important;
+    }
+    .guides-country-link:hover {
+      background: #fff !important;
+      transform: rotate(0deg) translateY(-2px) !important;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.18) !important;
+      color: #1E1408 !important;
+    }
+
+    /* ===== NOTICE BOARD REDESIGN ===== */
+
+    body {
+      background-color: #B49A72 !important;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 18px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 18px) !important;
+      color: #1E1408 !important;
+    }
+
+    /* ---- Header ---- */
+    header, .site-header {
+      background: transparent !important;
+      border-bottom: none !important;
+    }
+    .wordmark {
+      color: #4A2E0A !important;
+      text-shadow: none !important;
+    }
+    .strapline {
+      color: #7A5A2A !important;
+    }
+
+    /* ---- Hero: large central pinned card ---- */
+    .hero {
+      background: #FEFAF2 !important;
+      border-radius: 3px !important;
+      box-shadow: 3px 6px 20px rgba(0,0,0,0.22), 0 1px 4px rgba(0,0,0,0.1) !important;
+      padding: 2.5rem 2.5rem 2rem !important;
+      position: relative !important;
+      transform: rotate(0.3deg) !important;
+      border: none !important;
+    }
+    .hero::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4A6E8A;
+      position: absolute;
+      top: -6px;
+      left: calc(30% - 6px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+      z-index: 2;
+    }
+    .hero::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4A6E8A;
+      position: absolute;
+      top: -6px;
+      right: calc(30% - 6px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+      z-index: 2;
+    }
+    .hero h1 {
+      color: #1A1008 !important;
+      text-shadow: none !important;
+    }
+    .hero h1 em {
+      color: #7A4E18 !important;
+    }
+    .hero p {
+      color: #4A3818 !important;
+    }
+
+    /* ---- Question label ---- */
+    .question p {
+      color: #6A4E28 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      font-family: 'Source Sans 3', sans-serif !important;
+    }
+
+    /* ---- Cards: pinned notices ---- */
+    .cards {
+      align-items: start !important;
+    }
+    .card {
+      background: #FBF6EC !important;
+      border-radius: 3px !important;
+      box-shadow: 2px 4px 14px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.08) !important;
+      border: none !important;
+      position: relative !important;
+      margin-top: 10px !important;
+      opacity: 1 !important;
+      animation: none !important;
+      transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    }
+    .card::before {
+      content: '';
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      z-index: 2;
+    }
+    .card:nth-child(1) {
+      transform: rotate(-2.1deg) !important;
+      background: #FBF6EC !important;
+    }
+    .card:nth-child(1)::before { background: #C44B3A; }
+
+    .card:nth-child(2) {
+      transform: rotate(0.7deg) !important;
+      background: #F2F6EE !important;
+      margin-top: 0 !important;
+    }
+    .card:nth-child(2)::before { background: #5A8A4A; }
+
+    .card:nth-child(3) {
+      transform: rotate(1.9deg) !important;
+      background: #F0EEF6 !important;
+    }
+    .card:nth-child(3)::before { background: #4A6E8A; }
+
+    .card:hover {
+      transform: rotate(0deg) translateY(-3px) !important;
+      box-shadow: 4px 8px 24px rgba(0,0,0,0.28) !important;
+    }
+    .card-title {
+      color: #1E1408 !important;
+    }
+    .card-desc {
+      color: #5A4828 !important;
+    }
+    .card-arrow {
+      color: #9A7040 !important;
+    }
+    .card-icon {
+      background: rgba(255,255,255,0.65) !important;
+    }
+
+    /* ---- Trust strip ---- */
+    .trust-strip {
+      background: rgba(255,255,255,0.22) !important;
+      border: 0.5px solid rgba(255,255,255,0.35) !important;
+      border-radius: 4px !important;
+    }
+    .trust-item {
+      color: #4A3010 !important;
+    }
+    .trust-check {
+      color: #6A8A40 !important;
+    }
+
+    /* ---- Guides section ---- */
+    .guides {
+      background: #F7F2E6 !important;
+      border-radius: 3px !important;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.16) !important;
+      border: none !important;
+      position: relative !important;
+      transform: rotate(-0.3deg) !important;
+    }
+    .guides::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #C8922A;
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+    .guides-label {
+      color: #4A3010 !important;
+    }
+    .guides-country-link {
+      color: #5A3E10 !important;
+      border-color: #C8A860 !important;
+      background: rgba(255,255,255,0.5) !important;
+    }
+    .guides-country-link:hover {
+      background: rgba(255,255,255,0.85) !important;
+      color: #2A1A00 !important;
+    }
+
+    /* ---- Mobile: flatten rotations ---- */
+    @media (max-width: 640px) {
+      .card:nth-child(1),
+      .card:nth-child(2),
+      .card:nth-child(3) {
+        transform: rotate(0deg) !important;
+        margin-top: 0 !important;
+      }
+      .hero {
+        transform: none !important;
+      }
+      .guides {
+        transform: none !important;
+      }
+    }
+
   </style>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
