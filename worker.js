@@ -633,7 +633,58 @@ Brief — one short paragraph. If people close to them are also struggling with 
 
 ## Length
 
-Aim for a substantial plan — this is one of the few times in someone's life they will most benefit from concrete, sequenced guidance. But every line must earn its place. No padding. No filler acknowledgements. No restating the obvious.`
+Aim for a substantial plan — this is one of the few times in someone's life they will most benefit from concrete, sequenced guidance. But every line must earn its place. No padding. No filler acknowledgements. No restating the obvious.`,
+
+  // ── "Do it with me" — diagnosis: employer email ─────────────────────────────
+  'diagnosis-employer-email': `You are helping someone who has recently received a serious medical diagnosis draft a single email to their employer. They will read this and send it with minimal editing, so it must be ready to use.
+
+You do not know and must not comment on the diagnosis itself, its severity, or its prognosis.
+
+You will be told their country, their employment status, how much they have chosen to disclose, and (optionally) the employer/manager name, their job title, and anything they shared in their own words.
+
+Write the email so that:
+- It opens warmly and professionally and gets to the point quickly.
+- It discloses exactly as much as they asked for and no more:
+  - "condition_only" — say only that they have a health condition that requires some time and adjustments. Do NOT name or hint at the condition.
+  - "condition_name" — name the condition plainly and briefly, without dramatising it.
+  - "full" — explain the situation as they described it, but still measured and professional.
+- It requests what they need in practical terms: a conversation about sick leave, flexibility, or workload, and time to understand their options. Do not commit them to specifics (do not propose resigning, reduced hours, or a fixed timeline).
+- It keeps their rights intact — it asks to discuss, it does not concede anything in writing.
+- It is calm, dignified, and not over-apologetic. They are informing their employer, not asking permission to be unwell.
+
+Tone: warm, professional, human, ready to send with minimal editing.
+
+Output rules:
+- Output the email ONLY. No preamble, no explanation, no notes before or after.
+- Begin with a subject line on its own first line, in the form "Subject: ...".
+- Then the email body, including a greeting and a sign-off.
+- Use placeholders like [your name] only where you genuinely cannot know the detail.
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`,
+
+  // ── "Do it with me" — diagnosis: KiwiSaver / provider call script ────────────
+  'diagnosis-kiwisaver-call': `You are helping someone who has recently received a serious medical diagnosis prepare for a phone call to their KiwiSaver provider (or, if they are not in New Zealand, the equivalent superannuation / workplace pension / retirement or group-benefits provider) to find out what insurance cover they may hold through that membership — life cover, total and permanent disability, trauma / critical illness, or income protection. Many people pay for this cover for years without realising they have it, and some policies pay out on diagnosis itself.
+
+You do not know and must not comment on the diagnosis itself, its severity, or its prognosis.
+
+You will be told their country, their employment status, anything they shared in their own words, and (optionally) the name of their provider. If a provider name is given, address the script to that provider. If not, keep it generic ("your provider").
+
+Produce a short, practical phone script in three clearly labelled plain-text blocks:
+
+What to say:
+- A couple of short opening lines they can read out to identify themselves and explain they want to check what insurance cover is attached to their membership. They do NOT need to disclose the diagnosis to ask this — make that clear in the script's wording.
+
+What to ask:
+- The specific questions that get answers: Do I have any life, total and permanent disability, trauma/critical illness, or income protection cover under this membership? What are the sums insured? What are the claim conditions and do any pay out on diagnosis? Is the cover tied to active contributions? Can you send the policy wording in writing?
+
+What to listen for:
+- The things that matter in the answers: cover that pays on diagnosis vs on inability to work, whether cover lapses if they stop contributing, exclusions and stand-down periods, and getting everything confirmed in writing before they make any changes.
+
+Tone: warm, plain, practical — like a friend who has made these calls before talking them through it.
+
+Output rules:
+- Output the script ONLY. No preamble or explanation before or after.
+- Use exactly the three labels above ("What to say:", "What to ask:", "What to listen for:") as plain-text lines, with short lines beneath each.
+- Plain text only. No markdown, no bold, no headings, no asterisks. A simple dash at the start of a line is fine.`
 
 };
 
@@ -794,11 +845,53 @@ function formatDiagnosisIntake(intake) {
   return lines.join('\n');
 }
 
+// ─── "Do it with me" task formatters ─────────────────────────────────────────
+
+function diwmContextLines(intake) {
+  const EMPLOYMENT = {
+    employed:      'Employed (PAYE / regular employee)',
+    self_employed: 'Self-employed / contractor / business owner',
+    not_working:   'Not currently working'
+  };
+  const lines = [];
+  if (intake.country)    lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.employment) lines.push(`Employment status: ${EMPLOYMENT[intake.employment] || intake.employment}`);
+  if (intake.free_text && intake.free_text.trim()) {
+    lines.push(`In their own words (they were told they need not name the diagnosis):\n"${intake.free_text.trim()}"`);
+  }
+  return lines;
+}
+
+function formatEmployerEmailIntake(intake) {
+  const DISCLOSURE = {
+    condition_only: 'Only that they have a health condition — no name, no details',
+    condition_name: 'They are willing to name the condition',
+    full:           'They are willing to explain the full situation'
+  };
+  const lines = ['Help this person draft an email to their employer.\n'];
+  lines.push(...diwmContextLines(intake));
+  if (intake.employer_name && intake.employer_name.trim()) lines.push(`Employer or manager name: ${intake.employer_name.trim()}`);
+  if (intake.job_title && intake.job_title.trim())         lines.push(`Their job title: ${intake.job_title.trim()}`);
+  if (intake.disclosure) lines.push(`How much they want to disclose: ${DISCLOSURE[intake.disclosure] || intake.disclosure}`);
+  lines.push('\nDraft the email now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
+function formatKiwiSaverCallIntake(intake) {
+  const lines = ['Help this person prepare a phone script to check what insurance cover they hold through their retirement / KiwiSaver provider.\n'];
+  lines.push(...diwmContextLines(intake));
+  if (intake.provider && intake.provider.trim()) lines.push(`Their provider: ${intake.provider.trim()}`);
+  lines.push('\nWrite the script now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
 const INTAKE_FORMATTERS = {
   bereavement: formatBereavementIntake,
   incapacity:  formatIncapacityIntake,
   carer:       formatCarerIntake,
-  diagnosis:   formatDiagnosisIntake
+  diagnosis:   formatDiagnosisIntake,
+  'diagnosis-employer-email': formatEmployerEmailIntake,
+  'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake
 };
 
 // ─── Per-tool model selection ────────────────────────────────────────────────
@@ -806,7 +899,10 @@ const MODELS = {
   bereavement: 'claude-haiku-4-5-20251001',
   incapacity:  'claude-haiku-4-5-20251001',
   carer:       'claude-haiku-4-5-20251001',
-  diagnosis:   'claude-sonnet-4-6'
+  diagnosis:   'claude-sonnet-4-6',
+  // "Do it with me" drafts — Sonnet for tone/sensitivity on disclosure wording
+  'diagnosis-employer-email': 'claude-sonnet-4-6',
+  'diagnosis-kiwisaver-call': 'claude-sonnet-4-6'
 };
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 
@@ -817,7 +913,10 @@ const MAX_TOKENS = {
   bereavement: 2000,
   incapacity:  2000,
   carer:       2000,
-  diagnosis:   4000
+  diagnosis:   4000,
+  // "Do it with me" — fast, focused, output only
+  'diagnosis-employer-email': 500,
+  'diagnosis-kiwisaver-call': 500
 };
 const DEFAULT_MAX_TOKENS = 2000;
 

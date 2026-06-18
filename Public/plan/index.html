@@ -335,7 +335,127 @@
       color: var(--text);
     }
 
+    /* ── "Do it with me" task panels ──────────────────── */
+    .diwm { margin: 6px 0 28px; }
+
+    .diwm-trigger {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 400;
+      color: var(--amber);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .diwm-trigger:hover {
+      border-color: rgba(210,168,100,0.4);
+      background: var(--amber-dim);
+    }
+    .diwm-trigger[aria-expanded="true"] { display: none; }
+
+    .diwm-panel {
+      margin-top: 14px;
+      padding: 22px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      animation: fadeIn 0.4s ease;
+    }
+
+    .diwm-intro {
+      font-size: 0.9rem !important;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-muted) !important;
+      margin-bottom: 18px !important;
+    }
+
+    .diwm-field { margin-bottom: 14px; }
+
+    .diwm-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .diwm-field input,
+    .diwm-field select {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+    .diwm-field input:focus,
+    .diwm-field select:focus {
+      outline: none;
+      border-color: rgba(210,168,100,0.4);
+    }
+    .diwm-field select option { background: var(--bg-card); color: var(--text); }
+
+    .diwm-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+    .diwm-go {
+      background: var(--amber);
+      color: #0c1520;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 22px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .diwm-go:hover { opacity: 0.85; }
+    .diwm-go:disabled { opacity: 0.5; cursor: default; }
+
+    .diwm-secondary {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .diwm-secondary:hover { border-color: rgba(210,168,100,0.3); color: var(--text); }
+
+    .diwm-status {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .diwm-output-text {
+      white-space: pre-wrap;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
     @media print {
+      .diwm { display: none !important; }
       body { background: white; color: #111; padding: 0; }
       nav, #plan-footer { display: none !important; }
       #plan { display: block !important; padding-top: 20px; }
@@ -559,7 +679,256 @@ function caSubmitFeedback() {
     show('plan');
     flex('plan-footer');
     document.getElementById('feedback-section').style.display = 'block';
+    injectDiwmPanels();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── "Do it with me" — inline task panels ──────────────────────────────────
+  const DIWM_TASKS = [
+    {
+      tool: 'diagnosis-employer-email',
+      match: t => t.includes('employment rights'),
+      trigger: 'Draft my employer email →',
+      intro: "Answer a couple of quick questions and I'll draft an email to your employer — sharing only what you choose to share. You can edit it before you send it.",
+      submit: 'Draft my email',
+      working: 'Writing your email…',
+      fields: [
+        { name: 'employer_name', label: "Employer or manager's name (optional)", type: 'text', placeholder: 'e.g. Sarah, or the company name' },
+        { name: 'job_title', label: 'Your job title (optional)', type: 'text', placeholder: 'e.g. Account Manager' },
+        { name: 'disclosure', label: 'How much do you want to share?', type: 'select', options: [
+          { value: 'condition_only', label: 'Just that I have a health condition — no details' },
+          { value: 'condition_name', label: 'I want to name the condition' },
+          { value: 'full', label: 'The full situation' }
+        ] }
+      ]
+    },
+    {
+      tool: 'diagnosis-kiwisaver-call',
+      match: t => t.includes('income'),
+      trigger: 'Script for my KiwiSaver call →',
+      intro: "I'll write a short phone script so you know exactly what to say, what to ask, and what to listen for when you call to check the insurance cover you may already have.",
+      submit: 'Write my script',
+      working: 'Writing your script…',
+      fields: [
+        { name: 'provider', label: 'Your KiwiSaver provider (optional)', type: 'text', placeholder: 'e.g. ANZ, Milford, Simplicity' }
+      ]
+    }
+  ];
+
+  function getIntake() {
+    try { return JSON.parse(sessionStorage.getItem('cutadrift_intake') || '{}'); }
+    catch (_) { return {}; }
+  }
+
+  function injectDiwmPanels() {
+    const intake = getIntake();
+    if (intake.tool !== 'diagnosis') return;
+
+    const content = document.getElementById('plan-content');
+    const headings = Array.from(content.querySelectorAll('h2'));
+
+    DIWM_TASKS.forEach(task => {
+      const heading = headings.find(h => task.match(h.textContent.trim().toLowerCase()));
+      if (!heading) return;
+
+      // Find the last node of this section (stop at the next h2)
+      let last = heading;
+      let node = heading.nextElementSibling;
+      while (node && node.tagName !== 'H2') { last = node; node = node.nextElementSibling; }
+
+      const panel = buildDiwmPanel(task, intake);
+      last.parentNode.insertBefore(panel, last.nextSibling);
+    });
+  }
+
+  function buildDiwmPanel(task, intake) {
+    const wrap = document.createElement('div');
+    wrap.className = 'diwm';
+
+    const trigger = document.createElement('button');
+    trigger.className = 'diwm-trigger';
+    trigger.type = 'button';
+    trigger.textContent = task.trigger;
+    trigger.setAttribute('aria-expanded', 'false');
+    wrap.appendChild(trigger);
+
+    const panel = document.createElement('div');
+    panel.className = 'diwm-panel';
+    panel.hidden = true;
+    wrap.appendChild(panel);
+
+    // Form view
+    const form = document.createElement('div');
+    const intro = document.createElement('p');
+    intro.className = 'diwm-intro';
+    intro.textContent = task.intro;
+    form.appendChild(intro);
+
+    const inputs = {};
+    task.fields.forEach(f => {
+      const field = document.createElement('div');
+      field.className = 'diwm-field';
+      const id = task.tool + '-' + f.name;
+      const label = document.createElement('label');
+      label.setAttribute('for', id);
+      label.textContent = f.label;
+      field.appendChild(label);
+
+      let input;
+      if (f.type === 'select') {
+        input = document.createElement('select');
+        f.options.forEach(o => {
+          const opt = document.createElement('option');
+          opt.value = o.value;
+          opt.textContent = o.label;
+          input.appendChild(opt);
+        });
+      } else {
+        input = document.createElement('input');
+        input.type = 'text';
+        if (f.placeholder) input.placeholder = f.placeholder;
+      }
+      input.id = id;
+      field.appendChild(input);
+      inputs[f.name] = input;
+      form.appendChild(field);
+    });
+
+    const actions = document.createElement('div');
+    actions.className = 'diwm-actions';
+    const go = document.createElement('button');
+    go.className = 'diwm-go';
+    go.type = 'button';
+    go.textContent = task.submit;
+    const cancel = document.createElement('button');
+    cancel.className = 'diwm-secondary';
+    cancel.type = 'button';
+    cancel.textContent = 'Cancel';
+    actions.appendChild(go);
+    actions.appendChild(cancel);
+    form.appendChild(actions);
+
+    const status = document.createElement('p');
+    status.className = 'diwm-status';
+    status.hidden = true;
+    form.appendChild(status);
+
+    panel.appendChild(form);
+
+    // Open / close
+    trigger.addEventListener('click', () => {
+      panel.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+    });
+    function reset() {
+      panel.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.innerHTML = '';
+      panel.appendChild(form);
+      status.hidden = true;
+      status.textContent = '';
+      go.disabled = false;
+    }
+    cancel.addEventListener('click', reset);
+
+    // Generate
+    go.addEventListener('click', async () => {
+      go.disabled = true;
+      status.hidden = false;
+      status.textContent = task.working;
+
+      const payload = {
+        tool: task.tool,
+        country: intake.country,
+        employment: intake.employment,
+        free_text: intake.free_text
+      };
+      task.fields.forEach(f => { payload[f.name] = inputs[f.name].value; });
+
+      try {
+        const text = await diwmGenerate(payload);
+        if (!text || text.length < 5) throw new Error('empty');
+        showDiwmOutput(panel, task, text);
+      } catch (err) {
+        go.disabled = false;
+        status.textContent = err && err.message === 'rate'
+          ? "You've used a lot of requests today. Please try again tomorrow."
+          : "Sorry — that didn't work. Please try again in a moment.";
+      }
+    });
+
+    return wrap;
+  }
+
+  function showDiwmOutput(panel, task, text) {
+    panel.innerHTML = '';
+
+    const pre = document.createElement('div');
+    pre.className = 'diwm-output-text';
+    pre.textContent = text;
+    panel.appendChild(pre);
+
+    const actions = document.createElement('div');
+    actions.className = 'diwm-actions';
+
+    const copy = document.createElement('button');
+    copy.className = 'diwm-go';
+    copy.type = 'button';
+    copy.textContent = 'Copy';
+    copy.addEventListener('click', () => {
+      navigator.clipboard.writeText(text).then(() => {
+        copy.textContent = 'Copied ✓';
+        setTimeout(() => { copy.textContent = 'Copy'; }, 2000);
+      }).catch(() => { copy.textContent = 'Press ⌘/Ctrl+C'; });
+    });
+
+    const startOver = document.createElement('button');
+    startOver.className = 'diwm-secondary';
+    startOver.type = 'button';
+    startOver.textContent = 'Start over';
+    startOver.addEventListener('click', () => {
+      const fresh = buildDiwmPanel(task, getIntake());
+      panel.closest('.diwm').replaceWith(fresh);
+    });
+
+    actions.appendChild(copy);
+    actions.appendChild(startOver);
+    panel.appendChild(actions);
+  }
+
+  async function diwmGenerate(payload) {
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (response.status === 429) throw new Error('rate');
+    if (!response.ok) throw new Error('http');
+
+    const reader  = response.body.getReader();
+    const decoder = new TextDecoder();
+    let sseBuffer = '';
+    let fullText  = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      sseBuffer += decoder.decode(value, { stream: true });
+      const lines = sseBuffer.split('\n');
+      sseBuffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if (data === '[DONE]') continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
+            fullText += evt.delta.text;
+          }
+        } catch (_) { /* skip malformed */ }
+      }
+    }
+    return fullText.trim();
   }
 
   function showError(title, msg) {
