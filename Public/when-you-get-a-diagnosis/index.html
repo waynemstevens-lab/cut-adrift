@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When you receive a serious diagnosis — Cut Adrift</title>
+  <meta property="og:title" content="When you receive a serious diagnosis — Cut Adrift">
+  <meta property="og:description" content="What to do — and what NOT to do yet — in the first weeks after a serious diagnosis. Free, practical, tailored to your country.">
+  <meta property="og:url" content="https://cutadrift.org/when-you-get-a-diagnosis/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cutadrift.org/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cutadrift.org/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="description" content="A free, personalised guide for the first weeks after receiving a serious diagnosis — practical, financial, employment and legal ground.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0c1520;
+      --bg-card:      #111e2c;
+      --bg-hover:     #162538;
+      --bg-selected:  #1a2f44;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(210,168,100,0.4);
+      --border-sel:   rgba(210,168,100,0.7);
+      --text:         #ede8df;
+      --text-muted:   rgba(237,232,223,0.75);
+      --text-dim:     rgba(237,232,223,0.5);
+      --amber:        #d2a864;
+      --radius:       12px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(93,158,168,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav ──────────────────────────────────────── */
+    nav {
+      width: 100%;
+      max-width: 640px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .back-btn {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 0;
+      transition: color 0.2s;
+      display: none;
+    }
+
+    .back-btn:hover { color: var(--text-muted); }
+    .back-btn.visible { display: block; }
+
+    /* ── Progress ─────────────────────────────────── */
+    .progress-track {
+      width: 100%;
+      max-width: 640px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 28px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--amber);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      opacity: 0.5;
+    }
+
+    /* ── Step ─────────────────────────────────────── */
+    .step-wrap {
+      width: 100%;
+      max-width: 640px;
+      padding-top: 52px;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Question text ────────────────────────────── */
+    .step-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .step-q {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .step-hint {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 500px;
+    }
+
+    /* Bridge callout ─────────────────────────────── */
+    .bridge-note {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      background: rgba(210,168,100,0.06);
+      border: 1px solid rgba(210,168,100,0.12);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 32px;
+    }
+
+    .bridge-note a {
+      color: var(--amber);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(210,168,100,0.4);
+      transition: border-color 0.2s;
+    }
+    .bridge-note a:hover { border-color: var(--amber); }
+
+    /* ── Options ──────────────────────────────────── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .opt:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .opt.selected {
+      background: var(--bg-selected);
+      border-color: var(--border-sel);
+    }
+
+    .opt-text {
+      flex: 1;
+    }
+
+    .opt-main {
+      font-size: 0.97rem;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .opt-sub {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ── Textarea step ────────────────────────────── */
+    .free-text-area {
+      width: 100%;
+      min-height: 120px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.6;
+      padding: 18px 20px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .free-text-area::placeholder { color: var(--text-dim); }
+    .free-text-area:focus { border-color: rgba(210,168,100,0.3); }
+
+    .free-text-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #0c1520;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-skip {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-skip:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      .step-wrap { padding-top: 36px; }
+      .opt { padding: 16px; }
+    }
+
+    .other-country-wrap {
+      display: none;
+      margin-top: 12px;
+      gap: 10px;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    .other-country-wrap.visible {
+      display: flex;
+    }
+
+    .other-country-input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 300;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .other-country-input::placeholder { color: var(--text-dim); }
+    .other-country-input:focus { border-color: rgba(210,168,100,0.3); }
+  </style>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+  <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>
+</nav>
+
+<div class="progress-track">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="step-wrap" id="stepWrap">
+
+  <!-- Q1: Country -->
+  <div class="step" id="step-country">
+    <div class="step-label">Where you are</div>
+    <div class="step-q">Where are you based?</div>
+    <div class="step-hint">This helps us give you the right contacts, sick leave rules and patient rights for where you live.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('country','nz')"><div class="opt-text"><div class="opt-main">New Zealand</div></div></button>
+      <button class="opt" onclick="answer('country','au')"><div class="opt-text"><div class="opt-main">Australia</div></div></button>
+      <button class="opt" onclick="answer('country','uk')"><div class="opt-text"><div class="opt-main">United Kingdom</div></div></button>
+      <button class="opt" onclick="answer('country','ie')"><div class="opt-text"><div class="opt-main">Ireland</div></div></button>
+      <button class="opt" onclick="answer('country','ca')"><div class="opt-text"><div class="opt-main">Canada</div></div></button>
+      <button class="opt" onclick="answer('country','us')"><div class="opt-text"><div class="opt-main">United States</div></div></button>
+      <button class="opt" id="otherCountryBtn" onclick="selectOther(this)"><div class="opt-text"><div class="opt-main">Somewhere else</div><div class="opt-sub">Type your country and we'll do our best</div></div></button>
+    </div>
+    <div class="other-country-wrap" id="otherCountryWrap">
+      <input type="text" class="other-country-input" id="otherCountryInput" placeholder="Which country?" onkeydown="if(event.key==='Enter') submitOtherCountry()" />
+      <button class="btn-primary" onclick="submitOtherCountry()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- Q2: Who -->
+  <div class="step" id="step-who">
+    <div class="step-label">Who this is for</div>
+    <div class="step-q">Who received the diagnosis?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('who','me')"><div class="opt-text"><div class="opt-main">Me</div></div></button>
+      <button class="opt" onclick="answer('who','someone_close')"><div class="opt-text"><div class="opt-main">Someone close to me</div><div class="opt-sub">A partner, parent, child, sibling or close friend</div></div></button>
+    </div>
+  </div>
+
+  <!-- Bridge: redirect to carer tool -->
+  <div class="step" id="step-carer-bridge">
+    <div class="step-q">There's a better tool for this.</div>
+    <div class="bridge-note">
+      This tool is built for the person who received the diagnosis. If someone close to you has just been diagnosed and you're trying to work out how to support them — and how to look after yourself while doing it — the right place to start is our companion tool: <a href="/when-someone-cant-manage/">When someone can't manage</a>. It covers practical support, your own wellbeing, and what to do when someone you love needs more from you than usual.
+    </div>
+    <div class="options">
+      <a href="/when-someone-cant-manage/" class="opt" style="text-decoration:none;"><div class="opt-text"><div class="opt-main">Go to the carer tool →</div></div></a>
+      <a href="/" class="opt" style="text-decoration:none;"><div class="opt-text"><div class="opt-main">Back to all tools</div></div></a>
+    </div>
+  </div>
+
+  <!-- Q3: Employment -->
+  <div class="step" id="step-employment">
+    <div class="step-label">Your work</div>
+    <div class="step-q">Are you currently employed?</div>
+    <div class="options">
+      <button class="opt" onclick="answer('employment','employed')"><div class="opt-text"><div class="opt-main">Employed</div><div class="opt-sub">PAYE or salaried — you have an employer</div></div></button>
+      <button class="opt" onclick="answer('employment','self_employed')"><div class="opt-text"><div class="opt-main">Self-employed</div><div class="opt-sub">Contractor, freelancer, or running your own business</div></div></button>
+      <button class="opt" onclick="answer('employment','not_working')"><div class="opt-text"><div class="opt-main">Not currently working</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q4: Work impact -->
+  <div class="step" id="step-work_impact">
+    <div class="step-label">What this might mean for work</div>
+    <div class="step-q">Is this likely to affect your ability to work?</div>
+    <div class="step-hint">A best guess is fine — you don't need to know for sure.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('work_impact','yes')"><div class="opt-text"><div class="opt-main">Yes</div></div></button>
+      <button class="opt" onclick="answer('work_impact','unsure')"><div class="opt-text"><div class="opt-main">Unsure</div></div></button>
+      <button class="opt" onclick="answer('work_impact','no')"><div class="opt-text"><div class="opt-main">No</div></div></button>
+    </div>
+  </div>
+
+  <!-- Q5: Free text -->
+  <div class="step" id="step-free_text">
+    <div class="step-label">Almost done</div>
+    <div class="step-q">Tell us a little about your situation.</div>
+    <div class="step-hint">You don't need to name the diagnosis if you'd prefer not to. Anything you share helps us tailor what to send you — what you're worried about, what's on your mind, what feels urgent. This is optional.</div>
+    <textarea class="free-text-area" id="freeTextInput" placeholder="e.g. I haven't told work yet and I don't know what I'm allowed to keep private, or I'm worried about money if I have to take time off…"></textarea>
+    <div class="free-text-actions">
+      <button class="btn-primary" onclick="submitFreeText()">Build my plan →</button>
+      <button class="btn-skip" onclick="skipFreeText()">Skip this</button>
+    </div>
+  </div>
+
+</div><!-- /step-wrap -->
+
+<script>
+  const answers = {};
+  const history = [];
+
+  // Step sequence — determines order and which steps exist
+  const FULL_SEQ = ['country','who','employment','work_impact','free_text'];
+
+  let currentStep = 'country';
+  showStep('country');
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('step-' + id);
+    if (el) el.classList.add('active');
+    currentStep = id;
+
+    document.getElementById('backBtn').classList.toggle('visible', history.length > 0);
+    updateProgress();
+  }
+
+  function answer(field, value) {
+    answers[field] = value;
+    history.push(currentStep);
+
+    const next = getNext(currentStep, answers);
+    if (next === 'submit') {
+      submit();
+    } else {
+      showStep(next);
+    }
+  }
+
+  function selectOther(el) {
+    document.querySelectorAll('#step-country .opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const wrap = document.getElementById('otherCountryWrap');
+    wrap.classList.add('visible');
+    document.getElementById('otherCountryInput').focus();
+  }
+
+  function submitOtherCountry() {
+    const val = document.getElementById('otherCountryInput').value.trim();
+    if (!val) return;
+    answer('country', val);
+  }
+
+  function getNext(step, ans) {
+    // If "someone close to me", redirect via the carer bridge — no plan built here.
+    if (step === 'who' && ans.who === 'someone_close') {
+      return 'carer-bridge';
+    }
+
+    const idx = FULL_SEQ.indexOf(step);
+    if (idx >= 0 && idx < FULL_SEQ.length - 1) {
+      return FULL_SEQ[idx + 1];
+    }
+    return 'submit';
+  }
+
+  function goBack() {
+    if (history.length === 0) return;
+    const prev = history.pop();
+    delete answers[currentStep];
+    showStep(prev);
+  }
+
+  function submitFreeText() {
+    const val = document.getElementById('freeTextInput').value.trim();
+    if (val) answers.free_text = val;
+    submit();
+  }
+
+  function skipFreeText() {
+    submit();
+  }
+
+  function submit() {
+    answers.tool = 'diagnosis';
+    sessionStorage.setItem('cutadrift_intake', JSON.stringify(answers));
+    sessionStorage.removeItem('cutadrift_plan');
+    window.location.href = '/plan/';
+  }
+
+  function updateProgress() {
+    // Carer-bridge is a terminal branch — show full bar so it doesn't look unfinished
+    if (currentStep === 'carer-bridge') {
+      document.getElementById('progressFill').style.width = '100%';
+      return;
+    }
+    const idx  = FULL_SEQ.indexOf(currentStep);
+    const pct  = idx < 0 ? 0 : Math.round((idx / (FULL_SEQ.length - 1)) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+</script>
+
+</body>
+</html>
