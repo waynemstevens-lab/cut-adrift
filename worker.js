@@ -684,7 +684,50 @@ Tone: warm, plain, practical — like a friend who has made these calls before t
 Output rules:
 - Output the script ONLY. No preamble or explanation before or after.
 - Use exactly the three labels above ("What to say:", "What to ask:", "What to listen for:") as plain-text lines, with short lines beneath each.
-- Plain text only. No markdown, no bold, no headings, no asterisks. A simple dash at the start of a line is fine.`
+- Plain text only. No markdown, no bold, no headings, no asterisks. A simple dash at the start of a line is fine.`,
+
+  // ── "Do it with me" — bereavement: employer leave email ─────────────────────
+  'bereavement-leave-email': `You are helping someone who has recently had a death in their life draft a short email to their employer, to let them know and request the time off they need. They will read it and send it with minimal editing, so it must be ready to use.
+
+You will be told their country, their relationship to the person who died, and optionally their employer or manager's name, their job title, how much time they think they need, and anything they shared in their own words.
+
+Write the email so that:
+- It is brief, warm, and dignified. They are informing their employer and requesting leave — not asking permission to grieve, and not over-explaining.
+- It states plainly that someone close to them has died. Use the relationship — "my father", "my partner" — and never the word "deceased". It does not need to give any details of the death.
+- It requests bereavement / compassionate leave and, where they have said so, names roughly how much time they need, or says they will confirm once funeral or tangihanga arrangements are set.
+- It mentions handover or staying reachable only briefly and only if appropriate — do not over-promise availability.
+- It is country-appropriate in the leave it refers to (bereavement leave under the Holidays Act including tangihanga in NZ; compassionate leave in AU; reasonable / statutory time off in the UK and Ireland; bereavement provisions in CA / US), but it should request, not lecture — keep any mention of entitlement light and human.
+
+Tone: warm, brief, dignified, ready to send.
+
+Output rules:
+- Output the email ONLY. No preamble, no explanation, no notes before or after.
+- Begin with a subject line on its own first line, in the form "Subject: ...".
+- Then the email body, with a greeting and a sign-off.
+- Use placeholders like [your name] only where you genuinely cannot know the detail.
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`,
+
+  // ── "Do it with me" — bereavement: bank / institution notification letter ───
+  'bereavement-bank-letter': `You are helping someone draft a formal letter to notify a bank or other organisation that someone has died, and to ask what the organisation needs in order to deal with the accounts. They will send it with minimal editing, so it must be ready to use.
+
+You will be told their country, the name of the organisation, the full name of the person who died, the sender's relationship to that person, and optionally an account or reference number.
+
+Write the letter so that:
+- It is formal but human — clear and respectful, never cold or bureaucratic.
+- It states that the person has died, gives their full name, and gives the date of death as a placeholder [date of death] unless told otherwise.
+- It includes the account or reference number if one was given; if not, it asks the organisation to locate the accounts from the details provided.
+- It explains the sender's relationship to the person who died and, where relevant, that they are dealing with the estate or are the next of kin or executor.
+- It asks what the organisation requires to proceed (for example a certified copy of the death certificate and proof of the sender's identity) and asks them to confirm the next steps and any accounts, balances, or obligations.
+- It requests that no further marketing or automated correspondence be sent to the person who died.
+- It gives the sender's contact details as placeholders for them to fill in.
+
+Tone: formal, clear, respectful, ready to send.
+
+Output rules:
+- Output the letter ONLY. No preamble, no explanation, no notes before or after.
+- Lay it out as a standard letter in plain text: a [date] line, the organisation's name, a "Dear Sir or Madam," salutation, the body in short paragraphs, and a "Yours faithfully," sign-off with [your name] beneath.
+- Use square-bracket placeholders for anything you cannot know.
+- Plain text only. No markdown, no bold, no headings, no asterisks.`
 
 };
 
@@ -885,13 +928,38 @@ function formatKiwiSaverCallIntake(intake) {
   return lines.join('\n');
 }
 
+function formatBereavementLeaveEmailIntake(intake) {
+  const lines = ['Help this person draft an email to their employer requesting bereavement leave.\n'];
+  if (intake.country)      lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.relationship) lines.push(`Their relationship to the person who died: ${LABELS.relationship[intake.relationship] || intake.relationship}`);
+  if (intake.employer_name && intake.employer_name.trim()) lines.push(`Employer or manager name: ${intake.employer_name.trim()}`);
+  if (intake.job_title && intake.job_title.trim())         lines.push(`Their job title: ${intake.job_title.trim()}`);
+  if (intake.time_needed && intake.time_needed.trim())     lines.push(`Time they think they need: ${intake.time_needed.trim()}`);
+  if (intake.free_text && intake.free_text.trim())         lines.push(`Anything they shared in their own words:\n"${intake.free_text.trim()}"`);
+  lines.push('\nDraft the email now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
+function formatBankLetterIntake(intake) {
+  const lines = ['Help this person draft a formal letter notifying an organisation that someone has died.\n'];
+  if (intake.country)                  lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.institution_name && intake.institution_name.trim()) lines.push(`Organisation to notify: ${intake.institution_name.trim()}`);
+  if (intake.deceased_name && intake.deceased_name.trim())       lines.push(`Full name of the person who died: ${intake.deceased_name.trim()}`);
+  if (intake.relationship_to_deceased && intake.relationship_to_deceased.trim()) lines.push(`Sender's relationship to them: ${intake.relationship_to_deceased.trim()}`);
+  if (intake.reference && intake.reference.trim())               lines.push(`Account or reference number: ${intake.reference.trim()}`);
+  lines.push('\nDraft the letter now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
 const INTAKE_FORMATTERS = {
   bereavement: formatBereavementIntake,
   incapacity:  formatIncapacityIntake,
   carer:       formatCarerIntake,
   diagnosis:   formatDiagnosisIntake,
   'diagnosis-employer-email': formatEmployerEmailIntake,
-  'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake
+  'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake,
+  'bereavement-leave-email':  formatBereavementLeaveEmailIntake,
+  'bereavement-bank-letter':  formatBankLetterIntake
 };
 
 // ─── Per-tool model selection ────────────────────────────────────────────────
@@ -902,7 +970,9 @@ const MODELS = {
   diagnosis:   'claude-sonnet-4-6',
   // "Do it with me" drafts — Sonnet for tone/sensitivity on disclosure wording
   'diagnosis-employer-email': 'claude-sonnet-4-6',
-  'diagnosis-kiwisaver-call': 'claude-sonnet-4-6'
+  'diagnosis-kiwisaver-call': 'claude-sonnet-4-6',
+  'bereavement-leave-email':  'claude-sonnet-4-6',
+  'bereavement-bank-letter':  'claude-sonnet-4-6'
 };
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 
@@ -916,7 +986,9 @@ const MAX_TOKENS = {
   diagnosis:   4000,
   // "Do it with me" — fast, focused, output only
   'diagnosis-employer-email': 500,
-  'diagnosis-kiwisaver-call': 500
+  'diagnosis-kiwisaver-call': 500,
+  'bereavement-leave-email':  500,
+  'bereavement-bank-letter':  500
 };
 const DEFAULT_MAX_TOKENS = 2000;
 

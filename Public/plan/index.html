@@ -683,37 +683,68 @@ function caSubmitFeedback() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── "Do it with me" — inline task panels ──────────────────────────────────
-  const DIWM_TASKS = [
-    {
-      tool: 'diagnosis-employer-email',
-      match: t => t.includes('employment rights'),
-      trigger: 'Draft my employer email →',
-      intro: "Answer a couple of quick questions and I'll draft an email to your employer — sharing only what you choose to share. You can edit it before you send it.",
-      submit: 'Draft my email',
-      working: 'Writing your email…',
-      fields: [
-        { name: 'employer_name', label: "Employer or manager's name (optional)", type: 'text', placeholder: 'e.g. Sarah, or the company name' },
-        { name: 'job_title', label: 'Your job title (optional)', type: 'text', placeholder: 'e.g. Account Manager' },
-        { name: 'disclosure', label: 'How much do you want to share?', type: 'select', options: [
-          { value: 'condition_only', label: 'Just that I have a health condition — no details' },
-          { value: 'condition_name', label: 'I want to name the condition' },
-          { value: 'full', label: 'The full situation' }
-        ] }
-      ]
-    },
-    {
-      tool: 'diagnosis-kiwisaver-call',
-      match: t => t.includes('income'),
-      trigger: 'Script for my KiwiSaver call →',
-      intro: "I'll write a short phone script so you know exactly what to say, what to ask, and what to listen for when you call to check the insurance cover you may already have.",
-      submit: 'Write my script',
-      working: 'Writing your script…',
-      fields: [
-        { name: 'provider', label: 'Your KiwiSaver provider (optional)', type: 'text', placeholder: 'e.g. ANZ, Milford, Simplicity' }
-      ]
-    }
-  ];
+  // ── "Do it with me" — inline task panels (keyed by intake tool) ───────────
+  const DIWM_TASKS = {
+    diagnosis: [
+      {
+        tool: 'diagnosis-employer-email',
+        match: t => t.includes('employment rights'),
+        trigger: 'Draft my employer email →',
+        intro: "Answer a couple of quick questions and I'll draft an email to your employer — sharing only what you choose to share. You can edit it before you send it.",
+        submit: 'Draft my email',
+        working: 'Writing your email…',
+        fields: [
+          { name: 'employer_name', label: "Employer or manager's name (optional)", type: 'text', placeholder: 'e.g. Sarah, or the company name' },
+          { name: 'job_title', label: 'Your job title (optional)', type: 'text', placeholder: 'e.g. Account Manager' },
+          { name: 'disclosure', label: 'How much do you want to share?', type: 'select', options: [
+            { value: 'condition_only', label: 'Just that I have a health condition — no details' },
+            { value: 'condition_name', label: 'I want to name the condition' },
+            { value: 'full', label: 'The full situation' }
+          ] }
+        ]
+      },
+      {
+        tool: 'diagnosis-kiwisaver-call',
+        match: t => t.includes('income'),
+        trigger: 'Script for my KiwiSaver call →',
+        intro: "I'll write a short phone script so you know exactly what to say, what to ask, and what to listen for when you call to check the insurance cover you may already have.",
+        submit: 'Write my script',
+        working: 'Writing your script…',
+        fields: [
+          { name: 'provider', label: 'Your KiwiSaver provider (optional)', type: 'text', placeholder: 'e.g. ANZ, Milford, Simplicity' }
+        ]
+      }
+    ],
+    bereavement: [
+      {
+        tool: 'bereavement-leave-email',
+        match: t => t.includes('the people'),
+        trigger: 'Draft a bereavement leave email →',
+        intro: "I'll draft a short email to your employer to let them know and ask for the time you need. You can edit it before you send it.",
+        submit: 'Draft my email',
+        working: 'Writing your email…',
+        fields: [
+          { name: 'employer_name', label: "Employer or manager's name (optional)", type: 'text', placeholder: 'e.g. Sarah, or the company name' },
+          { name: 'job_title', label: 'Your job title (optional)', type: 'text', placeholder: 'e.g. Account Manager' },
+          { name: 'time_needed', label: 'How much time do you need? (optional)', type: 'text', placeholder: 'e.g. the rest of this week, or until after the funeral' }
+        ]
+      },
+      {
+        tool: 'bereavement-bank-letter',
+        match: t => ['bank', 'estate', 'admin', 'account'].some(k => t.includes(k)),
+        trigger: 'Draft a letter notifying them of the death →',
+        intro: "I'll draft a formal letter you can send to a bank or other organisation to notify them that someone has died and ask what they need from you.",
+        submit: 'Draft my letter',
+        working: 'Writing your letter…',
+        fields: [
+          { name: 'institution_name', label: 'Bank or organisation name', type: 'text', placeholder: 'e.g. ANZ, IRD, Spark' },
+          { name: 'deceased_name', label: 'Full name of the person who died', type: 'text', placeholder: 'Their full legal name' },
+          { name: 'relationship_to_deceased', label: 'Your relationship to them', type: 'text', placeholder: 'e.g. wife, son, executor' },
+          { name: 'reference', label: 'Account or reference number (optional)', type: 'text', placeholder: 'If you have it to hand' }
+        ]
+      }
+    ]
+  };
 
   function getIntake() {
     try { return JSON.parse(sessionStorage.getItem('cutadrift_intake') || '{}'); }
@@ -722,12 +753,13 @@ function caSubmitFeedback() {
 
   function injectDiwmPanels() {
     const intake = getIntake();
-    if (intake.tool !== 'diagnosis') return;
+    const tasks = DIWM_TASKS[intake.tool];
+    if (!tasks) return;
 
     const content = document.getElementById('plan-content');
     const headings = Array.from(content.querySelectorAll('h2'));
 
-    DIWM_TASKS.forEach(task => {
+    tasks.forEach(task => {
       const heading = headings.find(h => task.match(h.textContent.trim().toLowerCase()));
       if (!heading) return;
 
@@ -841,6 +873,7 @@ function caSubmitFeedback() {
         tool: task.tool,
         country: intake.country,
         employment: intake.employment,
+        relationship: intake.relationship,
         free_text: intake.free_text
       };
       task.fields.forEach(f => { payload[f.name] = inputs[f.name].value; });
