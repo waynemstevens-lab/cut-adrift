@@ -451,6 +451,18 @@
     </div>
   </div>
 
+  <!-- Q7b: Employment (the grieving person's own work) -->
+  <div class="step" id="step-employment">
+    <div class="step-label">Your work</div>
+    <div class="step-q">Are you working at the moment?</div>
+    <div class="step-hint">This helps us cover any leave or time off you may be entitled to.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('employment','employed')"><div class="opt-text"><div class="opt-main">Yes — I'm employed</div><div class="opt-sub">Working for an employer</div></div></button>
+      <button class="opt" onclick="answer('employment','self_employed')"><div class="opt-text"><div class="opt-main">Yes — I'm self-employed</div><div class="opt-sub">Contractor, freelancer, or business owner</div></div></button>
+      <button class="opt" onclick="answer('employment','not_working')"><div class="opt-text"><div class="opt-main">No — I'm not working right now</div></div></button>
+    </div>
+  </div>
+
   <!-- Q8: Dependants -->
   <div class="step" id="step-dependants">
     <div class="step-label">People and animals who relied on them</div>
@@ -530,10 +542,10 @@
   const history = [];
 
   // Step sequence — determines order and which steps exist
-  const LAYER1  = ['relationship','emotional_state','support_situation','children_affected','notifications_needed','dependants'];
+  const LAYER1  = ['relationship','emotional_state','support_situation','children_affected','notifications_needed','employment','dependants'];
   const LAYER2  = ['funeral_status','has_will','assets'];
   const FULL_SEQ = ['country','timing','relationship','emotional_state','support_situation',
-                    'children_affected','notifications_needed','dependants','bridge',
+                    'children_affected','notifications_needed','employment','dependants','bridge',
                     'funeral_status','has_will','assets','free_text'];
 
   let currentStep = 'country';
@@ -647,7 +659,7 @@
       ? ['country','timing','funeral_status','has_will','assets','free_text']
       : answers.practical_opted_in === 'no'
         ? ['country','timing','relationship','emotional_state','support_situation',
-           'children_affected','notifications_needed','dependants','bridge','free_text']
+           'children_affected','notifications_needed','employment','dependants','bridge','free_text']
         : FULL_SEQ;
 
     const idx  = seq.indexOf(currentStep);

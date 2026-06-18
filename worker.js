@@ -62,6 +62,8 @@ You will receive the person's answers as a structured message. Here is what each
 
 **dependants** — one of: yes_caring_for_someone, yes_pets, yes_other, no, not_sure.
 
+**employment** — the employment situation of the person grieving (not the person who died): employed, self_employed, not_working. Determines whether to include the "Your work and leave" section — see Path B.
+
 **has_will** — one of: yes_executor, yes_not_executor, no_will, dont_know.
 
 **assets** — one of: yes, no, dont_know.
@@ -106,13 +108,25 @@ Only include subsections relevant to their answers:
 - Anyone who depended on them — specific steps: alternative care arrangements, pet rehoming contacts.
 - Managing shared decision-making (if support_situation is complicated).
 
-**Section 3 — This week**
-Funeral arrangements if not started or in progress. Death certificate. Notifying employer and GP. One brief mention of grief support.
+**Section 3 — Your work and leave**
+This section is MANDATORY whenever employment is "employed". Output it as its own separate ## section — never merge it into "The people" or "This week". Its heading MUST be exactly:
 
-**Section 4 — The practical steps**
+## Your work and leave
+
+Do not rename or paraphrase that heading. Under it, cover briefly and practically:
+- Telling their employer — they can keep it brief and do not owe anyone the details. If making the call is hard, they can send a short message or ask a colleague or manager to pass word on.
+- The bereavement / tangihanga leave they are entitled to in their country. For New Zealand: under the Holidays Act 2003, employees get 3 days' paid bereavement leave for the death of an immediate family member (partner, parent, child, sibling, grandparent, grandchild, or parent of a current spouse/partner), and 1 day for others at the employer's discretion; it does not have to be taken consecutively and covers attending a tangihanga. For other countries use the correct local entitlement (compassionate leave under the Fair Work Act in AU; statutory and "reasonable" time off in the UK and Ireland; bereavement leave provisions in CA and the US, which vary by employer and state/province).
+- That they can usually add annual leave, sick leave, or unpaid leave if they need more time, and can ask about a phased or flexible return when they come back.
+
+If employment is "self_employed": do NOT output a "Your work and leave" heading. Instead include a separate section headed "## Your business" about pausing or notifying clients and watching for urgent contractual deadlines. If employment is "not_working" or absent: omit any work section entirely.
+
+**Section 4 — This week**
+Funeral arrangements if not started or in progress. Death certificate. Notifying their GP. One brief mention of grief support.
+
+**Section 5 — The practical steps**
 Only include if practical_opted_in is true. See Practical Steps Content below.
 
-**Section 5 — People and places that can help**
+**Section 6 — People and places that can help**
 Only contacts relevant to their situation and country.
 
 ---
@@ -217,6 +231,10 @@ Use markdown. The plan renders in a browser.
 - The plan should be scannable at a glance — it will be read on a phone by someone who is exhausted
 
 ---
+
+## The closing line
+
+For any plan that has sections (Paths B and C), end with a single sentence, on its own line, beginning exactly "The single most useful thing you can do today is" — then one concrete, specific action tailored to their situation. No heading, no bold, no formatting — just the plain sentence. Make it the one action most likely to matter for them. For example: if they are employed, sending a brief email to their employer to let them know; if they are not employed, calling the bank to tell them what has happened. Do NOT add this line to the brief Path A crisis plan — that plan keeps its existing quiet closing line and nothing more.
 
 ## What not to do
 
@@ -493,6 +511,10 @@ Use markdown. The plan renders in a browser.
 
 ---
 
+## The closing line
+
+End the plan with a single sentence, on its own line, beginning exactly "The single most useful thing you can do today is" — then one concrete, specific action tailored to their situation. No heading, no bold, no formatting — just the plain sentence. Make it the one action most likely to matter for them. For example: asking the ward social worker for a NASC referral before discharge, contacting a solicitor today to set up an Enduring Power of Attorney, or phoning their regional NASC to request an assessment. Pick the single action that matters most.
+
 ## What not to do
 
 - Do not include sections that do not apply to their situation
@@ -633,7 +655,11 @@ Brief — one short paragraph. If people close to them are also struggling with 
 
 ## Length
 
-Aim for a substantial plan — this is one of the few times in someone's life they will most benefit from concrete, sequenced guidance. But every line must earn its place. No padding. No filler acknowledgements. No restating the obvious.`,
+Aim for a substantial plan — this is one of the few times in someone's life they will most benefit from concrete, sequenced guidance. But every line must earn its place. No padding. No filler acknowledgements. No restating the obvious.
+
+## The closing line
+
+End the plan with a single sentence, on its own line, beginning exactly "The single most useful thing you can do today is" — then one concrete, specific action tailored to their situation (their country, employment, and whether the diagnosis affects their work). No heading, no bold, no formatting — just the plain sentence. Make it the one action most likely to matter for them. For example: if they are employed and it affects their work, calling their GP to ask for a letter confirming the diagnosis; if they are not working, calling their KiwiSaver / super / pension or insurance provider to ask what cover is attached to their account. Pick the single action that matters most.`,
 
   // ── "Do it with me" — diagnosis: employer email ─────────────────────────────
   'diagnosis-employer-email': `You are helping someone who has recently received a serious medical diagnosis draft a single email to their employer. They will read this and send it with minimal editing, so it must be ready to use.
@@ -744,7 +770,8 @@ const LABELS = {
   dependants:    { yes_caring_for_someone: 'Yes — they were caring for someone who now needs support', yes_pets: 'Yes — they had pets', yes_other: 'Yes — someone else depended on them', no: 'No', not_sure: 'Not sure' },
   will:          { yes_executor: 'Yes — and they are named as executor', yes_not_executor: 'Yes — but someone else is executor', no_will: 'No will', dont_know: "Don't know" },
   assets:        { yes: 'Yes — property or significant assets', no: 'Mainly personal belongings', dont_know: "Don't know" },
-  funeral:       { not_started: 'Not started', in_progress: 'Being arranged', done: 'Already happened', someone_else: 'Someone else is handling it' }
+  funeral:       { not_started: 'Not started', in_progress: 'Being arranged', done: 'Already happened', someone_else: 'Someone else is handling it' },
+  employment:    { employed: 'Employed (works for an employer)', self_employed: 'Self-employed / contractor / business owner', not_working: 'Not currently working' }
 };
 
 function lbl(map, val) {
@@ -767,6 +794,7 @@ function formatBereavementIntake(intake) {
   add('Children affected',                 LABELS.children,       'children_affected');
   add('Notification status',               LABELS.notifications,  'notifications_needed');
   add('Dependants of the person who died', LABELS.dependants,     'dependants');
+  add('Employment situation (of the person grieving)', LABELS.employment, 'employment');
   add('Will status',                       LABELS.will,           'has_will');
   add('Significant assets',                LABELS.assets,         'assets');
 
@@ -931,6 +959,7 @@ function formatKiwiSaverCallIntake(intake) {
 function formatBereavementLeaveEmailIntake(intake) {
   const lines = ['Help this person draft an email to their employer requesting bereavement leave.\n'];
   if (intake.country)      lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.employment)   lines.push(`Their employment situation: ${LABELS.employment[intake.employment] || intake.employment}`);
   if (intake.relationship) lines.push(`Their relationship to the person who died: ${LABELS.relationship[intake.relationship] || intake.relationship}`);
   if (intake.employer_name && intake.employer_name.trim()) lines.push(`Employer or manager name: ${intake.employer_name.trim()}`);
   if (intake.job_title && intake.job_title.trim())         lines.push(`Their job title: ${intake.job_title.trim()}`);
@@ -977,11 +1006,12 @@ const MODELS = {
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 
 // ─── Per-tool max output tokens ──────────────────────────────────────────────
-// Diagnosis has 7 substantive country-specific sections and needs more room
-// than the 2000-token bereavement/incapacity plans.
+// Diagnosis has 7 substantive country-specific sections and needs the most room.
+// Bereavement/incapacity Path B/C plans (sections + contacts + the closing line)
+// were truncating at 2000 (stop_reason: max_tokens), cutting off the closing line.
 const MAX_TOKENS = {
-  bereavement: 2000,
-  incapacity:  2000,
+  bereavement: 3000,
+  incapacity:  3000,
   carer:       2000,
   diagnosis:   4000,
   // "Do it with me" — fast, focused, output only

@@ -718,7 +718,11 @@ function caSubmitFeedback() {
     bereavement: [
       {
         tool: 'bereavement-leave-email',
-        match: t => t.includes('the people'),
+        // Anchors to the dedicated employment section, which the worker emits as
+        // "## Your work and leave" only when the person is employed. ("time off"
+        // covers any paraphrase.) This section is absent for self-employed,
+        // not-working, and weeks-ago plans — so the button correctly won't show.
+        match: t => t.includes('work and leave') || t.includes('time off'),
         trigger: 'Draft a bereavement leave email →',
         intro: "I'll draft a short email to your employer to let them know and ask for the time you need. You can edit it before you send it.",
         submit: 'Draft my email',
