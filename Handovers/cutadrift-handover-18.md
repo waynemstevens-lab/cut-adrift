@@ -279,7 +279,7 @@ grep -L "general information only\|page-disclaimer" \
 10. **Diagnosis tool guide pages** — 30 pages (5 per country) not yet built. Same structure as bereavement guides.
 
 ### ⏰ Time-sensitive (not Cut Adrift)
-- **ProductHunt promo code for RecPokerCoach expired 19 June 2026** — check whether still relevant.
+- **ProductHunt promo code for RecPokerCoach expires 19 June 2026 — that's tomorrow.**
 
 ---
 
