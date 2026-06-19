@@ -645,6 +645,17 @@ Country-specific. Cover statutory sick pay specifics. Benefits they may qualify 
 
 Tell them how to find out: contact the fund / provider directly and ask "what cover do I have under this membership, and what are the claim conditions?" This is one of the most undervalued bits of advice in this whole plan.
 
+### ## Your insurance
+Include this section ONLY when it is genuinely relevant — when they are employed or self-employed, when work_impact is yes or unsure, or when anything they shared suggests they may hold cover. Do NOT force it in if it clearly does not apply (for example, not working and no indication of any policies). When you do include it, use the heading exactly "## Your insurance".
+
+Standalone insurance policies are separate from the scheme-attached cover in "Your income" — people often hold one or more and forget. Briefly prompt them to check for:
+- Income protection — replaces part of their income while they cannot work. Check stand-down and benefit periods.
+- Life cover — some policies also include a terminal illness or serious illness advance.
+- Trauma / critical illness cover — frequently pays a lump sum on diagnosis of a listed condition, regardless of whether they can still work.
+- Total and permanent disability (TPD) cover.
+
+Many of these pay out on diagnosis itself, not on inability to work — so it is worth checking the wording before assuming they do not qualify. Tell them to find the policy documents (or ask the insurer or their adviser/broker) and confirm what they hold and the claim conditions, in writing, before making any changes. Do not cancel or alter a policy before checking what it would pay.
+
 ### ## Your treatment journey
 Practical, not medical. Cover:
 - Their right to a second opinion and how to ask for one in their country's system.
@@ -733,6 +744,31 @@ What to ask:
 
 What to listen for:
 - The things that matter in the answers: cover that pays on diagnosis vs on inability to work, whether cover lapses if they stop contributing, exclusions and stand-down periods, and getting everything confirmed in writing before they make any changes.
+
+Tone: warm, plain, practical — like a friend who has made these calls before talking them through it.
+
+Output rules:
+- Output the script ONLY. No preamble or explanation before or after.
+- Use exactly the three labels above ("What to say:", "What to ask:", "What to listen for:") as plain-text lines, with short lines beneath each.
+- Plain text only. No markdown, no bold, no headings, no asterisks. A simple dash at the start of a line is fine.`,
+
+  // ── "Do it with me" — diagnosis: insurer claim call script ───────────────────
+  'diagnosis-insurance-call': `You are helping someone who has recently received a serious medical diagnosis prepare for a phone call to their insurance company about a standalone policy they hold — income protection, life cover, or trauma / critical illness cover — to find out whether they can make a claim and how. Many of these policies pay out on diagnosis itself, not only on inability to work, so it is worth checking before they assume they do not qualify.
+
+You do not know and must not comment on the diagnosis itself, its severity, or its prognosis.
+
+You will be told their country, their employment status, anything they shared in their own words, the type of policy they want to ask about, and (optionally) the name of their insurer and a policy number. If an insurer name is given, address the script to that insurer; otherwise keep it generic ("your insurer"). If a policy number is given, include a line reading it out. Tailor the questions to the policy type they named (income protection, life, trauma / critical illness, or "not sure" — in which case ask the insurer to confirm what cover the policy actually provides).
+
+Produce a short, practical phone script in three clearly labelled plain-text blocks:
+
+What to say:
+- A couple of short opening lines they can read out to identify themselves, give the policy number if they have one, and explain they want to check whether they can make a claim under the policy. Keep it factual; they do not need to give a detailed account of the diagnosis to start this enquiry.
+
+What to ask:
+- The specific questions that get answers: Does this policy cover my situation, and does it pay out on diagnosis or only on inability to work? What is the sum insured or benefit amount? What are the claim conditions, exclusions, and any stand-down or waiting periods? What do I need to submit to make a claim, and what are the time limits? Can you confirm the policy wording and next steps in writing?
+
+What to listen for:
+- The things that matter in the answers: whether the cover pays on diagnosis vs on inability to work, the exact conditions and exclusions that apply, stand-down and benefit periods, claim deadlines, and getting everything confirmed in writing before they cancel or change anything.
 
 Tone: warm, plain, practical — like a friend who has made these calls before talking them through it.
 
@@ -1060,6 +1096,22 @@ function formatKiwiSaverCallIntake(intake) {
   return lines.join('\n');
 }
 
+function formatInsuranceCallIntake(intake) {
+  const POLICY_TYPE = {
+    income_protection: 'Income protection',
+    life:              'Life cover',
+    trauma:            'Trauma / critical illness',
+    not_sure:          'Not sure'
+  };
+  const lines = ['Help this person prepare a phone script to call their insurer about making a claim on a policy they hold.\n'];
+  lines.push(...diwmContextLines(intake));
+  if (intake.insurer && intake.insurer.trim())             lines.push(`Their insurer: ${intake.insurer.trim()}`);
+  if (intake.policy_type)                                  lines.push(`Type of policy to ask about: ${POLICY_TYPE[intake.policy_type] || intake.policy_type}`);
+  if (intake.policy_number && intake.policy_number.trim()) lines.push(`Policy number: ${intake.policy_number.trim()}`);
+  lines.push('\nWrite the script now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
 function formatBereavementLeaveEmailIntake(intake) {
   const lines = ['Help this person draft an email to their employer requesting bereavement leave.\n'];
   if (intake.country)      lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
@@ -1128,6 +1180,7 @@ const INTAKE_FORMATTERS = {
   diagnosis:   formatDiagnosisIntake,
   'diagnosis-employer-email': formatEmployerEmailIntake,
   'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake,
+  'diagnosis-insurance-call': formatInsuranceCallIntake,
   'bereavement-leave-email':  formatBereavementLeaveEmailIntake,
   'bereavement-bank-letter':  formatBankLetterIntake,
   'bereavement-employer-notify': formatEmployerNotifyIntake,
@@ -1144,6 +1197,7 @@ const MODELS = {
   // "Do it with me" drafts — Sonnet for tone/sensitivity on disclosure wording
   'diagnosis-employer-email': 'claude-sonnet-4-6',
   'diagnosis-kiwisaver-call': 'claude-sonnet-4-6',
+  'diagnosis-insurance-call': 'claude-sonnet-4-6',
   'bereavement-leave-email':  'claude-sonnet-4-6',
   'bereavement-bank-letter':  'claude-sonnet-4-6',
   'bereavement-employer-notify': 'claude-sonnet-4-6',
@@ -1164,6 +1218,7 @@ const MAX_TOKENS = {
   // "Do it with me" — fast, focused, output only
   'diagnosis-employer-email': 500,
   'diagnosis-kiwisaver-call': 500,
+  'diagnosis-insurance-call': 500,
   'bereavement-leave-email':  500,
   'bereavement-bank-letter':  500,
   'bereavement-employer-notify': 600,

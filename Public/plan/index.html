@@ -715,6 +715,26 @@ function caSubmitFeedback() {
         ]
       },
       {
+        tool: 'diagnosis-insurance-call',
+        // Anchors to the conditional "## Your insurance" section, which the
+        // diagnosis prompt emits only when insurance is genuinely relevant.
+        match: t => t.includes('insurance'),
+        trigger: 'Script for my insurance call →',
+        intro: "I'll write a short phone script so you know exactly what to say, what to ask, and what to listen for when you call your insurer about making a claim.",
+        submit: 'Write my script',
+        working: 'Writing your script…',
+        fields: [
+          { name: 'insurer', label: 'Your insurer (optional)', type: 'text', placeholder: 'e.g. AIA, Partners Life, Southern Cross' },
+          { name: 'policy_type', label: 'What kind of policy?', type: 'select', options: [
+            { value: 'income_protection', label: 'Income protection' },
+            { value: 'life', label: 'Life cover' },
+            { value: 'trauma', label: 'Trauma / critical illness' },
+            { value: 'not_sure', label: 'Not sure' }
+          ] },
+          { name: 'policy_number', label: 'Policy number (optional)', type: 'text', placeholder: 'If you have it to hand' }
+        ]
+      },
+      {
         tool: 'diagnosis-family-message',
         // Anchors to the fixed "## The people in your life" section, which the
         // diagnosis prompt always emits.
