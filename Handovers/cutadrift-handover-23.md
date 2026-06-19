@@ -127,7 +127,7 @@ https://cutadrift.org/what-to-do-when-someone-dies-uk/
 
 ### Consider
 
-5. **Extend the bereavement "tell my family" panel to Path C (weeks_ago)** — still no decision; deliberately set aside this session. Nothing blocks it.
+5. ~~**Extend the bereavement "tell my family" panel to Path C (weeks_ago)**~~ — ✅ Done this session. Added a reframed (weeks-on, *not* a copy of Path B's) `## The people around you` section to bereavement Path C so the panel now anchors there; taught the `bereavement-family-message` prompt to handle belated news using `timing` (now forwarded by the formatter — rides on the Phase 3 full-intake payload fix). No frontend change needed. Verified deterministically (23/23) + live: Path C plan emits the heading and a `weeks_ago` message gracefully acknowledges the delay. Worker deployed (version `87325d92`).
 6. **Update meta description / og:description tags** — still say "clear, short-term plan," out of step with the refreshed hero copy.
 7. **Pin "Notifying their employer" heading** in the bereavement prompt (test-harness flakiness source).
 

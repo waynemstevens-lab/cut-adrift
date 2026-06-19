@@ -158,6 +158,17 @@ Open with a single warm sentence acknowledging the loss without dwelling.
 **Section 1 — Where things typically stand now**
 Brief orienting paragraph. By this point the funeral is usually done, immediate notifications made, and the estate and admin work remains.
 
+**Section 1b — The people around you**
+Always include this section in Path C. Output it as its own ## section with the heading exactly:
+
+## The people around you
+
+Do not rename or paraphrase that heading. This is weeks on, not the first week, so keep it brief and proportionate — it is NOT a first-news notification plan. Most people will already know. Cover only what fits:
+- Anyone who still may not have heard — someone estranged, overseas, out of touch, or in the person's wider social, club, or work circle. Reassure them that letting people know now, even though time has passed, is completely normal and they do not need to apologise for the delay.
+- If notifications_needed is havent_started or dont_know, give a short, gentle steer on who is worth contacting, and that a brief message is enough.
+- One brief line on leaning on the people around them — grief weeks on can feel lonelier as others move on.
+Keep this to a few lines. Do not expand it into a sequence of hard calls or a children/dependants plan — those belong to the earlier paths.
+
 **Section 2 — The estate and admin checklist**
 Only include what is relevant:
 - Will and executor (with dont_know handling if applicable)
@@ -867,7 +878,7 @@ Output rules:
   // ── "Do it with me" — bereavement: message to tell family and friends ────────
   'bereavement-family-message': `You are helping someone who has recently had a death in their life draft a short message to let other people — family and friends — know that the person has died. They will send it as a text, email, or WhatsApp message, or read it out on the phone, with minimal editing. It must be ready to use.
 
-You will be told their country, their relationship to the person who died, who they need to tell, the tone they want, and optionally a specific concern about telling people.
+You will be told their country, their relationship to the person who died, how long ago the death was, who they need to tell, the tone they want, and optionally a specific concern about telling people.
 
 Write the message so that:
 - It is short, warm, and dignified. It carries hard news gently and is easy to read out loud or forward.
@@ -876,7 +887,8 @@ Write the message so that:
   - "gentle" — soft, warm, unhurried; gives the reader a moment before the news and a kind closing line.
   - "matter_of_fact" — calm, clear, and brief; the news stated simply, without being cold.
 - It takes account of any concern they raised (for example: people who live overseas and may want to travel; a relationship that is distant or strained; someone who should hear especially gently). Adjust the wording sensitively without drawing attention to the difficulty.
-- It can offer to share funeral or service details when they are known, using a placeholder like [funeral details to follow] only if it reads naturally — never invent dates or arrangements.
+- It accounts for how long ago the death was. If it was some weeks ago or more, the message may gently acknowledge that the news is belated — a soft line that they wanted the person to know even though some time has passed — without apologising at length or over-explaining the delay, and it should not imply the reader is hearing it in the first days. If it was recent, do not mention timing at all.
+- It can offer to share funeral or service details when they are known, using a placeholder like [funeral details to follow] only if it reads naturally — never invent dates or arrangements. If the death was weeks ago, do not offer funeral details unless it genuinely fits.
 - It does not over-explain or demand anything of the reader beyond, where it fits, a gentle invitation to be in touch.
 
 Tone: warm, brief, human, ready to send.
@@ -1242,6 +1254,7 @@ function formatBereavementFamilyMessageIntake(intake) {
   const lines = ['Help this person draft a short message to tell family and friends that someone has died.\n'];
   if (intake.country)      lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
   if (intake.relationship) lines.push(`Their relationship to the person who died: ${LABELS.relationship[intake.relationship] || intake.relationship}`);
+  if (intake.timing)       lines.push(`How long ago the death was: ${LABELS.timing[intake.timing] || intake.timing}`);
   if (intake.recipients && intake.recipients.trim()) lines.push(`Who they need to tell: ${intake.recipients.trim()}`);
   if (intake.tone)         lines.push(`Tone they want: ${FAMILY_MESSAGE_TONE[intake.tone] || intake.tone}`);
   if (intake.concern && intake.concern.trim())       lines.push(`A specific concern about telling people: ${intake.concern.trim()}`);

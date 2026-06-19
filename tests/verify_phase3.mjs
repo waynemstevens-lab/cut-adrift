@@ -104,5 +104,22 @@ ok('diagnosis gp-questions renders appointment + focus', diaOut.includes('A spec
 ok('dead "carer" key removed from SYSTEM_PROMPTS', !('carer' in SYSTEM_PROMPTS));
 ok('dead "carer" key removed from INTAKE_FORMATTERS', !('carer' in INTAKE_FORMATTERS));
 
+// ---- Path C tell-my-family extension --------------------------------------
+ok('bereavement prompt mandates "The people around you" in Path C',
+  SYSTEM_PROMPTS.bereavement.includes('Always include this section in Path C'));
+ok('bereavement-family-message prompt handles belated (weeks-on) news',
+  SYSTEM_PROMPTS['bereavement-family-message'].includes('belated'));
+// Path C plan headings still trigger the existing bereavement family-message matcher.
+const pathCHeadings = ['Where things typically stand now', 'The people around you',
+  'The estate and admin checklist', 'Notifying their employer', 'Things people commonly miss'];
+ok('bereavement-family-message matcher fires on a Path C plan',
+  DIWM_TASKS.bereavement.find(t => t.tool === 'bereavement-family-message')
+    .match('the people around you'));
+// Formatter now forwards timing so the model can adapt belated framing.
+const bfmPayload = { tool: 'bereavement-family-message', country: 'nz', relationship: 'parent',
+  timing: 'weeks_ago', recipients: 'my overseas cousins', tone: 'matter_of_fact', concern: '' };
+const bfmOut = INTAKE_FORMATTERS['bereavement-family-message'](bfmPayload);
+ok('family-message formatter forwards timing label', bfmOut.includes('A few weeks ago or more'));
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exitCode = fail ? 1 : 0;
