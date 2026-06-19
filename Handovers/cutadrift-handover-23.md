@@ -123,7 +123,7 @@ https://cutadrift.org/what-to-do-when-someone-dies-nz/
 https://cutadrift.org/uk-funeral-expenses-payment/
 https://cutadrift.org/what-to-do-when-someone-dies-uk/
 ```
-4. **Commit/clean the working-tree handover deletions** — handovers 2–13, 15, 16 are deleted in the working tree but those deletions are still uncommitted (handover 14 and 17–21 remain). Decide whether to commit the deletions or restore them. (Handovers 22 + 23 were committed this session.)
+4. ~~**Commit/clean the working-tree handover deletions**~~ — ✅ Done this session. Handovers 22 + 23 committed (`908de3e`); superseded handovers 2–13, 15, 16 deletions committed (`5be88b8`). Working tree clean. `Handovers/` now holds 14, 17–23.
 
 ### Consider
 
