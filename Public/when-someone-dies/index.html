@@ -296,6 +296,27 @@
       line-height: 1.65;
     }
 
+    /* ── Distress short-circuit (abbreviated crisis plan) ── */
+    .crisis-output {
+      white-space: pre-wrap;
+      font-size: 1.02rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin: 6px 0 26px;
+    }
+    .crisis-output .crisis-loading {
+      font-style: italic;
+      color: var(--text-dim);
+    }
+    .crisis-cta { margin-top: 4px; }
+    .crisis-cta-note {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-dim);
+    }
+
     @media (max-width: 600px) {
       .step-wrap { padding-top: 36px; }
       .opt { padding: 16px; }
@@ -411,6 +432,19 @@
       <button class="opt" onclick="answer('emotional_state','holding_together')"><div class="opt-text"><div class="opt-main">I'm managing, but overwhelmed</div><div class="opt-sub">There's a lot and I don't know where to start</div></div></button>
       <button class="opt" onclick="answer('emotional_state','need_the_list')"><div class="opt-text"><div class="opt-main">OK — I just need to know what to do</div></div></button>
       <button class="opt" onclick="answer('emotional_state','not_sure')"><div class="opt-text"><div class="opt-main">I'm not sure how I feel</div></div></button>
+    </div>
+  </div>
+
+  <!-- Distress short-circuit: abbreviated "next few hours" plan -->
+  <div class="step" id="step-crisis">
+    <div class="step-label">Right now</div>
+    <div class="step-q">Let's just get through the next little while.</div>
+    <div id="crisisOutput" class="crisis-output" aria-live="polite">
+      <span class="crisis-loading">Putting together a few gentle things for right now…</span>
+    </div>
+    <div class="crisis-cta">
+      <button class="btn-primary" id="crisisContinueBtn" onclick="continueToFull()">Want the fuller plan? A few more questions →</button>
+      <p class="crisis-cta-note">There's no rush. The fuller plan will be here whenever you're ready.</p>
     </div>
   </div>
 
@@ -553,6 +587,7 @@
 <script>
   const answers = {};
   const history = [];
+  const WORKER_URL = 'https://cutadrift-engine.waynemstevens.workers.dev';
 
   // Step sequence — determines order and which steps exist
   const LAYER1  = ['relationship','emotional_state','support_situation','children_affected','notifications_needed','employment','dependants'];
@@ -584,6 +619,8 @@
     const next = getNext(currentStep, answers);
     if (next === 'submit') {
       submit();
+    } else if (next === 'crisis') {
+      startCrisis();
     } else {
       showStep(next);
     }
@@ -604,6 +641,13 @@
   }
 
   function getNext(step, ans) {
+    // Distress short-circuit: after Q4, if barely coping or overwhelmed, branch
+    // to the abbreviated "next few hours" plan instead of continuing to Q5.
+    if (step === 'emotional_state' &&
+        (ans.emotional_state === 'barely_functioning' || ans.emotional_state === 'holding_together')) {
+      return 'crisis';
+    }
+
     // Special routing after timing
     if (step === 'timing' && ans.timing === 'weeks_ago') {
       return 'weeks-intro';
@@ -664,6 +708,65 @@
     answers.tool = 'bereavement';
     sessionStorage.setItem('cutadrift_intake', JSON.stringify(answers));
     window.location.href = '/plan/';
+  }
+
+  // ── Distress short-circuit ────────────────────────────────────────────────
+  function startCrisis() {
+    showStep('crisis');
+    streamCrisis();
+  }
+
+  async function streamCrisis() {
+    const out = document.getElementById('crisisOutput');
+    const payload = {
+      tool: 'bereavement-crisis',
+      country: answers.country,
+      timing: answers.timing,
+      relationship: answers.relationship,
+      emotional_state: answers.emotional_state
+    };
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('http');
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '', text = '';
+      out.textContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split('\n');
+        buf = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') continue;
+          try {
+            const evt = JSON.parse(data);
+            if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
+              text += evt.delta.text;
+              out.textContent = text;
+            }
+          } catch (_) { /* skip malformed */ }
+        }
+      }
+      if (!text.trim()) throw new Error('empty');
+    } catch (err) {
+      // Gentle fallback — never a glitchy dead end; the CTA below still works.
+      out.textContent = "Take a breath — you don't have to do anything right now. There's very little that genuinely can't wait until tomorrow. If you can, let someone be with you. When you're ready, the fuller plan below will walk you through what comes next.";
+    }
+  }
+
+  function continueToFull() {
+    history.push('crisis');
+    showStep('support_situation');
   }
 
   function updateProgress() {

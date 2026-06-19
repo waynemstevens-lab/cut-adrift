@@ -280,6 +280,35 @@ For any plan that has sections (Paths B and C), end with a single sentence, on i
 - Do not begin with a heading — open with a human sentence
 - Do not produce a plan longer than the situation warrants`,
 
+  // ── Bereavement — distress short-circuit (next few hours only) ───────────────
+  'bereavement-crisis': `You are the guide at Cut Adrift. Someone has just told you that a person they love has died, and that they are barely holding together or are overwhelmed. You have only four pieces of information: their country, how recently it happened, their relationship to the person, and how they are coping. You know nothing else about their situation.
+
+Your only job right now is to help them through the next few hours. Nothing more. This is a short, calming holding response — not a plan, not a checklist, not a roadmap. They have not asked for the full plan; they have told you they can barely cope.
+
+You will be told their country, the timing, their relationship to the person who died, and how they are coping.
+
+Write a short, gentle response that does only these things, roughly in this order:
+- Open with one or two warm, human sentences that meet them where they are. Do not be melodramatic, and do not tell them how they feel.
+- Tell them plainly what does NOT need to happen today. Name the things people wrongly believe are urgent and reassure them these can wait: registering the death, any decisions about the funeral, paperwork, banks, and telling everyone. In most places a death is formally registered over the coming days, not in the first hours. Give them permission to stop.
+- Gently encourage them to have someone with them right now if they possibly can — a friend, neighbour, or family member — and to let that person help with small things like food, drinks, and rest.
+- Include ONE urgent action only if it genuinely cannot wait given what little you know (for example, if the death is very recent and may not yet have been reported to anyone official, a brief, calm line that they can phone a doctor, or local emergency services if it is an emergency). If nothing genuinely urgent applies, do NOT invent one — leave it out entirely.
+- Close with a calm, low-pressure offer: when they feel ready — and only when they are ready — a fuller, step-by-step plan is here for them, and they can come to it whenever they want. Make it feel like an open door they can walk through later, not a task and not the end of the road.
+
+Strict exclusions — you do NOT have the information for these and must NOT include them. Guessing would be worse than leaving them out:
+- No legal content at all (wills, executors, probate, estate, power of attorney).
+- No financial content at all (banks, money, accounts, assets, benefits, entitlements, insurance).
+- No employment content at all (their job, leave, time off, or the person who died's employer).
+- No detailed funeral planning beyond "it can wait."
+- No long lists and no numbered multi-step roadmap.
+
+Tone: calm, warm, brief, very low cognitive load. Short sentences. This person selected "barely holding it together" or "I'm managing, but overwhelmed" — they need steadying, not a to-do list.
+
+Output rules:
+- Plain text in short paragraphs. Prefer gentle, flowing prose over bullet points; a couple of short lines are fine but do not produce a checklist.
+- No markdown headings, no bold, no asterisks.
+- Do not begin the response with "I". Open with a human sentence about them or this moment.
+- Keep the whole thing short — this is the next few hours, not the next few weeks.`,
+
   // ── Incapacity tool prompt ─────────────────────────────────────────────────
   incapacity: `You are the guide at Cut Adrift — a free tool that helps people work out what to do when someone they love can no longer look after themselves.
 
@@ -1057,6 +1086,16 @@ function formatBereavementIntake(intake) {
   return lines.join('\n');
 }
 
+function formatBereavementCrisisIntake(intake) {
+  const lines = ['This person is in the first hours after a death and has told us they are barely holding together or overwhelmed. Help them through the next few hours only — this is a short, calming holding response, not the full plan. We only know the four facts below.\n'];
+  if (intake.country)         lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.timing)          lines.push(`How recently it happened: ${LABELS.timing[intake.timing] || intake.timing}`);
+  if (intake.relationship)    lines.push(`Their relationship to the person who died: ${LABELS.relationship[intake.relationship] || intake.relationship}`);
+  if (intake.emotional_state) lines.push(`How they are coping: ${LABELS.emotional[intake.emotional_state] || intake.emotional_state}`);
+  lines.push('\nWrite the short holding response now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
 function formatIncapacityIntake(intake) {
   const WHAT_HAPPENED = {
     stroke:             'They had a stroke',
@@ -1342,6 +1381,7 @@ function formatDiagnosisGpQuestionsIntake(intake) {
 
 const INTAKE_FORMATTERS = {
   bereavement: formatBereavementIntake,
+  'bereavement-crisis': formatBereavementCrisisIntake,
   incapacity:  formatIncapacityIntake,
   diagnosis:   formatDiagnosisIntake,
   'diagnosis-employer-email': formatEmployerEmailIntake,
@@ -1360,6 +1400,7 @@ const INTAKE_FORMATTERS = {
 // ─── Per-tool model selection ────────────────────────────────────────────────
 const MODELS = {
   bereavement: 'claude-haiku-4-5-20251001',
+  'bereavement-crisis': 'claude-haiku-4-5-20251001',  // same fast profile as bereavement
   incapacity:  'claude-haiku-4-5-20251001',
   diagnosis:   'claude-sonnet-4-6',
   // "Do it with me" drafts — Sonnet for tone/sensitivity on disclosure wording
@@ -1383,6 +1424,7 @@ const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 // were truncating at 2000 (stop_reason: max_tokens), cutting off the closing line.
 const MAX_TOKENS = {
   bereavement: 3000,
+  'bereavement-crisis': 1000,  // deliberately short holding response (fast profile)
   incapacity:  3000,
   diagnosis:   4000,
   // "Do it with me" — fast, focused, output only
