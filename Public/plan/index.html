@@ -751,6 +751,70 @@ function caSubmitFeedback() {
           ] },
           { name: 'concern', label: 'Anything specific to bear in mind? (optional)', type: 'text', placeholder: "e.g. they live overseas, or we're not close" }
         ]
+      },
+      {
+        tool: 'diagnosis-gp-questions',
+        // Anchors to the fixed "## Your treatment journey" section, which the
+        // diagnosis prompt always emits (and which already mentions questions
+        // to take to the next appointment).
+        match: t => t.includes('treatment journey'),
+        trigger: 'Draft my questions for the appointment →',
+        intro: "I'll draft a list of questions to take to your GP or specialist, so you leave the appointment with the answers you need. This drafts questions only — not medical advice.",
+        submit: 'Draft my questions',
+        working: 'Writing your questions…',
+        fields: [
+          { name: 'appt_with', label: 'Who is the appointment with?', type: 'select', options: [
+            { value: 'gp', label: 'My GP' },
+            { value: 'specialist', label: 'A specialist' },
+            { value: 'not_sure', label: 'Not sure yet' }
+          ] },
+          { name: 'focus', label: 'Anything specific you want to ask about? (optional)', type: 'text', placeholder: 'e.g. work, side effects, what happens next' }
+        ]
+      }
+    ],
+    incapacity: [
+      {
+        tool: 'incapacity-family-message',
+        // Anchors to the mandated "## The people around you" section the
+        // incapacity prompt now always emits.
+        match: t => t.includes('people around you'),
+        trigger: 'Draft a message to tell family and friends →',
+        intro: "I'll draft a short message you can send or read out to let family and friends know — and, if you want, ask for help. You can edit it before you send it.",
+        submit: 'Draft my message',
+        working: 'Writing your message…',
+        fields: [
+          { name: 'recipients', label: 'Who do you need to tell?', type: 'text', placeholder: 'e.g. my siblings, the wider family, close friends' },
+          { name: 'purpose', label: "What's the message for?", type: 'select', options: [
+            { value: 'inform', label: 'Just to let people know' },
+            { value: 'ask_help', label: 'To let them know and ask for help' },
+            { value: 'organise', label: 'To let them know and plan together' }
+          ] },
+          { name: 'tone', label: 'What tone do you want?', type: 'select', options: [
+            { value: 'gentle', label: 'Gentle and warm' },
+            { value: 'matter_of_fact', label: 'Calm and matter-of-fact' }
+          ] },
+          { name: 'concern', label: 'Anything specific to bear in mind? (optional)', type: 'text', placeholder: "e.g. they live overseas, or it's a strained relationship" }
+        ]
+      },
+      {
+        tool: 'incapacity-gp-questions',
+        // Anchors to the mandated "## Questions for the medical team" section
+        // the incapacity prompt now always emits.
+        match: t => t.includes('questions for the medical team'),
+        trigger: 'Draft my questions for the appointment →',
+        intro: "I'll draft a list of questions to take to the GP, hospital team, or discharge planner, so you leave knowing what you need to. This drafts questions only — not medical advice.",
+        submit: 'Draft my questions',
+        working: 'Writing your questions…',
+        fields: [
+          { name: 'appt_with', label: 'Who is the appointment with?', type: 'select', options: [
+            { value: 'gp', label: 'Their GP' },
+            { value: 'hospital_team', label: 'The hospital team' },
+            { value: 'specialist', label: 'A specialist' },
+            { value: 'discharge_planner', label: 'The discharge planner / social worker' },
+            { value: 'not_sure', label: 'Not sure yet' }
+          ] },
+          { name: 'focus', label: 'Anything specific you want to ask about? (optional)', type: 'text', placeholder: 'e.g. getting them home safely, what help is available' }
+        ]
       }
     ],
     bereavement: [
@@ -946,13 +1010,11 @@ function caSubmitFeedback() {
       status.hidden = false;
       status.textContent = task.working;
 
-      const payload = {
-        tool: task.tool,
-        country: intake.country,
-        employment: intake.employment,
-        relationship: intake.relationship,
-        free_text: intake.free_text
-      };
+      // Forward the whole intake so each tool's formatter gets the fields it
+      // actually uses — bereavement/diagnosis read relationship/employment,
+      // incapacity reads who/what_happened/etc. task.tool overrides intake.tool;
+      // panel field values are applied last so they win on any name collision.
+      const payload = { ...intake, tool: task.tool };
       task.fields.forEach(f => { payload[f.name] = inputs[f.name].value; });
 
       try {

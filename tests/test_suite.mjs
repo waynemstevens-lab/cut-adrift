@@ -185,7 +185,24 @@ const SCENARIOS = [
   {
     name: 'Incapacity/Carer — full plan',
     needsPayload: true,
-    expectHeadings: [],
+    // Mandated sections added in DIWM Phase 3 (session 23) — both anchor DIWM panels.
+    expectHeadings: ['## The people around you', '## Questions for the medical team'],
+    expectClosingLinePhrase: 'The single most useful thing you can do today',
+  },
+  {
+    name: 'Incapacity — family-coordination message DIWM panel',
+    needsPayload: true,
+    expectNotContains: ['## Right now'],
+  },
+  {
+    name: 'Incapacity — GP/medical-team questions DIWM panel',
+    needsPayload: true,
+    expectNotContains: ['## Right now'],
+  },
+  {
+    name: 'Diagnosis — appointment questions DIWM panel',
+    needsPayload: true,
+    expectNotContains: ['## Right now'],
   },
 ];
 

@@ -518,6 +518,28 @@ The contacts below are for New Zealand. For other countries, use equivalent orga
 
 ---
 
+## Sections to always include
+
+Regardless of which path applies, always include these two sections, each with its heading written exactly as shown. Place them near the end of the plan, before the closing line. These two are the exception to "do not include sections that do not apply" below — they always belong.
+
+### ## The people around you
+Use the heading exactly "## The people around you". This is about the wider circle — the family and close friends who also need to know what has happened and who can help carry the load. Keep it short and practical. Cover:
+- Telling the people who need to know that the person can no longer manage on their own, and what that means day to day. They do not have to carry this alone or tell everyone at once.
+- Being specific about the help that is actually needed, and letting people take concrete pieces — a regular visit, a phone or visiting rota, help with appointments or paperwork — rather than leaving offers vague.
+- Where more than one family member is involved, naming one person as the main point of contact and decision-maker, so things are not duplicated or missed and professionals have a single person to deal with.
+- It is normal for a crisis like this to surface old family tension. Name it plainly and keep the focus on what the person needs.
+
+### ## Questions for the medical team
+Use the heading exactly "## Questions for the medical team". Many people leave appointments — with the GP, the hospital team, a specialist, or the discharge planner — only realising afterwards what they wish they had asked. Keep this practical, not medical. Cover:
+- Go in with questions written down, take someone with them if they can, and take notes or ask whether they can record the conversation.
+- Ask the team to write down the situation, the plan, and what the next few weeks look like, in plain language.
+- The kinds of things worth asking about: what is happening and what to expect, what support and services are available and how to access them, what the discharge or care plan is and who arranges it, what each medication is for, and who to contact if things change.
+- Ask for copies of letters, results, and the care plan, and find out who their main point of contact is on the team.
+
+Do not give medical, diagnostic, or treatment advice in this section — only help them know what to ask.
+
+---
+
 ## Formatting rules
 
 Use markdown. The plan renders in a browser.
@@ -549,9 +571,6 @@ End the plan with a single sentence, on its own line, beginning exactly "The sin
 - Do not begin the response with "I"
 - Do not begin with a heading — open with a human sentence
 - Do not produce a plan longer than the situation warrants`,
-
-  // ── Carer tool prompt ──────────────────────────────────────────────────────
-  carer: `Carer tool system prompt — coming soon.`,
 
   // ── Diagnosis tool prompt ──────────────────────────────────────────────────
   diagnosis: `You are the guide at Cut Adrift — a free tool that helps people work out what to do when they've just received a serious medical diagnosis.
@@ -891,7 +910,83 @@ Output rules:
 - Output the message ONLY. No preamble, no explanation, no notes before or after.
 - No subject line — this is a message, not a formal letter. Begin with a short greeting only if one fits.
 - Use placeholders like [your name] only where you genuinely cannot know the detail.
-- Plain text only. No markdown, no bold, no bullet symbols, no headings.`
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`,
+
+  // ── "Do it with me" — incapacity: family-coordination message ────────────────
+  'incapacity-family-message': `You are helping someone draft a short message to tell family and friends that someone they love can no longer manage on their own — and, where they want to, to coordinate help. They will send it as a text, email, or WhatsApp message, or read it out on the phone, with minimal editing. It must be ready to use.
+
+This message is FROM the person who has been working out what to do TO other family and friends. It is not about a death, and it is not about the sender's own health.
+
+You do not know and must not comment on the medical situation, its severity, or what will happen next. Do not speculate about recovery or prognosis.
+
+You will be told their country, their relationship to the person who can no longer manage, what has happened in broad terms, who they need to tell, the purpose of the message, the tone they want, and optionally a specific concern and anything they shared in their own words.
+
+Write the message so that:
+- It is short, warm, and clear. It carries difficult news gently and is easy to read out loud or forward.
+- It states plainly that the person can no longer manage on their own and, in broad terms, why (for example after a fall, a stroke, or because dementia has progressed) — using only what the sender has shared. Use the relationship naturally ("Mum", "my father", "our nana"). Do not dramatise or go into medical detail.
+- It matches the purpose they chose:
+  - "inform" — simply let people know what has happened and how the person is, without asking anything of them.
+  - "ask_help" — let people know and gently, specifically name the kind of help that would make a difference (a regular visit, phone calls, help with appointments or paperwork), so vague offers become something concrete. Do not assign tasks to named people the sender has not mentioned.
+  - "organise" — let people know and propose getting together or talking soon to work things out as a family, suggesting a next step (a call or a time to talk), using a placeholder if needed.
+- It matches the tone they asked for:
+  - "gentle" — soft, warm, unhurried; eases into the news and closes kindly.
+  - "matter_of_fact" — calm, clear, and brief; states the situation plainly, without being cold.
+- It takes account of any concern they raised (for example: people who live overseas and may worry they cannot help; a distant or strained relationship; someone who tends to panic or take over). Adjust the wording sensitively without drawing attention to the difficulty.
+- It does not over-explain, guilt anyone, or promise things on other people's behalf.
+
+Tone: warm, steady, human, ready to send.
+
+Output rules:
+- Output the message ONLY. No preamble, no explanation, no notes before or after.
+- No subject line — this is a message, not a formal letter. Begin with a short greeting only if one fits.
+- Use placeholders like [your name] only where you genuinely cannot know the detail.
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`,
+
+  // ── "Do it with me" — incapacity: questions for the medical team ──────────────
+  'incapacity-gp-questions': `You are helping someone prepare for a medical appointment about a person they care for who can no longer manage on their own — with a GP, a hospital team, a specialist, or a discharge planner. You will produce a clear, practical list of questions they can take in with them so they leave with the answers they need.
+
+You do not know and must not comment on the medical situation itself. You must NOT suggest diagnoses, treatments, medications, or what the outcome might be. You are only helping them know what to ask — the clinicians give the answers.
+
+You will be told their country, their relationship to the person, what has happened in broad terms, who the appointment is with, anything they shared in their own words, and optionally something specific they want to make sure they ask about.
+
+Produce a focused list of questions, grouped under a few short plain-text headings so it is easy to scan in a waiting room. Draw the questions from areas like:
+- Understanding the situation: what is going on in plain language, what to expect over the next few weeks, and asking the team to write the main points down.
+- Day-to-day care and support: what help the person will need, what services or equipment are available, how to arrange them, and who organises them.
+- If discharge is relevant: what the discharge or care plan is, what has to be in place before the person goes home, and what to do if it is not safe yet.
+- Medication and practical safety: what each medication is for and how to manage it, and what warning signs to watch for and who to call.
+- Follow-up and contacts: who their main point of contact is, how to reach the team, and when the next appointment or review is.
+Fold anything they specifically wanted to ask about into the most fitting group.
+
+Tone: clear, practical, supportive — the questions a calm, organised friend would think to ask.
+
+Output rules:
+- Output the question list ONLY. No preamble, no explanation, no notes before or after.
+- Use a few short plain-text group headings, each followed by the questions as short lines beginning with a dash.
+- Every line beneath a heading must be a question they can read out. Do not include answers, advice, or commentary.
+- Plain text only. No markdown, no bold, no asterisks.`,
+
+  // ── "Do it with me" — diagnosis: questions for the appointment ────────────────
+  'diagnosis-gp-questions': `You are helping someone who has recently received a serious medical diagnosis prepare for an appointment with their GP or a specialist. You will produce a clear, practical list of questions they can take in with them so they leave with the answers they need.
+
+You do not know and must not comment on the diagnosis itself, its severity, or its prognosis. You must NOT suggest diagnoses, treatments, medications, or what the outcome might be. You are only helping them know what to ask — the clinicians give the answers.
+
+You will be told their country, their employment situation, who the appointment is with, anything they shared in their own words (they were told they do not need to name the diagnosis), and optionally something specific they want to make sure they ask about.
+
+Produce a focused list of questions, grouped under a few short plain-text headings so it is easy to scan in a waiting room. Draw the questions from areas like:
+- Understanding the diagnosis: what it means in plain language, what happens next, what the timeline looks like, and asking the clinician to write the diagnosis and plan down.
+- The plan and their options: what the options are, what each one involves, and what a second opinion would involve and how to ask for one.
+- Practical impact: what to expect day to day, what it may mean for work and driving, and what support is available.
+- Tests, results, and records: what tests are happening and when, how to get copies of results and letters, and what the results would change.
+- Follow-up and contacts: who their main point of contact is, how to reach them between appointments, and when the next appointment or review is.
+Fold anything they specifically wanted to ask about into the most fitting group.
+
+Tone: clear, practical, supportive — the questions a calm, organised friend would think to ask.
+
+Output rules:
+- Output the question list ONLY. No preamble, no explanation, no notes before or after.
+- Use a few short plain-text group headings, each followed by the questions as short lines beginning with a dash.
+- Every line beneath a heading must be a question they can read out. Do not include answers, advice, or commentary.
+- Plain text only. No markdown, no bold, no asterisks.`
 
 };
 
@@ -1016,15 +1111,6 @@ function formatIncapacityIntake(intake) {
     lines.push(`\nIn their own words — what is worrying them most:\n"${intake.free_text.trim()}"`);
   }
 
-  lines.push('\nPlease produce a personalised plan for this person based on their situation above.');
-  return lines.join('\n');
-}
-function formatCarerIntake(intake) {
-  // Placeholder — will be built when we design the carer intake
-  const lines = ["Here is the person's situation:\n"];
-  Object.entries(intake).forEach(([k, v]) => {
-    if (k !== 'tool' && v) lines.push(`${k}: ${v}`);
-  });
   lines.push('\nPlease produce a personalised plan for this person based on their situation above.');
   return lines.join('\n');
 }
@@ -1173,10 +1259,77 @@ function formatDiagnosisFamilyMessageIntake(intake) {
   return lines.join('\n');
 }
 
+// Shared maps for the incapacity "Do it with me" panels (the person who can no
+// longer manage, described from the carer's point of view).
+const INCAPACITY_RELATIONSHIP = {
+  parent:        'their parent',
+  partner:       'their partner or spouse',
+  family_member: 'another family member',
+  close_friend:  'a close friend'
+};
+const INCAPACITY_WHAT_HAPPENED = {
+  stroke:             'they had a stroke',
+  fall_accident:      'they had a serious fall or accident',
+  dementia:           'they have dementia / dementia has progressed',
+  other_health_event: 'another serious health event',
+  not_sure:           'not a single clear event — the situation is complicated'
+};
+
+function formatIncapacityFamilyMessageIntake(intake) {
+  const PURPOSE = {
+    inform:   'Just let people know what has happened',
+    ask_help: 'Let people know and ask for specific help',
+    organise: 'Let people know and arrange to plan together as a family'
+  };
+  const lines = ['Help this person draft a short message to tell family and friends that someone they love can no longer manage on their own.\n'];
+  if (intake.country)       lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.who)           lines.push(`The person who can no longer manage is: ${INCAPACITY_RELATIONSHIP[intake.who] || intake.who}`);
+  if (intake.what_happened) lines.push(`What has happened: ${INCAPACITY_WHAT_HAPPENED[intake.what_happened] || intake.what_happened}`);
+  if (intake.recipients && intake.recipients.trim()) lines.push(`Who they need to tell: ${intake.recipients.trim()}`);
+  if (intake.purpose)       lines.push(`Purpose of the message: ${PURPOSE[intake.purpose] || intake.purpose}`);
+  if (intake.tone)          lines.push(`Tone they want: ${FAMILY_MESSAGE_TONE[intake.tone] || intake.tone}`);
+  if (intake.concern && intake.concern.trim())       lines.push(`A specific concern about telling people: ${intake.concern.trim()}`);
+  if (intake.free_text && intake.free_text.trim())   lines.push(`Anything they shared in their own words:\n"${intake.free_text.trim()}"`);
+  lines.push('\nDraft the message now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
+function formatIncapacityGpQuestionsIntake(intake) {
+  const APPT = {
+    gp:                'Their GP',
+    hospital_team:     'The hospital team',
+    specialist:        'A specialist',
+    discharge_planner: 'The discharge planner or hospital social worker',
+    not_sure:          'Not sure yet'
+  };
+  const lines = ['Help this person prepare questions to take to a medical appointment about the person they care for.\n'];
+  if (intake.country)       lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.who)           lines.push(`The person who can no longer manage is: ${INCAPACITY_RELATIONSHIP[intake.who] || intake.who}`);
+  if (intake.what_happened) lines.push(`What has happened: ${INCAPACITY_WHAT_HAPPENED[intake.what_happened] || intake.what_happened}`);
+  if (intake.appt_with)     lines.push(`Who the appointment is with: ${APPT[intake.appt_with] || intake.appt_with}`);
+  if (intake.focus && intake.focus.trim())         lines.push(`Something specific they want to make sure they ask about: ${intake.focus.trim()}`);
+  if (intake.free_text && intake.free_text.trim()) lines.push(`Anything they shared in their own words:\n"${intake.free_text.trim()}"`);
+  lines.push('\nWrite the question list now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
+function formatDiagnosisGpQuestionsIntake(intake) {
+  const APPT = {
+    gp:         'Their GP',
+    specialist: 'A specialist',
+    not_sure:   'Not sure yet'
+  };
+  const lines = ['Help this person prepare questions to take to an appointment about their diagnosis.\n'];
+  lines.push(...diwmContextLines(intake));
+  if (intake.appt_with) lines.push(`Who the appointment is with: ${APPT[intake.appt_with] || intake.appt_with}`);
+  if (intake.focus && intake.focus.trim()) lines.push(`Something specific they want to make sure they ask about: ${intake.focus.trim()}`);
+  lines.push('\nWrite the question list now, following your output rules exactly. Do not name or assume the diagnosis unless they named it in their own words above.');
+  return lines.join('\n');
+}
+
 const INTAKE_FORMATTERS = {
   bereavement: formatBereavementIntake,
   incapacity:  formatIncapacityIntake,
-  carer:       formatCarerIntake,
   diagnosis:   formatDiagnosisIntake,
   'diagnosis-employer-email': formatEmployerEmailIntake,
   'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake,
@@ -1185,14 +1338,16 @@ const INTAKE_FORMATTERS = {
   'bereavement-bank-letter':  formatBankLetterIntake,
   'bereavement-employer-notify': formatEmployerNotifyIntake,
   'bereavement-family-message': formatBereavementFamilyMessageIntake,
-  'diagnosis-family-message':   formatDiagnosisFamilyMessageIntake
+  'diagnosis-family-message':   formatDiagnosisFamilyMessageIntake,
+  'incapacity-family-message':  formatIncapacityFamilyMessageIntake,
+  'incapacity-gp-questions':    formatIncapacityGpQuestionsIntake,
+  'diagnosis-gp-questions':     formatDiagnosisGpQuestionsIntake
 };
 
 // ─── Per-tool model selection ────────────────────────────────────────────────
 const MODELS = {
   bereavement: 'claude-haiku-4-5-20251001',
   incapacity:  'claude-haiku-4-5-20251001',
-  carer:       'claude-haiku-4-5-20251001',
   diagnosis:   'claude-sonnet-4-6',
   // "Do it with me" drafts — Sonnet for tone/sensitivity on disclosure wording
   'diagnosis-employer-email': 'claude-sonnet-4-6',
@@ -1202,7 +1357,10 @@ const MODELS = {
   'bereavement-bank-letter':  'claude-sonnet-4-6',
   'bereavement-employer-notify': 'claude-sonnet-4-6',
   'bereavement-family-message': 'claude-sonnet-4-6',
-  'diagnosis-family-message':   'claude-sonnet-4-6'
+  'diagnosis-family-message':   'claude-sonnet-4-6',
+  'incapacity-family-message':  'claude-sonnet-4-6',
+  'incapacity-gp-questions':    'claude-sonnet-4-6',
+  'diagnosis-gp-questions':     'claude-sonnet-4-6'
 };
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 
@@ -1213,7 +1371,6 @@ const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 const MAX_TOKENS = {
   bereavement: 3000,
   incapacity:  3000,
-  carer:       2000,
   diagnosis:   4000,
   // "Do it with me" — fast, focused, output only
   'diagnosis-employer-email': 500,
@@ -1223,7 +1380,10 @@ const MAX_TOKENS = {
   'bereavement-bank-letter':  500,
   'bereavement-employer-notify': 600,
   'bereavement-family-message': 500,
-  'diagnosis-family-message':   500
+  'diagnosis-family-message':   500,
+  'incapacity-family-message':  500,
+  'incapacity-gp-questions':    700,
+  'diagnosis-gp-questions':     700
 };
 const DEFAULT_MAX_TOKENS = 2000;
 
