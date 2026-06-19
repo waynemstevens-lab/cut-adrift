@@ -713,9 +713,45 @@ function caSubmitFeedback() {
         fields: [
           { name: 'provider', label: 'Your KiwiSaver provider (optional)', type: 'text', placeholder: 'e.g. ANZ, Milford, Simplicity' }
         ]
+      },
+      {
+        tool: 'diagnosis-family-message',
+        // Anchors to the fixed "## The people in your life" section, which the
+        // diagnosis prompt always emits.
+        match: t => t.includes('people in your life'),
+        trigger: 'Draft a message for my family →',
+        intro: "I'll draft a short message you can send or read out to tell the people in your life — sharing only as much as you choose. You can edit it before you send it.",
+        submit: 'Draft my message',
+        working: 'Writing your message…',
+        fields: [
+          { name: 'recipients', label: 'Who do you need to tell?', type: 'text', placeholder: 'e.g. my parents, siblings, the kids, close friends' },
+          { name: 'tone', label: 'What tone do you want?', type: 'select', options: [
+            { value: 'gentle', label: 'Gentle and warm' },
+            { value: 'matter_of_fact', label: 'Calm and matter-of-fact' }
+          ] },
+          { name: 'concern', label: 'Anything specific to bear in mind? (optional)', type: 'text', placeholder: "e.g. they live overseas, or we're not close" }
+        ]
       }
     ],
     bereavement: [
+      {
+        tool: 'bereavement-family-message',
+        // Anchors to the fixed "## The people around you" section, which the
+        // bereavement prompt emits on Path B plans.
+        match: t => t.includes('people around you'),
+        trigger: 'Draft a message to tell family and friends →',
+        intro: "I'll draft a short message you can send or read out to let family and friends know. You can edit it before you send it.",
+        submit: 'Draft my message',
+        working: 'Writing your message…',
+        fields: [
+          { name: 'recipients', label: 'Who do you need to tell?', type: 'text', placeholder: 'e.g. my parents, siblings, the kids, close friends' },
+          { name: 'tone', label: 'What tone do you want?', type: 'select', options: [
+            { value: 'gentle', label: 'Gentle and warm' },
+            { value: 'matter_of_fact', label: 'Calm and matter-of-fact' }
+          ] },
+          { name: 'concern', label: 'Anything specific to bear in mind? (optional)', type: 'text', placeholder: "e.g. they live overseas, or we're not close" }
+        ]
+      },
       {
         tool: 'bereavement-leave-email',
         // Anchors to the dedicated employment section, which the worker emits as

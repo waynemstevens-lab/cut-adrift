@@ -103,8 +103,12 @@ Use when: timing is recent_sudden, recent_expected, or week_ago AND emotional_st
 **Section 1 — Right now**
 Actions that cannot wait today. Maximum four items. For NZ sudden deaths: the coroner is notified by the funeral director or police — explain this clearly so they understand they do not need to take action on that themselves.
 
-**Section 2 — The people**
-Only include subsections relevant to their answers:
+**Section 2 — The people around you**
+Always include this section in Path B. Output it as its own ## section with the heading exactly:
+
+## The people around you
+
+Do not rename or paraphrase that heading. Under it, include only the subsections relevant to their answers (if most people have already been told and no other subsection applies, keep it to a brief note on who else may still want to hear and on leaning on the people around them):
 - Who still needs to be told (if notifications_needed is havent_started or dont_know) — gentle sequence: immediate family, close friends, employer, GP. Include suggested language for hard calls if emotional_state is barely_functioning or not_sure.
 - Children who need support — school notification, age-appropriate conversation, immediate care if their children are at home.
 - Anyone who depended on them — specific steps: alternative care arrangements, pet rehoming contacts.
@@ -659,6 +663,13 @@ Frame this as taking control, not as morbid. Cover, briefly:
 
 Keep the tone matter-of-fact. This is housekeeping, not a death sentence.
 
+### ## The people in your life
+Always include this section, with the heading exactly "## The people in your life". Keep it short and practical. Telling people is one of the hardest parts and it is theirs to control. Cover:
+- Disclosure is one-way and on their terms — they decide who hears, how much, and when. They never have to name the diagnosis to anyone, including family.
+- A gentle order can help: one or two trusted people first, then wider family and friends as they feel ready. There is no obligation to tell everyone, or to tell anyone before they are ready.
+- They can ask one person to pass the news on, so they do not have to repeat it. They can set the terms — whether they want help, space, or just for people to know.
+- It is normal for people to react badly or make it about themselves. They are allowed to keep their distance from anyone who makes this harder.
+
 ### ## Support
 Two short blocks:
 1. Condition-specific organisations — only if the free text mentions a specific condition. Name the actual organisation for their country (e.g. Cancer Society of NZ, Macmillan Cancer Support UK, Cancer Council AU, Heart Foundation, MS Society, Diabetes UK, etc.). Do not invent.
@@ -795,6 +806,54 @@ Output rules:
 - Output the email ONLY. No preamble, no explanation, no notes before or after.
 - Begin with a subject line on its own first line, in the form "Subject: ...".
 - Then the email body, with a greeting and a sign-off.
+- Use placeholders like [your name] only where you genuinely cannot know the detail.
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`,
+
+  // ── "Do it with me" — bereavement: message to tell family and friends ────────
+  'bereavement-family-message': `You are helping someone who has recently had a death in their life draft a short message to let other people — family and friends — know that the person has died. They will send it as a text, email, or WhatsApp message, or read it out on the phone, with minimal editing. It must be ready to use.
+
+You will be told their country, their relationship to the person who died, who they need to tell, the tone they want, and optionally a specific concern about telling people.
+
+Write the message so that:
+- It is short, warm, and dignified. It carries hard news gently and is easy to read out loud or forward.
+- It states plainly that the person has died. Use the relationship — "my father", "my partner", "our mum" — and the natural framing for the people being told. Never use the word "deceased". It does not need to give details of the death.
+- It matches the tone they asked for:
+  - "gentle" — soft, warm, unhurried; gives the reader a moment before the news and a kind closing line.
+  - "matter_of_fact" — calm, clear, and brief; the news stated simply, without being cold.
+- It takes account of any concern they raised (for example: people who live overseas and may want to travel; a relationship that is distant or strained; someone who should hear especially gently). Adjust the wording sensitively without drawing attention to the difficulty.
+- It can offer to share funeral or service details when they are known, using a placeholder like [funeral details to follow] only if it reads naturally — never invent dates or arrangements.
+- It does not over-explain or demand anything of the reader beyond, where it fits, a gentle invitation to be in touch.
+
+Tone: warm, brief, human, ready to send.
+
+Output rules:
+- Output the message ONLY. No preamble, no explanation, no notes before or after.
+- No subject line — this is a message, not a formal letter. Begin with a short greeting only if one fits.
+- Use placeholders like [your name] only where you genuinely cannot know the detail.
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`,
+
+  // ── "Do it with me" — diagnosis: message to tell family and friends ──────────
+  'diagnosis-family-message': `You are helping someone who has recently received a serious medical diagnosis draft a short message to tell people in their life — family and friends — what is going on. They will send it as a text, email, or WhatsApp message, or read it out on the phone, with minimal editing. It must be ready to use.
+
+You do not know and must not comment on the diagnosis itself, its severity, or its prognosis.
+
+You will be told their country, their employment situation, who they need to tell, the tone they want, optionally a specific concern, and anything they shared in their own words. They were explicitly told they do not need to name the diagnosis.
+
+Write the message so that:
+- It is short, warm, and steady. It shares difficult news without alarming the reader and without dramatising.
+- Disclosure is theirs to control. Do NOT name or hint at the condition unless they clearly named it in their own words. If they did not name it, keep it general — "a health condition", "some health news" — and share only as much as they have chosen to.
+- It matches the tone they asked for:
+  - "gentle" — soft, warm, reassuring; eases into the news and closes kindly.
+  - "matter_of_fact" — calm, clear, and brief; states the situation plainly, without being cold.
+- It takes account of any concern they raised (for example: people who live overseas; a distant or strained relationship; someone who tends to worry or over-react). Adjust the wording sensitively.
+- It sets the terms of support they want: whether they would welcome help, would rather have space for now, or will share more when they know more. Do not commit them to anything they have not indicated.
+- It never speculates about treatment, recovery, outcomes, or how serious things are.
+
+Tone: warm, steady, human, ready to send.
+
+Output rules:
+- Output the message ONLY. No preamble, no explanation, no notes before or after.
+- No subject line — this is a message, not a formal letter. Begin with a short greeting only if one fits.
 - Use placeholders like [your name] only where you genuinely cannot know the detail.
 - Plain text only. No markdown, no bold, no bullet symbols, no headings.`
 
@@ -1036,6 +1095,32 @@ function formatEmployerNotifyIntake(intake) {
   return lines.join('\n');
 }
 
+const FAMILY_MESSAGE_TONE = {
+  gentle:         'Gentle and warm',
+  matter_of_fact: 'Calm and matter-of-fact'
+};
+
+function formatBereavementFamilyMessageIntake(intake) {
+  const lines = ['Help this person draft a short message to tell family and friends that someone has died.\n'];
+  if (intake.country)      lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.relationship) lines.push(`Their relationship to the person who died: ${LABELS.relationship[intake.relationship] || intake.relationship}`);
+  if (intake.recipients && intake.recipients.trim()) lines.push(`Who they need to tell: ${intake.recipients.trim()}`);
+  if (intake.tone)         lines.push(`Tone they want: ${FAMILY_MESSAGE_TONE[intake.tone] || intake.tone}`);
+  if (intake.concern && intake.concern.trim())       lines.push(`A specific concern about telling people: ${intake.concern.trim()}`);
+  lines.push('\nDraft the message now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
+function formatDiagnosisFamilyMessageIntake(intake) {
+  const lines = ['Help this person draft a short message to tell family and friends about their diagnosis.\n'];
+  lines.push(...diwmContextLines(intake));
+  if (intake.recipients && intake.recipients.trim()) lines.push(`Who they need to tell: ${intake.recipients.trim()}`);
+  if (intake.tone)         lines.push(`Tone they want: ${FAMILY_MESSAGE_TONE[intake.tone] || intake.tone}`);
+  if (intake.concern && intake.concern.trim())       lines.push(`A specific concern about telling people: ${intake.concern.trim()}`);
+  lines.push('\nDraft the message now, following your output rules exactly. Do not name the condition unless they named it in their own words above.');
+  return lines.join('\n');
+}
+
 const INTAKE_FORMATTERS = {
   bereavement: formatBereavementIntake,
   incapacity:  formatIncapacityIntake,
@@ -1045,7 +1130,9 @@ const INTAKE_FORMATTERS = {
   'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake,
   'bereavement-leave-email':  formatBereavementLeaveEmailIntake,
   'bereavement-bank-letter':  formatBankLetterIntake,
-  'bereavement-employer-notify': formatEmployerNotifyIntake
+  'bereavement-employer-notify': formatEmployerNotifyIntake,
+  'bereavement-family-message': formatBereavementFamilyMessageIntake,
+  'diagnosis-family-message':   formatDiagnosisFamilyMessageIntake
 };
 
 // ─── Per-tool model selection ────────────────────────────────────────────────
@@ -1059,7 +1146,9 @@ const MODELS = {
   'diagnosis-kiwisaver-call': 'claude-sonnet-4-6',
   'bereavement-leave-email':  'claude-sonnet-4-6',
   'bereavement-bank-letter':  'claude-sonnet-4-6',
-  'bereavement-employer-notify': 'claude-sonnet-4-6'
+  'bereavement-employer-notify': 'claude-sonnet-4-6',
+  'bereavement-family-message': 'claude-sonnet-4-6',
+  'diagnosis-family-message':   'claude-sonnet-4-6'
 };
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 
@@ -1077,7 +1166,9 @@ const MAX_TOKENS = {
   'diagnosis-kiwisaver-call': 500,
   'bereavement-leave-email':  500,
   'bereavement-bank-letter':  500,
-  'bereavement-employer-notify': 600
+  'bereavement-employer-notify': 600,
+  'bereavement-family-message': 500,
+  'diagnosis-family-message':   500
 };
 const DEFAULT_MAX_TOKENS = 2000;
 
