@@ -734,6 +734,23 @@ function caSubmitFeedback() {
         ]
       },
       {
+        tool: 'bereavement-employer-notify',
+        // Anchors to the "## Notifying their employer" section, which the worker
+        // emits only when the person who died was employed (deceased_employment
+        // === 'employed'). Absent otherwise — so the button correctly won't show.
+        match: t => t.includes('notifying their employer'),
+        trigger: 'Draft an email to their employer →',
+        intro: "I'll draft a short, dignified email to let their workplace know and ask about their final pay and anything else owed. You can edit it before you send it.",
+        submit: 'Draft my email',
+        working: 'Writing your email…',
+        fields: [
+          { name: 'employer_name', label: 'Employer or workplace name', type: 'text', placeholder: 'e.g. the company they worked for' },
+          { name: 'job_title', label: 'Their job title (optional)', type: 'text', placeholder: 'e.g. Site Foreman' },
+          { name: 'relationship_to_deceased', label: 'Your relationship to them', type: 'text', placeholder: 'e.g. wife, son, executor' },
+          { name: 'hr_contact', label: 'HR or payroll contact name (optional)', type: 'text', placeholder: 'If you know who to address it to' }
+        ]
+      },
+      {
         tool: 'bereavement-bank-letter',
         match: t => ['bank', 'estate', 'admin', 'account'].some(k => t.includes(k)),
         trigger: 'Draft a letter notifying them of the death →',

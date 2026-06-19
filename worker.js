@@ -64,6 +64,8 @@ You will receive the person's answers as a structured message. Here is what each
 
 **employment** — the employment situation of the person grieving (not the person who died): employed, self_employed, not_working. Determines whether to include the "Your work and leave" section — see Path B.
 
+**deceased_employment** — the employment situation of the person who died: employed, self_employed, not_working, not_sure. When this is "employed", you MUST include the "Notifying their employer" section — see Path B and Path C.
+
 **has_will** — one of: yes_executor, yes_not_executor, no_will, dont_know.
 
 **assets** — one of: yes, no, dont_know.
@@ -120,6 +122,19 @@ Do not rename or paraphrase that heading. Under it, cover briefly and practicall
 
 If employment is "self_employed": do NOT output a "Your work and leave" heading. Instead include a separate section headed "## Your business" about pausing or notifying clients and watching for urgent contractual deadlines. If employment is "not_working" or absent: omit any work section entirely.
 
+**Section 3b — Notifying their employer**
+This section is MANDATORY whenever deceased_employment is "employed" — it is about the employer of the person who died, and is entirely separate from "Your work and leave" (which is about the grieving person's own job). Output it as its own ## section. Its heading MUST be exactly:
+
+## Notifying their employer
+
+Do not rename or paraphrase that heading. Do NOT include this section when deceased_employment is self_employed, not_working, not_sure, or absent. Under the heading, cover briefly and practically:
+- Telling their employer — contact the workplace (HR, payroll, or their manager) to let them know they have died. A short call or email is enough; the family does not owe a detailed explanation. If the person is named as next of kin or is handling the estate, they can say so.
+- Final pay and entitlements — there is usually money owed: final wages, untaken annual / holiday leave, and sometimes a death-in-service benefit, life cover through the workplace, or outstanding KiwiSaver / superannuation / pension contributions. Ask payroll exactly what is owed and what they need (often a death certificate and proof the person is dealing with the estate) before it can be released — it forms part of the estate.
+- Returning equipment and access — arrange to return work property (laptop, phone, vehicle, keys, security passes) and ask them to close off email and system access. Don't rush this; agree a time that works.
+- What to say — keep it simple and factual. Suggested wording: "I'm contacting you about [name], who worked with you. I'm very sorry to tell you that they have died. I'm [relationship / handling their affairs] and wanted to let you know, and to ask what you need from me regarding their final pay and anything outstanding."
+
+Use the correct country-specific entitlements where relevant (final pay and holiday pay under the Holidays Act 2003 in NZ; equivalents under the Fair Work Act in AU, statutory final pay in the UK and Ireland, and applicable provisions in CA and the US).
+
 **Section 4 — This week**
 Funeral arrangements if not started or in progress. Death certificate. Notifying their GP. One brief mention of grief support.
 
@@ -147,6 +162,9 @@ Only include what is relevant:
 - Property and assets (with dont_know handling if applicable)
 - Government notifications (IRD, WINZ, NZ Super, passport, driver licence, KiwiSaver)
 - Subscriptions and digital accounts
+
+**Section 2b — Notifying their employer**
+This section is MANDATORY whenever deceased_employment is "employed" — output it as its own ## section with the heading exactly "## Notifying their employer". Do NOT include it when deceased_employment is self_employed, not_working, not_sure, or absent. Even weeks on, the employer may still owe final pay, untaken holiday pay, or a death-in-service / workplace life or pension benefit that has not been claimed. Cover the same ground as in Path B: telling HR / payroll, the final pay and entitlements owed (and what payroll needs before releasing them), returning work equipment and closing off access, and simple, factual wording for making contact.
 
 **Section 3 — Things people commonly miss**
 Legal timeframes. Outstanding letters. Warning about scams targeting bereaved people.
@@ -753,7 +771,32 @@ Output rules:
 - Output the letter ONLY. No preamble, no explanation, no notes before or after.
 - Lay it out as a standard letter in plain text: a [date] line, the organisation's name, a "Dear Sir or Madam," salutation, the body in short paragraphs, and a "Yours faithfully," sign-off with [your name] beneath.
 - Use square-bracket placeholders for anything you cannot know.
-- Plain text only. No markdown, no bold, no headings, no asterisks.`
+- Plain text only. No markdown, no bold, no headings, no asterisks.`,
+
+  // ── "Do it with me" — bereavement: notify the deceased's employer ────────────
+  'bereavement-employer-notify': `You are helping someone draft a short, dignified email to the employer of a person who has died — to let the workplace know, and to ask what happens with their final pay and anything else outstanding. They will send it with minimal editing, so it must be ready to use.
+
+This is the employer of the person who DIED — not the sender's own employer. The sender is a bereaved family member or the person dealing with the estate.
+
+You will be told their country, the name of the employer or workplace, the job title of the person who died, the sender's relationship to them, and optionally the name of an HR or payroll contact.
+
+Write the email so that:
+- It is brief, warm, and dignified — clear, never cold or bureaucratic, and not over-explaining.
+- It states plainly that the person has died. Use their name and, where it reads naturally, their role ("who worked with you as a [job title]"). Never use the word "deceased". It does not need to give any details of the death.
+- It explains who the sender is and their relationship to the person who died, and that they are letting the workplace know and (where relevant) dealing with their affairs.
+- It asks the practical questions: what the workplace needs from them, and what happens with final pay, any untaken holiday / annual leave owed, and any death-in-service benefit, workplace life cover, or outstanding pension / KiwiSaver / superannuation. Ask them to confirm what documentation they require (for example a death certificate) before anything can be released.
+- It offers to arrange the return of any work equipment (laptop, phone, keys, passes) and the closing of accounts and access.
+- It addresses the named HR / payroll contact if one was given; otherwise it uses a general greeting.
+- It is country-appropriate in what it refers to (final pay and holiday pay under the Holidays Act in NZ; equivalents under the Fair Work Act in AU; statutory final pay in the UK and Ireland; applicable provisions in CA / US), but it asks rather than lectures.
+
+Tone: warm, brief, dignified, ready to send.
+
+Output rules:
+- Output the email ONLY. No preamble, no explanation, no notes before or after.
+- Begin with a subject line on its own first line, in the form "Subject: ...".
+- Then the email body, with a greeting and a sign-off.
+- Use placeholders like [your name] only where you genuinely cannot know the detail.
+- Plain text only. No markdown, no bold, no bullet symbols, no headings.`
 
 };
 
@@ -771,7 +814,8 @@ const LABELS = {
   will:          { yes_executor: 'Yes — and they are named as executor', yes_not_executor: 'Yes — but someone else is executor', no_will: 'No will', dont_know: "Don't know" },
   assets:        { yes: 'Yes — property or significant assets', no: 'Mainly personal belongings', dont_know: "Don't know" },
   funeral:       { not_started: 'Not started', in_progress: 'Being arranged', done: 'Already happened', someone_else: 'Someone else is handling it' },
-  employment:    { employed: 'Employed (works for an employer)', self_employed: 'Self-employed / contractor / business owner', not_working: 'Not currently working' }
+  employment:    { employed: 'Employed (works for an employer)', self_employed: 'Self-employed / contractor / business owner', not_working: 'Not currently working' },
+  deceasedEmployment: { employed: 'Yes — they were employed (worked for an employer)', self_employed: 'They were self-employed / contractor / business owner', not_working: "No — they weren't working (retired or not in work)", not_sure: 'Not sure' }
 };
 
 function lbl(map, val) {
@@ -795,6 +839,7 @@ function formatBereavementIntake(intake) {
   add('Notification status',               LABELS.notifications,  'notifications_needed');
   add('Dependants of the person who died', LABELS.dependants,     'dependants');
   add('Employment situation (of the person grieving)', LABELS.employment, 'employment');
+  add('Employment of the person who died',  LABELS.deceasedEmployment, 'deceased_employment');
   add('Will status',                       LABELS.will,           'has_will');
   add('Significant assets',                LABELS.assets,         'assets');
 
@@ -980,6 +1025,17 @@ function formatBankLetterIntake(intake) {
   return lines.join('\n');
 }
 
+function formatEmployerNotifyIntake(intake) {
+  const lines = ["Help this person draft an email to the employer of someone who has died.\n"];
+  if (intake.country)            lines.push(`Country: ${LABELS.country[intake.country] || intake.country}`);
+  if (intake.employer_name && intake.employer_name.trim())                  lines.push(`Employer or workplace name: ${intake.employer_name.trim()}`);
+  if (intake.job_title && intake.job_title.trim())                          lines.push(`Job title of the person who died: ${intake.job_title.trim()}`);
+  if (intake.relationship_to_deceased && intake.relationship_to_deceased.trim()) lines.push(`Sender's relationship to the person who died: ${intake.relationship_to_deceased.trim()}`);
+  if (intake.hr_contact && intake.hr_contact.trim())                        lines.push(`HR or payroll contact name: ${intake.hr_contact.trim()}`);
+  lines.push('\nDraft the email now, following your output rules exactly.');
+  return lines.join('\n');
+}
+
 const INTAKE_FORMATTERS = {
   bereavement: formatBereavementIntake,
   incapacity:  formatIncapacityIntake,
@@ -988,7 +1044,8 @@ const INTAKE_FORMATTERS = {
   'diagnosis-employer-email': formatEmployerEmailIntake,
   'diagnosis-kiwisaver-call': formatKiwiSaverCallIntake,
   'bereavement-leave-email':  formatBereavementLeaveEmailIntake,
-  'bereavement-bank-letter':  formatBankLetterIntake
+  'bereavement-bank-letter':  formatBankLetterIntake,
+  'bereavement-employer-notify': formatEmployerNotifyIntake
 };
 
 // ─── Per-tool model selection ────────────────────────────────────────────────
@@ -1001,7 +1058,8 @@ const MODELS = {
   'diagnosis-employer-email': 'claude-sonnet-4-6',
   'diagnosis-kiwisaver-call': 'claude-sonnet-4-6',
   'bereavement-leave-email':  'claude-sonnet-4-6',
-  'bereavement-bank-letter':  'claude-sonnet-4-6'
+  'bereavement-bank-letter':  'claude-sonnet-4-6',
+  'bereavement-employer-notify': 'claude-sonnet-4-6'
 };
 const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 
@@ -1018,7 +1076,8 @@ const MAX_TOKENS = {
   'diagnosis-employer-email': 500,
   'diagnosis-kiwisaver-call': 500,
   'bereavement-leave-email':  500,
-  'bereavement-bank-letter':  500
+  'bereavement-bank-letter':  500,
+  'bereavement-employer-notify': 600
 };
 const DEFAULT_MAX_TOKENS = 2000;
 

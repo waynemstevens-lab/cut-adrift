@@ -384,7 +384,7 @@
     <div class="step-q">Let's focus on what needs doing.</div>
     <div class="weeks-intro">It sounds like you're past the immediate shock and working through everything that still needs to be sorted. A few quick questions and we'll put a practical plan together for you.</div>
     <div class="options">
-      <button class="opt" onclick="skipTo('funeral_status')"><div class="opt-text"><div class="opt-main">OK, let's go →</div></div></button>
+      <button class="opt" onclick="skipTo('deceased_employment')"><div class="opt-text"><div class="opt-main">OK, let's go →</div></div></button>
     </div>
   </div>
 
@@ -476,6 +476,19 @@
     </div>
   </div>
 
+  <!-- Q8b: Deceased's employment (the person who died) -->
+  <div class="step" id="step-deceased_employment">
+    <div class="step-label">Their work</div>
+    <div class="step-q">Were they employed when they died?</div>
+    <div class="step-hint">If they were working, their employer will need to be told — and there may be final pay or entitlements owed.</div>
+    <div class="options">
+      <button class="opt" onclick="answer('deceased_employment','employed')"><div class="opt-text"><div class="opt-main">Yes — they were employed</div><div class="opt-sub">Working for an employer</div></div></button>
+      <button class="opt" onclick="answer('deceased_employment','self_employed')"><div class="opt-text"><div class="opt-main">They were self-employed</div><div class="opt-sub">Contractor, freelancer, or business owner</div></div></button>
+      <button class="opt" onclick="answer('deceased_employment','not_working')"><div class="opt-text"><div class="opt-main">No — they weren't working</div><div class="opt-sub">Retired, or not in work</div></div></button>
+      <button class="opt" onclick="answer('deceased_employment','not_sure')"><div class="opt-text"><div class="opt-main">I'm not sure</div></div></button>
+    </div>
+  </div>
+
   <!-- Bridge: practical opt-in -->
   <div class="step" id="step-bridge">
     <div class="step-q">One more thing before your plan.</div>
@@ -545,7 +558,7 @@
   const LAYER1  = ['relationship','emotional_state','support_situation','children_affected','notifications_needed','employment','dependants'];
   const LAYER2  = ['funeral_status','has_will','assets'];
   const FULL_SEQ = ['country','timing','relationship','emotional_state','support_situation',
-                    'children_affected','notifications_needed','employment','dependants','bridge',
+                    'children_affected','notifications_needed','employment','dependants','deceased_employment','bridge',
                     'funeral_status','has_will','assets','free_text'];
 
   let currentStep = 'country';
@@ -597,7 +610,7 @@
     }
     if (step === 'weeks-intro') {
       answers.practical_opted_in = 'yes'; // auto opt-in for weeks_ago path
-      return 'funeral_status';
+      return 'deceased_employment';
     }
 
     // Bridge routing
@@ -656,10 +669,10 @@
   function updateProgress() {
     // Compute approximate progress
     const seq = answers.timing === 'weeks_ago'
-      ? ['country','timing','funeral_status','has_will','assets','free_text']
+      ? ['country','timing','deceased_employment','funeral_status','has_will','assets','free_text']
       : answers.practical_opted_in === 'no'
         ? ['country','timing','relationship','emotional_state','support_situation',
-           'children_affected','notifications_needed','employment','dependants','bridge','free_text']
+           'children_affected','notifications_needed','employment','dependants','deceased_employment','bridge','free_text']
         : FULL_SEQ;
 
     const idx  = seq.indexOf(currentStep);
