@@ -73,5 +73,31 @@ ok('formatter handles missing fields without leaking "undefined"', !/undefined/.
 ok('existing bereavement prompt still present', /You are the guide at Cut Adrift/.test(SYSTEM_PROMPTS.bereavement || ''));
 ok('existing bereavement formatter still present', typeof INTAKE_FORMATTERS.bereavement === 'function');
 
+// ---- Crisis-continue Path B override (signal plumbing; behaviour is live) ----
+// The Path A/B decision is model-driven, so deterministically we verify only
+// that the override SIGNAL is wired correctly end to end. The actual
+// "Path B not Path A" behaviour is checked live (see report / test_suite).
+const fullBase = { tool: 'bereavement', country: 'nz', timing: 'recent_sudden', relationship: 'partner',
+  emotional_state: 'barely_functioning', support_situation: 'mostly_alone', children_affected: 'no',
+  notifications_needed: 'havent_started', employment: 'employed', dependants: 'no',
+  deceased_employment: 'employed', practical_opted_in: 'yes', funeral_status: 'not_started',
+  has_will: 'yes_executor', assets: 'yes' };
+const withFlag    = INTAKE_FORMATTERS.bereavement({ ...fullBase, from_crisis_continue: true });
+const withoutFlag = INTAKE_FORMATTERS.bereavement({ ...fullBase });
+const SIGNAL = 'Continuing from the brief crisis response: yes';
+ok('formatter emits the override signal when from_crisis_continue=true', withFlag.includes(SIGNAL));
+ok('formatter omits the override signal when flag absent (existing behaviour untouched)', !withoutFlag.includes(SIGNAL));
+ok('bereavement prompt has the Path-selection override rule', /Override — check this first/.test(SYSTEM_PROMPTS.bereavement || ''));
+ok('override rule directs to Path B and protects weeks_ago→Path C',
+  /you MUST use Path B/.test(SYSTEM_PROMPTS.bereavement || '') && /weeks_ago[^.]*Path C/.test(SYSTEM_PROMPTS.bereavement || ''));
+
+// frontend sets the flag ONLY on the continue-from-crisis path
+const intakeHtml = fs.readFileSync(new URL('../Public/when-someone-dies/index.html', import.meta.url), 'utf8');
+ok('continueToFull() sets answers.from_crisis_continue = true',
+  /function continueToFull\(\)\s*\{[\s\S]*?answers\.from_crisis_continue\s*=\s*true/.test(intakeHtml));
+const submitBody = (intakeHtml.match(/function submit\(\)\s*\{[\s\S]*?\n  \}/) || [''])[0];
+ok('the flag is NOT set inside the default submit() body (only continueToFull sets it)',
+  submitBody.length > 0 && !submitBody.includes('from_crisis_continue'));
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exitCode = fail ? 1 : 0;

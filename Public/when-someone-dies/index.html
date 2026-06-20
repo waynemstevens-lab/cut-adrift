@@ -765,6 +765,10 @@
   }
 
   function continueToFull() {
+    // Signal to the worker that this full-plan run came from the crisis
+    // short-circuit, so it must use the full Path B plan regardless of the
+    // emotional_state answer (which would otherwise route to brief Path A).
+    answers.from_crisis_continue = true;
     history.push('crisis');
     showStep('support_situation');
   }

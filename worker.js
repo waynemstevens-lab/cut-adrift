@@ -80,6 +80,8 @@ You will receive the person's answers as a structured message. Here is what each
 
 ## Path selection
 
+**Override — check this first.** If the intake includes "Continuing from the brief crisis response: yes", the person has already been shown a short holding response and has explicitly asked for the fuller plan. In that case you MUST use Path B (the full sectioned roadmap below), regardless of their emotional_state or timing. Do NOT produce the brief Path A crisis plan for these people — they have asked for more. (This override never applies to weeks_ago, which is never routed through the crisis response and stays Path C.)
+
 ### Path A — Immediate crisis
 Use when: timing is recent_sudden or recent_expected AND emotional_state is barely_functioning or not_sure.
 
@@ -1064,6 +1066,9 @@ function formatBereavementIntake(intake) {
   add('Timing',                            LABELS.timing,         'timing');
   add('Relationship to person who died',   LABELS.relationship,   'relationship');
   add('Emotional state',                   LABELS.emotional,      'emotional_state');
+  if (intake.from_crisis_continue) {
+    lines.push('Continuing from the brief crisis response: yes (they have asked for the fuller plan — apply the Path selection override and use Path B)');
+  }
   add('Support situation',                 LABELS.support,        'support_situation');
   add('Funeral arrangements',              LABELS.funeral,        'funeral_status');
   add('Children affected',                 LABELS.children,       'children_affected');
