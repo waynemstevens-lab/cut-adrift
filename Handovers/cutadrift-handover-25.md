@@ -1,6 +1,6 @@
 # Cut Adrift — Handover Document 25
 **Updated:** 20 June 2026
-**Session work:** Full visual redesign of the homepage — new palette, logo, headline, and a "proof card" device showing actual drafted output. Deleted three stacked `!important` design systems from `index.html` (original dark editorial → desktop-grid patch → session 16's cork-board "NOTICE BOARD REDESIGN") and replaced with one clean stylesheet. Updated trust-strip/footer wording site-wide ("No ads, ever" → "We don't sell your data") across all 26 affected pages. Confirmed GSC indexing is healthy (42/8, no real problem — earlier concern was a false alarm). Then: a full per-country anti-hallucination hardening of the **incapacity tool** prompt across all five non-NZ countries (AU/CA/UK/IE/US) — started from a one-line request to add Canada/US to the dropdown, which exposed a fabrication pattern in three never-tested countries. Verified national contacts where they exist, suppression + search fallback where they don't, jurisdiction-correct legal terms, and a generalized cross-country contact-reuse ban; each country closed only after passing both a chronic and an acute live test. Deployed and verified live on cutadrift.org.
+**Session work:** Full visual redesign of the homepage — new palette, logo, headline, and a "proof card" device showing actual drafted output. Deleted three stacked `!important` design systems from `index.html` (original dark editorial → desktop-grid patch → session 16's cork-board "NOTICE BOARD REDESIGN") and replaced with one clean stylesheet. Updated trust-strip/footer wording site-wide ("No ads, ever" → "We don't sell your data") across all 26 affected pages. Confirmed GSC indexing is healthy (42/8, no real problem — earlier concern was a false alarm). Then: a full per-country anti-hallucination hardening of the **incapacity tool** prompt across all five non-NZ countries (AU/CA/UK/IE/US) — started from a one-line request to add Canada/US to the dropdown, which exposed a fabrication pattern in three never-tested countries. Verified national contacts where they exist, suppression + search fallback where they don't, jurisdiction-correct legal terms, and a generalized cross-country contact-reuse ban; each country closed only after passing both a chronic and an acute live test. Then the same pattern was applied to the **bereavement** tool for **Canada** (verified contacts, Ontario estate terminology, banned NZ/US-org leaks), and a global **no-URL rule + cross-country reuse ban** was added to the bereavement prompt scoped to all six countries from the start — partially shielding AU/UK/IE/US there too. Deployed and verified live on cutadrift.org.
 **Supersedes:** Handover 24
 
 ---
@@ -79,6 +79,38 @@ The shape of the fix: **verified national contacts where they genuinely exist; e
 
 ---
 
+### 4. Bereavement tool — Canada hardened + global guardrails (all six countries)
+
+With incapacity fully closed, the same diagnostic was run on the **bereavement** tool with country = Canada. As the section above predicted, it carried the same pattern — **worse**, because the bereavement prompt had no URL guardrail at all.
+
+**Diagnostic (Canada, chronic + acute) found:**
+- **NZ-content leak**: **Skylight** (0800 299 100, a New Zealand grief line) recommended to a Toronto user — verbatim "Skylight (0800 299 100 in NZ, but for Toronto…)". The NZ-detailed content bleeding straight into a Canadian plan.
+- **Fabricated / mislocalized URLs**: `lawhelp.org/ca` (that is *California* legal aid), `lawhelpontario.org` (does not exist), `bfo.org`, `clstoronto.org`.
+- **US-org leaks**: The Dinner Party, GriefShare offered to a Canadian.
+- **Mis-routed contact**: CRA `1-800-959-5525` (the Business Enquiries line) for a deceased individual's estate.
+- **Terminology gap**: generic "probate" instead of Ontario's "estate trustee" / "Certificate of Appointment of Estate Trustee"; the Estate Administration Tax never named.
+- *(Underlying Canadian knowledge was actually solid: Service Canada, CPP death benefit, intestacy, clearance certificate, correct Service Canada / CRA-individual numbers.)*
+
+**Fix applied — same verified-contacts + suppression pattern as incapacity, with the structural guardrails scoped to all six countries from the start:**
+- **Canada content block** (verified, given directly): Service Canada `1-800-277-9914` (independently verified this session), CRA Estates & Trusts `1-800-959-8281` (with `1-800-959-5525` explicitly banned as a wrong-department mis-route, not just a fabrication), Bereaved Families of Ontario–Toronto `416-440-0290` (verified — the earlier "likely wrong" flag was itself wrong), Toronto Distress Centres 408 Helpline `416-408-4357` (independently verified this session), **Steps to Justice** (`stepstojustice.ca`, by CLEO) replacing the California/fabricated legal URLs.
+- **Ontario terminology corrected**: estate trustee, Certificate of Appointment of Estate Trustee (with / without a will), Estate Administration Tax, intestacy.
+- **Explicit bans**: Skylight, the fabricated/wrong URLs, and the US grief orgs.
+- **Global no-URL rule + cross-country contact-reuse ban added to the bereavement prompt's country clause, scoped to all six countries (NZ/AU/UK/IE/CA/US) from the start** — not discovered incrementally as it was for incapacity. One deliberate difference from incapacity: incapacity's no-URL rule is *absolute*; the bereavement version is a **whitelist** (official government domains + prompt-verified URLs like `stepstojustice.ca` allowed; everything else banned from invention/localization), because this prompt genuinely has verified URLs worth giving.
+
+**Tested clean (both chronic + acute):** CRA `1-800-959-8281` present (−5525 gone), BFO `416-440-0290` present, `stepstojustice.ca` correctly formed (not mangled), Skylight/NZ + all banned US/fabricated orgs gone (0), only `ontario.ca` + `stepstojustice.ca` URLs remain, Ontario estate-trustee terminology dominant over bare "probate" (acute used "probate" 0×). Worker `5cd80995`.
+
+**Side benefit:** because the no-URL rule and cross-country ban are scoped to all six countries, **AU/UK/IE/US bereavement are now partially protected against the worst leak classes** (fabricated/mislocalized URLs, cross-country contact bleed) even though they have not been individually tested or given verified-contact blocks yet.
+
+### Methodology for the per-country hardening — carry forward to next session
+
+For whoever continues this (AU/UK/IE/US bereavement, then the diagnosis tool):
+- **Verify every "this is correct" claim independently.** Claude Code has been wrong before this session — the UK LPA fee (asserted £82, actually £92) and the BFO Toronto number (flagged "likely wrong," actually correct). Confirm each number/term against an independent source before baking it in (this session used web search + cross-referencing).
+- **Test both a chronic and an acute scenario per country.** They exercise different surfaces — chronic hits legal/estate/contact content; acute hits emergency/deadline/safeguarding routing. A country is not closed until both are clean on a scripted scan.
+- **Prefer phone numbers over URLs.** URLs get invented and TLD-mangled even when correct in the prompt (AU's `.au`→`.nz`); verified phone numbers come through reliably.
+- **Use real verified national contacts wherever a genuine national entry point exists** (AU's My Aged Care, US's Eldercare Locator, Canada's Service Canada) rather than defaulting to search-only suppression. Suppression + "tell them to search" is the fallback *only* where services are purely regional with no clean national line (Canada provinces, UK councils).
+
+---
+
 ## Commits this session
 
 | Commit | Message |
@@ -95,6 +127,7 @@ The shape of the fix: **verified national contacts where they genuinely exist; e
 | `e03bf74` | Add Ireland block: verified DSS/Alzheimer/HSE-safeguarding contacts, wardship→DSS correction, Community Law root-fix |
 | `a416a1b` | Add US block + generalize cross-country contact-reuse ban to all five countries |
 | `794be69` | Harden US block: forbid Medicaid/state-agency phone numbers; make 911/APS two-path mandatory on acute risk |
+| `5acd417` | Harden **bereavement** prompt: Canada verified-contacts block + global no-URL rule + cross-country reuse ban (scoped to all six countries) |
 
 All pushed to `origin/main`. The homepage change (`10b6096`) was Pages-only; **every incapacity-hardening commit required a `wrangler deploy` (the Worker holds the prompt) in addition to the Pages deploy** — a split that matters: a Pages-only deploy would silently leave the prompt stale. Final Worker version `b69e3aeb`.
 
@@ -112,7 +145,9 @@ All pushed to `origin/main`. The homepage change (`10b6096`) was Pages-only; **e
 
 ### ⚡ Priority
 
-1. **NEW — Apply the incapacity hardening pattern to the bereavement and diagnosis prompts.** The per-country anti-hallucination work (item 3 above) covered the **incapacity tool only**. The bereavement and diagnosis prompts serve the same six countries and almost certainly carry the same latent risk (fabricated numbers/URLs, cross-country leaks, stale figures). The proven loop applies directly: chronic + acute test per country → triage → verified block where clean national contacts exist, suppression + search-pattern where they don't. Start by checking the bereavement prompt intro at `worker.js:47` (still only names AU/UK/Ireland in its detailed-support line).
+1. **NEW — Finish the per-country hardening sweep (bereavement, then diagnosis).** Progress so far: **incapacity = all five non-NZ countries done** (item 3); **bereavement = Canada done + global guardrails now protect all six against the worst leak classes** (item 4). Remaining:
+   - **Bereavement AU/UK/IE/US** still each need the full chronic + acute test-and-harden pass (verified-contact blocks + correct local terminology). They're partially shielded by the no-URL + cross-country ban already in place, but not individually tested.
+   - **Diagnosis tool — untouched.** It serves the same six countries and almost certainly carries the same latent risk across all of them (it has no country-specific blocks and no URL/cross-country guardrails yet). It's the next *tool* once bereavement is fully closed out. Follow the carry-forward methodology subsection under item 4.
 2. **NEW — Homepage-vs-rest visual inconsistency.** This session's homepage redesign was scoped to `index.html` only, so guide and tool pages still use the pre-redesign styling. Applying the new design system (clay/sage, Fraunces/Inter, hairline aesthetic, custom icons) site-wide is the remaining consistency work (see item 6).
 
    *(Resolved this session — the Handover 24 carried items are now done: the incapacity tool offers all six countries (CA/US picker buttons added), and `SYSTEM_PROMPTS.incapacity` has full, tested CA/US content. See item 3.)*
@@ -163,7 +198,7 @@ All pushed to `origin/main`. The homepage change (`10b6096`) was Pages-only; **e
 | 22 | Refined homepage hero subhead and footer trust line; verified live across mobile/tablet/desktop breakpoints. |
 | 23 | DIWM Phase 3: incapacity family-coordination message + GP/appointment question-prep panels (incapacity + diagnosis), scoped to questions only. Added mandated headings to the incapacity prompt as stable panel anchors. Fixed DIWM payload field forwarding. Discovered incapacity tool IS the carer tool, deleted dead scaffolding. Cover-letter (#3) parked. |
 | 24 | Homepage hero/title/meta refresh ("without warning" → "where to start," fitting all three personas). Built distress-adaptive bereavement intake — short-circuit on high-distress answers, abbreviated output, opt-in continue to full plan. Fixed continue-to-full routing asymmetry. Cleaned up superseded handovers 17–19. |
-| 25 | Full homepage visual redesign — new palette (clay/sage), logo brought in from favicon, restructured nav, new two-clause headline, Roman-numeral how-it-works strip, "proof card" showing real drafted output, custom line icons, flat hairline card grid. Deleted three stacked `!important` design systems, replaced with one clean stylesheet. Site-wide trust-copy fix ("No ads, ever" → "We don't sell your data") across 26 pages. GSC indexing concern investigated and closed as a false alarm. **Then: per-country anti-hallucination hardening of the incapacity tool prompt (AU/CA/UK/IE/US) — verified contacts where they exist, suppression + search fallback where they don't, jurisdiction-correct legal terms, generalized cross-country reuse ban; each country closed only after a chronic + acute live test.** Deployed and verified live. |
+| 25 | Full homepage visual redesign — new palette (clay/sage), logo brought in from favicon, restructured nav, new two-clause headline, Roman-numeral how-it-works strip, "proof card" showing real drafted output, custom line icons, flat hairline card grid. Deleted three stacked `!important` design systems, replaced with one clean stylesheet. Site-wide trust-copy fix ("No ads, ever" → "We don't sell your data") across 26 pages. GSC indexing concern investigated and closed as a false alarm. **Then: per-country anti-hallucination hardening of the incapacity tool (AU/CA/UK/IE/US) — verified contacts where they exist, suppression + search fallback where they don't, jurisdiction-correct legal terms, generalized cross-country reuse ban; each closed only after a chronic + acute live test. Then bereavement-tool Canada hardened the same way + global no-URL/cross-country guardrails scoped to all six countries.** Deployed and verified live. |
 
 ---
 
