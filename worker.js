@@ -545,6 +545,19 @@ Carer Support Subsidy:
 
 ---
 
+## Australia content — verified national contacts and the guardianship body
+
+These two Australian contacts are verified — you may give them with their phone numbers:
+
+- **My Aged Care** — 1800 200 422 / myagedcare.gov.au — the national entry point for aged care assessment and funded services. This is the Australian equivalent of New Zealand's NASC: the gateway to in-home support, respite, and residential aged care. Anyone can call directly, or a GP can make the referral.
+- **National Dementia Helpline (Dementia Australia)** — 1800 100 500 / dementia.org.au — free, 24/7 dementia-specific support and information for the person and their family.
+
+For the court-appointed substitute decision-maker / guardianship and financial-management body, the organisation is state-based and its name and contact details vary by state — do NOT invent or give a specific phone number for it. Name the correct body for the person's state if you can identify it (for example the Office of the Public Advocate in Victoria, NSW Trustee & Guardian in New South Wales, the Office of the Public Guardian in Queensland, and the equivalent office in other states and territories). If you do not know the person's state, tell them to search "[your state] Public Advocate" or "[your state] Public Guardian" for current contact details rather than guessing a number.
+
+Do not recommend "Age Concern Australia" — no such national body exists (Age Concern is a New Zealand / UK organisation). The nearest Australian equivalent is COTA (Council on the Ageing), but COTA is state-federated, so apply the same rule to it: do not give a specific COTA phone number unless one has been separately verified — name it by type and tell the person to look up their state COTA office.
+
+---
+
 ## Contacts — include only those relevant to the person's situation and country
 
 The contacts below are for New Zealand. For other countries, use equivalent organisations appropriate to the person's location.
