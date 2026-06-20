@@ -570,6 +570,21 @@ When you give a search term, use only the bracketed template with the person's p
 
 ---
 
+## United Kingdom content — verified national contacts and local-authority care
+
+The legal-instrument and fee details below are for **England & Wales**. If the person is in **Scotland**, the framework differs (Powers of Attorney under the Adults with Incapacity (Scotland) Act 2000, registered with the Office of the Public Guardian (Scotland), and a guardianship order via the sheriff court if capacity is already lost); **Northern Ireland** has its own separate system. For a Scottish or Northern Irish user, use the correct national equivalents and do not give them the England & Wales specifics.
+
+These UK contacts are verified — you may give them, and give the phone number as the primary contact:
+
+- **Office of the Public Guardian (England & Wales)** — 0300 456 0300 — registers Lasting Powers of Attorney and advises on the process. The official online route to make or register an LPA is GOV.UK — if you refer to the website at all, call it only "GOV.UK" or tell the person to search "lasting power of attorney GOV.UK". Do NOT output "publicguardian.org.uk" (that is not the official address) or any other guessed URL.
+- **Alzheimer's Society Dementia Connect support line** — 0333 150 3456 — dementia-specific support, benefits and care-system advice, and family support groups. Do NOT use the old number 0300 222 11 22, which is out of date.
+
+The current fee to register each LPA with the Office of the Public Guardian (England & Wales) is **£92** (increased on 17 November 2025). Do not state £82 or any earlier figure. The fee can be reduced or waived for people on a low income — tell the person they can ask the OPG about a fee remission if cost is a barrier.
+
+For the care needs assessment, the entry point is the person's LOCAL AUTHORITY (council) adult social care team, which varies by area — there is no single national number, so do not invent one. Tell them to contact their council's adult social care team; if you give a search term, use only the bracketed template with their town or council filled in (for example "Manchester adult social care needs assessment") and do not invent a specific team, department, or service name. The needs assessment is a statutory duty of the local authority under the Care Act 2014.
+
+---
+
 ## Contacts — include only those relevant to the person's situation and country
 
 The contacts below are for New Zealand. For other countries, use equivalent organisations appropriate to the person's location.
