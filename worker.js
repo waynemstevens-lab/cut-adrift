@@ -566,6 +566,8 @@ Do NOT recommend the "Community Care Access Centre" or "CCAC" — these were dis
 
 Instead, point the person to the right TYPE of service for their province and tell them how to find it themselves: their provincial home-care or continuing-care program (tell them to search "[their province] home care"), a local elder-law or estates lawyer, the provincial guardianship body (tell them to search "[their province] Public Guardian and Trustee"), and the Alzheimer Society in their province for dementia support (tell them to search "Alzheimer Society [their province]"). Give the category and the search term, never a phone number.
 
+When you give a search term, use only the bracketed template with the person's province or city filled in (for example "Ontario home care" or "Toronto home care") — do not append or invent any specific region, health-network, LHIN, branch, district, or program name. If you are not certain a specific organisation name is current and correct, leave it out of the search term entirely rather than guessing one.
+
 ---
 
 ## Contacts — include only those relevant to the person's situation and country
