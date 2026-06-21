@@ -7,14 +7,22 @@
  * (per-IP limit 10/day). Costs real tokens. Read-only.
  */
 const WORKER_URL = 'https://cutadrift-engine.waynemstevens.workers.dev/';
-const RUNS_PER_SCENARIO = 7;   // 14 total — limiter will likely cut us off sooner
-const PACE_MS = 8000;
+const RUNS_PER_SCENARIO = 5;   // 10 total — bypass header means no rate limit
+const PACE_MS = 1500;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Internal test bypass — skips the per-IP gate + global counter (see handover 31).
+const INTERNAL_TEST_KEY = process.env.INTERNAL_TEST_KEY
+  || '498ba6d2a2777d0b23d71705b3e4fab67e69ec2a16ab8f322b065227bde46c04';
 
 async function callWorker(payload) {
   const res = await fetch(WORKER_URL, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', origin: 'https://cutadrift.org' },
+    headers: {
+      'content-type': 'application/json',
+      origin: 'https://cutadrift.org',
+      'X-Internal-Test': INTERNAL_TEST_KEY,
+    },
     body: JSON.stringify(payload),
   });
   if (!res.ok) return { ok: false, status: res.status };
@@ -33,6 +41,7 @@ async function callWorker(payload) {
 const FAIL_CHECKS = [
   { name: 'stale estate-tax $13.61M', re: /13\.61\s*million/i },
   { name: 'stale estate-tax $13.99M', re: /13\.99\s*million/i },
+  { name: 'any explicit $N million estate-tax figure', re: /\$\s?\d[\d.,]*\s*million/i },
   { name: '"solicitor" (UK/IE term)', re: /\bsolicitor/i },
   { name: 'The Dinner Party (defunct)', re: /dinner party/i },
   { name: 'fabricated Widows/Widowers org', re: /widows? and widowers? organization/i },
