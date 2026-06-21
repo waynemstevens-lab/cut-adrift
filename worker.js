@@ -1742,6 +1742,74 @@ async function sendThresholdAlert(env, { count, threshold, date }) {
   }
 }
 
+// ─── US-only output safety net: "solicitor" → "attorney" ────────────────────
+// The model intermittently uses the British "solicitor" in US plans despite the
+// prompt ban (a sticky generic-word edge-leak, ~10% of US runs). This rewrites it
+// to "attorney" in the streamed SSE response. Scoped by the caller to
+// country === 'us' so legitimate UK / Irish / Australian usage is never touched.
+//
+// Two split cases are handled so it is not just a common-case fix:
+//   1. SSE framing split across network chunks — only complete events (delimited
+//      by a blank line) are processed; a partial trailing event stays buffered.
+//   2. The word split across two text_delta deltas — delta text is accumulated and
+//      the trailing maximal letter-run is HELD BACK each flush (it could still be
+//      growing into "solicitor"), so replacement only ever runs on text that ends
+//      at a non-letter boundary and a target word is never cut mid-stream. The
+//      carry is flushed before the block/message stop events and in flush().
+function makeSolicitorRewriteStream() {
+  const TARGET = /\bsolicitors?\b(?!\s+General)/gi;  // skip "Solicitor General"
+  const deBritify = (t) => t.replace(TARGET, (m) => {
+    const cap = m[0] === 'S';
+    const plural = /s$/i.test(m);            // "solicitors" ends in s
+    return (cap ? 'Attorney' : 'attorney') + (plural ? 's' : '');
+  });
+
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder();
+  let sseBuf = '';      // incomplete SSE framing across network chunks
+  let textCarry = '';   // held-back trailing letter-run (possible word prefix)
+  let blockIndex = 0;
+
+  const emitText = (controller, text) => {
+    if (!text) return;
+    const payload = { type: 'content_block_delta', index: blockIndex, delta: { type: 'text_delta', text } };
+    controller.enqueue(encoder.encode(`event: content_block_delta\ndata: ${JSON.stringify(payload)}\n\n`));
+  };
+
+  return new TransformStream({
+    transform(chunk, controller) {
+      sseBuf += decoder.decode(chunk, { stream: true });
+      let idx;
+      while ((idx = sseBuf.indexOf('\n\n')) !== -1) {
+        const rawEvent = sseBuf.slice(0, idx);
+        sseBuf = sseBuf.slice(idx + 2);
+        const dataLine = rawEvent.split('\n').find((l) => l.startsWith('data:'));
+        let j = null;
+        if (dataLine) { try { j = JSON.parse(dataLine.slice(5).trim()); } catch { j = null; } }
+
+        if (j && j.type === 'content_block_delta' && j.delta?.type === 'text_delta') {
+          if (typeof j.index === 'number') blockIndex = j.index;
+          const pending = textCarry + j.delta.text;
+          const tail = pending.match(/[A-Za-z]+$/);          // could still grow into a word
+          const hold = tail ? tail[0] : '';
+          textCarry = hold;
+          emitText(controller, deBritify(pending.slice(0, pending.length - hold.length)));
+        } else {
+          // flush any held text before the stream's terminal events
+          if (j && (j.type === 'content_block_stop' || j.type === 'message_delta' || j.type === 'message_stop')) {
+            if (textCarry) { emitText(controller, deBritify(textCarry)); textCarry = ''; }
+          }
+          controller.enqueue(encoder.encode(rawEvent + '\n\n'));
+        }
+      }
+    },
+    flush(controller) {
+      if (textCarry) { emitText(controller, deBritify(textCarry)); textCarry = ''; }
+      if (sseBuf) controller.enqueue(encoder.encode(sseBuf));
+    },
+  });
+}
+
 // ─── Main Worker ──────────────────────────────────────────────────────────────
 export default {
   async fetch(request, env, ctx) {
@@ -1891,7 +1959,14 @@ export default {
     }
 
     // ── Stream response back to client ────────────────────────────────────────
-    return new Response(claudeResponse.body, {
+    // US-only safety net: rewrite the British "solicitor" → "attorney" in-stream
+    // (the prompt ban leaks ~10% of the time). Gated on country so no other
+    // jurisdiction's legitimate usage is affected; handles cross-chunk splits.
+    const body = (intake.country === 'us')
+      ? claudeResponse.body.pipeThrough(makeSolicitorRewriteStream())
+      : claudeResponse.body;
+
+    return new Response(body, {
       status: 200,
       headers: {
         ...corsHeaders,
