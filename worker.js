@@ -1773,49 +1773,62 @@ export default {
     const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
     const rlKey = `rl:${ip}`;
 
-    try {
-      const raw = await env.RATE_LIMIT.get(rlKey);
-      const count = raw ? parseInt(raw, 10) : 0;
+    // ── Internal test bypass ──────────────────────────────────────────────────
+    // A request carrying a valid X-Internal-Test header (matching the
+    // INTERNAL_TEST_KEY secret) is our own test/capture traffic, not a real user.
+    // It skips BOTH the per-IP gate AND the global daily counter, so capture and
+    // testing passes never burn the public 10/IP/24h limit or skew the 200/day
+    // cost-safety alert. If the secret is unset, or the header is missing or does
+    // not match, isInternalTest is false and behaviour below is exactly as before
+    // — no change for real users.
+    const testHeader = request.headers.get('X-Internal-Test') || '';
+    const isInternalTest = !!env.INTERNAL_TEST_KEY && testHeader === env.INTERNAL_TEST_KEY;
 
-      if (count >= RATE_LIMIT_MAX) {
-        return new Response(JSON.stringify({
-          error: 'rate_limited',
-          message: "You've made a lot of requests today. Please come back tomorrow — the tool will be here when you need it."
-        }), {
-          status: 429,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
+    if (!isInternalTest) {
+      try {
+        const raw = await env.RATE_LIMIT.get(rlKey);
+        const count = raw ? parseInt(raw, 10) : 0;
 
-      await env.RATE_LIMIT.put(rlKey, String(count + 1), { expirationTtl: RATE_LIMIT_TTL });
-
-    } catch (_) {
-      // KV failure — allow request through rather than blocking someone in crisis
-    }
-
-    // ── Global daily request counter (alert-only — NEVER blocks the user) ──────
-    // Wrapped so that any failure here (KV or email) can never affect the
-    // user-facing request. Counts requests that passed the per-IP gate above.
-    try {
-      const day  = new Date().toISOString().slice(0, 10);   // YYYY-MM-DD (UTC)
-      const gKey = `global:${day}`;
-      const gRaw = await env.RATE_LIMIT.get(gKey);
-      const gCount = (gRaw ? parseInt(gRaw, 10) : 0) + 1;
-      await env.RATE_LIMIT.put(gKey, String(gCount), { expirationTtl: GLOBAL_COUNTER_TTL });
-
-      // Send exactly one heads-up email on the request that crosses the threshold.
-      // The per-day flag key dedupes so we never send more than one per day.
-      if (gCount >= GLOBAL_ALERT_THRESHOLD) {
-        const alertKey = `global-alerted:${day}`;
-        const alreadySent = await env.RATE_LIMIT.get(alertKey);
-        if (!alreadySent) {
-          await env.RATE_LIMIT.put(alertKey, '1', { expirationTtl: GLOBAL_COUNTER_TTL });
-          // Fire-and-forget: runs after the response, errors are swallowed inside.
-          ctx.waitUntil(sendThresholdAlert(env, { count: gCount, threshold: GLOBAL_ALERT_THRESHOLD, date: day }));
+        if (count >= RATE_LIMIT_MAX) {
+          return new Response(JSON.stringify({
+            error: 'rate_limited',
+            message: "You've made a lot of requests today. Please come back tomorrow — the tool will be here when you need it."
+          }), {
+            status: 429,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
         }
+
+        await env.RATE_LIMIT.put(rlKey, String(count + 1), { expirationTtl: RATE_LIMIT_TTL });
+
+      } catch (_) {
+        // KV failure — allow request through rather than blocking someone in crisis
       }
-    } catch (_) {
-      // Counter/alert failure must NEVER affect the user — swallow and continue.
+
+      // ── Global daily request counter (alert-only — NEVER blocks the user) ──────
+      // Wrapped so that any failure here (KV or email) can never affect the
+      // user-facing request. Counts requests that passed the per-IP gate above.
+      try {
+        const day  = new Date().toISOString().slice(0, 10);   // YYYY-MM-DD (UTC)
+        const gKey = `global:${day}`;
+        const gRaw = await env.RATE_LIMIT.get(gKey);
+        const gCount = (gRaw ? parseInt(gRaw, 10) : 0) + 1;
+        await env.RATE_LIMIT.put(gKey, String(gCount), { expirationTtl: GLOBAL_COUNTER_TTL });
+
+        // Send exactly one heads-up email on the request that crosses the threshold.
+        // The per-day flag key dedupes so we never send more than one per day.
+        if (gCount >= GLOBAL_ALERT_THRESHOLD) {
+          const alertKey = `global-alerted:${day}`;
+          const alreadySent = await env.RATE_LIMIT.get(alertKey);
+          if (!alreadySent) {
+            await env.RATE_LIMIT.put(alertKey, '1', { expirationTtl: GLOBAL_COUNTER_TTL });
+            // Fire-and-forget: runs after the response, errors are swallowed inside.
+            ctx.waitUntil(sendThresholdAlert(env, { count: gCount, threshold: GLOBAL_ALERT_THRESHOLD, date: day }));
+          }
+        }
+      } catch (_) {
+        // Counter/alert failure must NEVER affect the user — swallow and continue.
+      }
     }
 
     // ── Parse intake ──────────────────────────────────────────────────────────
