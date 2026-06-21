@@ -1665,6 +1665,57 @@ const DEFAULT_MAX_TOKENS = 2000;
 const RATE_LIMIT_MAX = 10;    // requests per window
 const RATE_LIMIT_TTL = 86400; // 24-hour window in seconds
 
+// ─── Global daily request counter (alert-only — NEVER blocks anyone) ──────────
+// Counts requests that pass the per-IP gate (i.e. requests that will call Claude
+// and therefore cost money). If a day crosses the threshold, one heads-up email
+// is sent. This does not block any request and is independent of the per-IP limit.
+const GLOBAL_ALERT_THRESHOLD = 200;     // total Claude-bound requests/day before the heads-up
+const GLOBAL_COUNTER_TTL     = 172800;  // 48h — per-day keys self-expire
+const ALERT_EMAIL_TO         = 'waynemstevens@gmail.com';
+const ALERT_EMAIL_FROM       = 'Cut Adrift Alerts <onboarding@resend.dev>';
+
+// Send a single heads-up email via Resend. NEVER throws — it is called
+// fire-and-forget via ctx.waitUntil so it can never delay or fail a user request.
+async function sendThresholdAlert(env, { count, threshold, date }) {
+  if (!env.RESEND_API_KEY) {
+    console.error('Global daily threshold reached but RESEND_API_KEY is not set — no email sent.', { count, threshold, date });
+    return;
+  }
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: ALERT_EMAIL_FROM,
+        to: [ALERT_EMAIL_TO],
+        subject: `Cut Adrift: ${count} requests today (${date}) — over the ${threshold} alert threshold`,
+        text: [
+          'Heads-up from the Cut Adrift worker (cutadrift-engine).',
+          '',
+          `The global daily request counter has crossed its alert threshold.`,
+          '',
+          `Date (UTC):           ${date}`,
+          `Requests so far today: ${count}`,
+          `Alert threshold:       ${threshold}`,
+          '',
+          'This is an alert only — nothing has been blocked and users are unaffected.',
+          'The per-IP limit (10 requests / IP / 24h) is still enforced separately.',
+          'You will only receive one of these per day, even if traffic keeps climbing.',
+        ].join('\n'),
+      }),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => '');
+      console.error('Resend alert email failed:', res.status, body);
+    }
+  } catch (err) {
+    console.error('Resend alert email threw:', err && err.message);
+  }
+}
+
 // ─── Main Worker ──────────────────────────────────────────────────────────────
 export default {
   async fetch(request, env, ctx) {
@@ -1714,6 +1765,31 @@ export default {
 
     } catch (_) {
       // KV failure — allow request through rather than blocking someone in crisis
+    }
+
+    // ── Global daily request counter (alert-only — NEVER blocks the user) ──────
+    // Wrapped so that any failure here (KV or email) can never affect the
+    // user-facing request. Counts requests that passed the per-IP gate above.
+    try {
+      const day  = new Date().toISOString().slice(0, 10);   // YYYY-MM-DD (UTC)
+      const gKey = `global:${day}`;
+      const gRaw = await env.RATE_LIMIT.get(gKey);
+      const gCount = (gRaw ? parseInt(gRaw, 10) : 0) + 1;
+      await env.RATE_LIMIT.put(gKey, String(gCount), { expirationTtl: GLOBAL_COUNTER_TTL });
+
+      // Send exactly one heads-up email on the request that crosses the threshold.
+      // The per-day flag key dedupes so we never send more than one per day.
+      if (gCount >= GLOBAL_ALERT_THRESHOLD) {
+        const alertKey = `global-alerted:${day}`;
+        const alreadySent = await env.RATE_LIMIT.get(alertKey);
+        if (!alreadySent) {
+          await env.RATE_LIMIT.put(alertKey, '1', { expirationTtl: GLOBAL_COUNTER_TTL });
+          // Fire-and-forget: runs after the response, errors are swallowed inside.
+          ctx.waitUntil(sendThresholdAlert(env, { count: gCount, threshold: GLOBAL_ALERT_THRESHOLD, date: day }));
+        }
+      }
+    } catch (_) {
+      // Counter/alert failure must NEVER affect the user — swallow and continue.
     }
 
     // ── Parse intake ──────────────────────────────────────────────────────────
