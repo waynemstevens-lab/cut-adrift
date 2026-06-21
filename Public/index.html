@@ -253,6 +253,85 @@
       margin-top: 14px;
     }
 
+    /* ── Draft gallery (4-card grid) ──────────────────── */
+    .gallery {
+      width: 100%;
+      max-width: var(--content);
+      margin-bottom: 72px;
+      opacity: 0;
+      animation: rise 0.7s 0.44s ease forwards;
+    }
+    .gallery-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 30px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px 30px;
+    }
+    .gallery-card {
+      position: relative;
+      background: #FBF8F2;
+      color: #211d17;
+      border-radius: 4px;
+      padding: 28px 26px 26px;
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.25),
+        0 18px 44px rgba(0,0,0,0.40);
+    }
+    .gallery-card:nth-child(1) { transform: rotate(-0.5deg); }
+    .gallery-card:nth-child(2) { transform: rotate(0.4deg); }
+    .gallery-card:nth-child(3) { transform: rotate(0.5deg); }
+    .gallery-card:nth-child(4) { transform: rotate(-0.4deg); }
+    .gallery-tag {
+      position: absolute;
+      top: -13px;
+      left: 22px;
+      background: var(--clay);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 3px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    .gallery-tag.sage { background: var(--sage); }
+    .gallery-meta {
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: rgba(33,29,23,0.55);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(33,29,23,0.10);
+    }
+    .gallery-body {
+      font-size: 0.86rem;
+      font-weight: 400;
+      line-height: 1.56;
+      color: #2c271f;
+    }
+    .gallery-body .sign { display: block; margin-top: 12px; }
+    .gallery-h {
+      display: block;
+      font-weight: 600;
+      margin-top: 12px;
+      margin-bottom: 2px;
+    }
+    .gallery-h:first-child { margin-top: 0; }
+    .gallery-more {
+      display: block;
+      margin-top: 10px;
+      color: rgba(33,29,23,0.60);
+      font-style: italic;
+    }
+
     /* ── Situation cards ──────────────────────────────── */
     .situations {
       width: 100%;
@@ -566,6 +645,9 @@
       .situation:nth-child(odd) { border-right: none; }
       .situation:nth-child(3) { border-bottom: 1px solid var(--border); }
 
+      .gallery-grid { grid-template-columns: 1fr; gap: 30px; }
+      .gallery-card { transform: none !important; }
+
       footer { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
   </style>
@@ -664,6 +746,63 @@
           <div class="situation-title">I've lost my job <span class="situation-ext">notredundant.com ↗</span></div>
           <p class="situation-desc">A free action plan for redundancy — what to do, what you're entitled to, and how to move forward.</p>
         </a>
+
+      </div>
+    </section>
+
+    <!-- Draft gallery: more examples of real drafted output -->
+    <section class="gallery">
+      <p class="gallery-label">A few more things we draft for you</p>
+      <div class="gallery-grid">
+
+        <!-- Card 1 — Bereavement (letter) — existing proof card content, verbatim -->
+        <div class="gallery-card">
+          <span class="gallery-tag">Bereavement</span>
+          <div class="gallery-meta">To: HR Team · Subject: Bereavement leave — Sarah Mitchell</div>
+          <div class="gallery-body">
+            Hi Janet,<br><br>
+            I'm writing to let you know my father passed away yesterday. I'll need to take bereavement leave starting today.<br><br>
+            I'll confirm my return date once I have more clarity. Thank you for your understanding.
+            <span class="sign">Sarah</span>
+          </div>
+        </div>
+
+        <!-- Card 2 — Diagnosis (call script) -->
+        <div class="gallery-card">
+          <span class="gallery-tag sage">Diagnosis</span>
+          <div class="gallery-body">
+            <span class="gallery-h">What to say:</span>
+            Hi, my name is [your full name] and I hold an income protection policy with Partners Life. I'd like to speak with someone who can help me understand whether I can make a claim under my policy, and if so, how to go about it.
+            <span class="gallery-h">What to ask:</span>
+            — Does my income protection policy cover my current situation, and what are the specific conditions that need to be met?<br>
+            — Does this policy pay out on diagnosis alone, or only once I am unable to work?<br>
+            — Is there a stand-down or waiting period before payments begin?
+            <span class="gallery-more">…plus what to listen for, so you don't miss the details that matter.</span>
+          </div>
+        </div>
+
+        <!-- Card 3 — Incapacity (message) — full text -->
+        <div class="gallery-card">
+          <span class="gallery-tag">Incapacity</span>
+          <div class="gallery-body">
+            Hi everyone,<br><br>
+            I wanted to let you know that Mum had a stroke last week. She's out of immediate danger and being looked after, but it has become clear that she'll need support going forward and won't be able to live on her own anymore.<br><br>
+            I'd love for us to find a time soon to talk together and start working out how we can best care for her as a family.
+            <span class="sign">With love, [your name]</span>
+          </div>
+        </div>
+
+        <!-- Card 4 — Diagnosis (question list) -->
+        <div class="gallery-card">
+          <span class="gallery-tag sage">Diagnosis</span>
+          <div class="gallery-body">
+            <span class="gallery-h">Understanding what you've been told</span>
+            — Can you explain my diagnosis in plain language, without medical jargon?<br>
+            — Can you write down the diagnosis and the plan so I have it to refer to at home?<br>
+            — What is the likely timeline from here?
+            <span class="gallery-more">…plus your options, test results, work &amp; money, and follow-up — four more sections, all in one list.</span>
+          </div>
+        </div>
 
       </div>
     </section>
