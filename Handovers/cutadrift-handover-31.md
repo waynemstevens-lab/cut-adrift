@@ -1,6 +1,6 @@
 # Cut Adrift — Handover Document 31
 **Updated:** 21 June 2026
-**Session work:** Three things. (1) Added a **secret-gated internal test bypass** to the Worker rate limiter so capture/testing passes don't burn the public 10/IP/24h limit or skew the 200/day cost alert. (2) **Captured real DIWM panel outputs** to `tests/captures/` (via the bypass) for a homepage gallery decision. (3) Built, iterated, and **deployed a new homepage gallery section** — "A few more things we draft for you" — showing four real captured outputs in four formats. No country-hardening this session; the US bereavement **confirmation re-test is still owed** (carried from H30).
+**Session work:** Four things. (1) Added a **secret-gated internal test bypass** to the Worker rate limiter so capture/testing passes don't burn the public 10/IP/24h limit or skew the 200/day cost alert. (2) **Captured real DIWM panel outputs** to `tests/captures/` (via the bypass) for a homepage gallery decision. (3) Built, iterated, and **deployed a new homepage gallery section** — "A few more things we draft for you" — showing four real captured outputs in four formats. (4) **Closed out the owed US bereavement confirmation re-test** (carried from H30): ran large samples via the bypass, then fixed the two residual edge-leaks structurally — estate-tax figure suppressed to qualitative-only, and a worker-level in-stream "solicitor"→"attorney" rewrite. US bereavement now confirmed **10/10 clean**.
 **Supersedes:** Handover 30
 
 ---
@@ -80,23 +80,39 @@ Result: three diagnosis cards + one incapacity — accepted as fine because the 
 
 ---
 
+## New this session — US bereavement re-test + final hardening (the owed H30 item, now closed)
+
+Ran the confirmation re-test that H30 left owed, now rate-limit-free via the bypass header (`tests/retest_bereavement_us.mjs` sends `X-Internal-Test`). The larger sample (the H27 large-sample lesson again) exposed two residual edge-leaks that prompt wording alone could not kill, so both were fixed **structurally, not by re-patching the prompt**:
+
+**Final measured leak rates (across a 20-run + two 10-run samples):**
+- **`$13.61M` stale estate-tax figure** — **0** everywhere. The H30 meta-warning held; it was never actually re-leaking.
+- **Estate-tax exclusion figure (any `$N million`)** — was `$15M` in the prompt; now **suppressed to qualitative-only**. Block states only that the exclusion is "very high — in the tens of millions, so most estates owe no federal estate tax" and routes to **irs.gov** / an attorney or CPA. Forms 706/1041/1040 and the stable $600 1041 threshold retained. Confirmed **0/10** for any `$N million`. (Preventive: removes the fabrication surface for an annually-changing number permanently.) Commit `9f3ae70`, Worker `00c35dc9`.
+- **"solicitor" (British term; US is "attorney")** — leaked **~10% (3/30)** despite the prompt ban; a sticky generic-word leak, same class as IE "Community Law". Fixed with a **worker-level in-stream rewrite**, `makeSolicitorRewriteStream()` in `worker.js`: a `TransformStream` on the SSE response that rewrites `solicitor→attorney`, **gated on `intake.country === 'us'`** so UK/IE/AU legitimate usage is untouched. Case-preserving, plural-aware, excludes "Solicitor General". **Cross-chunk-safe** (the part you'd expect to break): incomplete SSE framing is buffered so only complete events are processed, and a word split across two `text_delta` deltas is handled by holding back the trailing letter-run each flush (replacement only runs on text ending at a non-letter boundary; carry flushed before the stop events). Unit-tested with 7-byte chunking (splits both the word and the data lines) + verified live. Commit `03eef86`, **Worker `afac0f2e` (current live)**.
+
+**Result:** final live 10-run sample **10/10 clean** — 0 solicitor, 0 estate-tax `$ figure`, 0 cross-country, 0 Dinner Party.
+
+**⚠️ Residual to watch (NOT fixed today, different leak from the two above):** **"The Dinner Party"** (the defunct US grief org — closed 2026, banned in the prompt) flickered at **~7% (2/30)** in the 20-run sample, though it was **0** in the final clean sample. Not blocking and low-harm (a grief-org name, not a contact/figure), but it's a prompt-suppression leak of the same family as solicitor was — if it proves persistent on a future large sample, the same fix applies: a US-gated in-stream rewrite (drop/replace the "The Dinner Party" sentence) rather than more prompt wording. Logged in Outstanding tasks.
+
+**Reinforced lesson:** for sticky generic-word / named-entity terminology leaks, a **narrow country-gated post-generation string rewrite in the worker is more reliable than any amount of prompt banning.** Prefer it once a leak proves it survives the prompt.
+
 ## Next session — START HERE
 
-1. **US bereavement confirmation re-test** (carried from H30, still owed): `node tests/retest_bereavement_us.mjs` once the per-IP limit has reset — **OR just use the new bypass header now** (add `X-Internal-Test` to the retest script's fetch headers) and it won't be rate-limited at all. Target: 0 occurrences of the stale `$13.61M` estate-tax figure and "solicitor" across a 10+ run sample, on the strengthened build (`960fb7e0` was the strengthened US worker; current live worker is `91202a75` which includes it + the bypass). If either still leaks, suppress the exact estate-tax dollar figure entirely (qualitative only).
-2. Then begin the **diagnosis tool** country-hardening — the only tool never hardened (no country blocks, no global guardrails). Watch: disability/discrimination statutes by name (ADA + FMLA US, Equality Act 2010 UK, etc.), statutory sick pay, benefit program names (SSDI, PIP, Illness Benefit). Use the bypass header for testing so it's free.
+1. ✅ **US bereavement confirmation re-test — DONE this session** (see "US bereavement re-test + final hardening" above). Closed: estate-tax suppressed to qualitative-only, "solicitor" fixed via worker rewrite, final 10/10 clean. **Current live worker is `afac0f2e`.** Only residual is the Dinner Party ~7% flicker (watch item #8 below).
+2. Begin the **diagnosis tool** country-hardening — the only tool never hardened (no country blocks, no global guardrails). Watch: disability/discrimination statutes by name (ADA + FMLA US, Equality Act 2010 UK, etc.), statutory sick pay, benefit program names (SSDI, PIP, Illness Benefit). Use the bypass header for testing so it's free. **Apply the lesson reinforced this session:** when a named-entity/terminology leak survives the prompt ban on a large sample, reach for a country-gated in-stream rewrite in the worker (pattern: `makeSolicitorRewriteStream`) rather than re-tweaking wording.
 
 ---
 
 ## Outstanding tasks
 
 ### ⚡ Priority
-1. **US bereavement confirmation re-test**, then **diagnosis tool** country-hardening (see "Next session"). Use the bypass header for both — testing is now free of the rate limit.
+1. ✅ US bereavement confirmation re-test **done** (estate-tax qualitative-only + worker-level solicitor rewrite; 10/10 clean; live worker `afac0f2e`). Next priority is **diagnosis tool** country-hardening (see "Next session"). Use the bypass header — testing is free of the rate limit.
 2. Homepage design system not yet applied site-wide (guides + tool pages still pre-redesign). Carried.
 3–6. *(Carried: DIWM Phase 3 #3 cover-letter; capture stubbed-test payloads — partially addressed now that `tests/captures/` exists; GSC request-indexing for 8 pages; apply homepage design system site-wide.)*
 
 ### Consider / Ongoing
 7. `GLOBAL_ALERT_THRESHOLD = 200` — revisit once real traffic is known (H29).
-8. Pin "Notifying their employer" heading in the bereavement prompt. 9. Tighten `verify_crisis.mjs` Path A assertion. 10. `wrangler.toml` missing `pages_build_output_dir` (non-fatal; warns on every pages deploy). 11. Confirm sage favicon at tab size. 12. **Outreach follow-up (5 bereavement orgs) was due week of 23 June 2026 — now imminent.** 13. OG image placeholder. 14. Feedback form → Google Sheet. 15–18. *(Best Man notice board / testimonials; GSC indexing queue; diagnosis guide pages — see H25.)*
+8. **Watch: "The Dinner Party" residual leak in US bereavement** — the defunct US grief org (banned in the prompt) flickered at **~7% (2/30)** in this session's 20-run sample, though 0 in the final clean sample. Different leak from the two fixed today; not blocking, low-harm. If a future large sample shows it persists, fix with a US-gated in-stream rewrite (same `makeSolicitorRewriteStream` pattern — drop/replace the offending sentence), not more prompt wording.
+9. Pin "Notifying their employer" heading in the bereavement prompt. 10. Tighten `verify_crisis.mjs` Path A assertion. 11. `wrangler.toml` missing `pages_build_output_dir` (non-fatal; warns on every pages deploy). 12. Confirm sage favicon at tab size. 13. **Outreach follow-up (5 bereavement orgs) was due week of 23 June 2026 — now imminent.** 14. OG image placeholder. 15. Feedback form → Google Sheet. 16–19. *(Best Man notice board / testimonials; GSC indexing queue; diagnosis guide pages — see H25.)*
 
 ---
 
@@ -110,4 +126,4 @@ Result: three diagnosis cards + one incapacity — accepted as fine because the 
 | 28 | Bereavement **Ireland** hardened. Worker `ebf1d4cd`. |
 | 29 | Per-IP rate-limit audit + **global daily counter + Resend email alert** (alert-only, threshold 200). Worker `8c7bbe00`, commit `44dd414`. |
 | 30 | Bereavement **United States** hardened — bereavement sweep complete. Estate-tax $13.61M→**$15M (2026)**; "attorney" not "solicitor"; killed defunct Dinner Party + fabricated widows org. Worker `960fb7e0`, commit `03a41aa`. Confirmation re-test left owed. |
-| 31 | **Secret-gated test bypass** added to the rate limiter (`X-Internal-Test`/`INTERNAL_TEST_KEY`; skips per-IP + global counter; commit `c0d67b7`, Worker `91202a75`). **Captured real DIWM outputs** to `tests/captures/` via the bypass. Built + deployed the **homepage gallery** "A few more things we draft for you" (4 real outputs: letter/script/message/list; commits `e6de0cc`→`ad6be9e`→`0643b14`). US confirmation re-test still owed. |
+| 31 | **Secret-gated test bypass** added to the rate limiter (`X-Internal-Test`/`INTERNAL_TEST_KEY`; skips per-IP + global counter; commit `c0d67b7`, Worker `91202a75`). **Captured real DIWM outputs** to `tests/captures/` via the bypass. Built + deployed the **homepage gallery** "A few more things we draft for you" (4 real outputs: letter/script/message/list; commits `e6de0cc`→`ad6be9e`→`0643b14`). **Closed the owed US bereavement re-test:** estate-tax figure suppressed to qualitative-only (`9f3ae70`) + worker-level US-gated `solicitor→attorney` in-stream rewrite (`03eef86`); final **10/10 clean**, live Worker **`afac0f2e`**. Residual to watch: Dinner Party ~7% flicker. |
