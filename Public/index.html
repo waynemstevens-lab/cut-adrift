@@ -302,6 +302,7 @@
       border-radius: 3px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
+    .gallery-tag.clay { background: var(--clay); }
     .gallery-tag.sage { background: var(--sage); }
     .gallery-meta {
       font-size: 0.74rem;
@@ -755,54 +756,59 @@
       <p class="gallery-label">A few more things we draft for you</p>
       <div class="gallery-grid">
 
-        <!-- Card 1 — Diagnosis (employer email / letter) — captured output, verbatim excerpt -->
+        <!-- One card per intake situation: bereavement · diagnosis · incapacity · job loss.
+             Tag colours hold the deliberate rust/sage diagonal (sage·clay / clay·sage) —
+             do not "fix" them when reassigning which tool sits in which position. -->
+
+        <!-- Card 1 — Bereavement (bank / institution notification letter) — captured output, verbatim excerpt -->
         <div class="gallery-card">
-          <span class="gallery-tag sage">Diagnosis</span>
-          <div class="gallery-meta">Subject: Health Matter — Request to Discuss Leave and Support Options</div>
+          <span class="gallery-tag sage">Bereavement</span>
+          <div class="gallery-meta">To: ANZ Bank New Zealand · Re: Estate of Robert James Whitford</div>
           <div class="gallery-body">
-            Dear Karen,<br><br>
-            I hope you are well. I am writing to let you know that I have recently been diagnosed with a health condition that will require some time away from work for treatment and appointments. I wanted to inform you as soon as I felt ready to do so.<br><br>
-            I am not in a position to share further details at this stage, and I hope you will understand and respect that.
-            <span class="gallery-more">…plus a request to talk through leave, support and options — ready to send.</span>
+            Dear Sir or Madam,<br><br>
+            I am writing to notify ANZ Bank New Zealand of the death of my father, Robert James Whitford, who passed away on [date of death]. I am his son and the executor named in his will, and I am writing in that capacity as I begin to administer his estate.<br><br>
+            I do not have a specific account number to hand, and would be grateful if you could locate any accounts held in his name from the details provided.
+            <span class="gallery-more">…plus the documents they'll ask for, and a line asking them to stop all mail in his name — ready to sign and send.</span>
           </div>
         </div>
 
-        <!-- Card 2 — Diagnosis (call script) -->
+        <!-- Card 2 — Diagnosis (insurer claim call script) -->
         <div class="gallery-card">
-          <span class="gallery-tag">Diagnosis</span>
+          <span class="gallery-tag clay">Diagnosis</span>
           <div class="gallery-body">
             <span class="gallery-h">What to say:</span>
             Hi, my name is [your full name] and I hold an income protection policy with Partners Life. I'd like to speak with someone who can help me understand whether I can make a claim under my policy, and if so, how to go about it.
             <span class="gallery-h">What to ask:</span>
-            — Does my income protection policy cover my current situation, and what are the specific conditions that need to be met?<br>
             — Does this policy pay out on diagnosis alone, or only once I am unable to work?<br>
-            — Is there a stand-down or waiting period before payments begin?
-            <span class="gallery-more">…plus what to listen for, so you don't miss the details that matter.</span>
+            — Is there a stand-down or waiting period before payments begin, and how long is the benefit period?
+            <span class="gallery-more">…plus the stand-downs and exclusions to listen for — the small print that decides whether money actually arrives.</span>
           </div>
         </div>
 
-        <!-- Card 3 — Incapacity (message) — full text -->
+        <!-- Card 3 — Incapacity (message to family & friends) — captured output, verbatim excerpt -->
         <div class="gallery-card">
-          <span class="gallery-tag">Incapacity</span>
+          <span class="gallery-tag clay">Incapacity</span>
           <div class="gallery-body">
             Hi everyone,<br><br>
-            I wanted to let you know that Mum had a stroke last week. She's out of immediate danger and being looked after, but it has become clear that she'll need support going forward and won't be able to live on her own anymore.<br><br>
-            I'd love for us to find a time soon to talk together and start working out how we can best care for her as a family.
-            <span class="sign">With love, [your name]</span>
+            I want to let you all know that Dad's dementia has progressed quite a bit over the last few months. He's had a couple of incidents at home that reminded me he really can't manage safely on his own anymore.<br><br>
+            What would make the biggest difference right now is regular phone or video calls with Dad — even just a quick check-in a few times a week.
+            <span class="gallery-more">…plus the specific, low-pressure ways each of them can help from a distance — turning "let me know if you need anything" into something real.</span>
           </div>
         </div>
 
-        <!-- Card 4 — Diagnosis (question list) -->
+        <!-- Card 4 — Job loss — SLOT RESERVED. Capture pending the Not Redundant repo pass.
+             When filled, restore as a <div class="gallery-card"> with <span class="gallery-tag sage">Job loss</span>
+             to complete the rust/sage diagonal (sage top-left + bottom-right). Left commented so no
+             empty/placeholder card ships before the real captured output exists.
         <div class="gallery-card">
-          <span class="gallery-tag sage">Diagnosis</span>
+          <span class="gallery-tag sage">Job loss</span>
           <div class="gallery-body">
-            <span class="gallery-h">Understanding what you've been told</span>
-            — Can you explain my diagnosis in plain language, without medical jargon?<br>
-            — Can you write down the diagnosis and the plan so I have it to refer to at home?<br>
-            — What is the likely timeline from here?
-            <span class="gallery-more">…plus your options, test results, work &amp; money, and follow-up — four more sections, all in one list.</span>
+            [Captured output from the Not Redundant CV / job-loss tool goes here.]
+            <span class="gallery-more">…plus [fresh closing line, italic low-key style].</span>
           </div>
         </div>
+        -->
+
 
       </div>
     </section>
