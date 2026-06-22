@@ -4,3 +4,4 @@ node_modules/
 tests/_nz_diag_fails/
 tests/_au_diag_fails/
 tests/_uk_diag_fails/
+tests/_ie_diag_fails/
