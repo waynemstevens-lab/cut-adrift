@@ -949,21 +949,11 @@
     <div class="footer-links">
       <a href="/privacy/">Privacy</a>
       <a href="/terms/">Terms</a>
-      <a href="#" id="contactLink" onclick="copyContact(event)">Contact</a>
-      <span id="contactCopied" style="display:none; font-size:0.78rem; color: var(--clay); margin-left: 6px;">hello@cutadrift.org — copied</span>
+      <span style="color: var(--text-dim); user-select: all;">hello@cutadrift.org</span>
     </div>
   </footer>
 
   <script>
-    function copyContact(e) {
-      e.preventDefault();
-      navigator.clipboard.writeText('hello@cutadrift.org').then(function() {
-        var el = document.getElementById('contactCopied');
-        el.style.display = 'inline';
-        setTimeout(function() { el.style.display = 'none'; }, 3000);
-      });
-    }
-
     function submitSuggestion() {
       const input  = document.getElementById('suggestInput');
       const btn    = document.getElementById('suggestBtn');
