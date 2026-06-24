@@ -1760,6 +1760,35 @@ async function sendThresholdAlert(env, { count, threshold, date }) {
   }
 }
 
+// Send an alert email when the Anthropic API returns a non-ok status.
+// NEVER throws — fire-and-forget via ctx.waitUntil.
+async function sendApiErrorAlert(env, { status, detail }) {
+  if (!env.RESEND_API_KEY) return;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: ALERT_EMAIL_FROM,
+        to: [ALERT_EMAIL_TO],
+        subject: `Cut Adrift: Anthropic API error (${status}) — ${new Date().toISOString().slice(0, 10)}`,
+        text: [
+          'Anthropic API error on Cut Adrift (cutadrift-engine).',
+          '',
+          `HTTP status:  ${status}`,
+          `Detail:       ${detail}`,
+          `Time (UTC):   ${new Date().toISOString()}`,
+          '',
+          'Users received a generic error message. Check your Anthropic API key and model string.',
+        ].join('\n'),
+      }),
+    });
+  } catch (_) {}
+}
+
 // ─── US-only output safety net: "solicitor" → "attorney" ────────────────────
 // The model intermittently uses the British "solicitor" in US plans despite the
 // prompt ban (a sticky generic-word edge-leak, ~10% of US runs). This rewrites it
@@ -1970,6 +1999,7 @@ export default {
     if (!claudeResponse.ok) {
       const errText = await claudeResponse.text();
       console.error('Claude API error:', claudeResponse.status, errText);
+      ctx.waitUntil(sendApiErrorAlert(env, { status: claudeResponse.status, detail: errText }));
       return new Response(JSON.stringify({ error: 'api_error' }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
