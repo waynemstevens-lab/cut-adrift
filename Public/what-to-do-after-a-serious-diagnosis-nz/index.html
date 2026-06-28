@@ -151,6 +151,29 @@
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
 
+    .related {
+      margin-top: 56px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .related-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(237,232,223,0.6);
+      margin-bottom: 12px;
+    }
+    .related-link {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .related-link:last-child { border-bottom: none; }
+    .related-link:hover { color: var(--amber); text-decoration: none; }
     .page-disclaimer {
       margin: 2.5rem auto 0;
       max-width: 680px;
@@ -228,6 +251,11 @@
 
     <div class="callout">
       <p><a href="/when-you-get-a-diagnosis/">Work through your situation step by step with the diagnosis tool →</a></p>
+    </div>
+
+    <div class="related">
+      <p class="related-label">More New Zealand diagnosis guides</p>
+      <a href="/serious-illness-work-and-income-nz/" class="related-link">Your work and income after a serious diagnosis →</a>
     </div>
 
     <div class="page-disclaimer">
