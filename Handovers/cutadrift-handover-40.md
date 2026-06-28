@@ -1,6 +1,6 @@
 # Cut Adrift — Handover Document 40
 **Updated:** 28 June 2026
-**Session work:** SEO/backlink strategy research; first two pages of the NZ diagnosis guide cluster built and deployed; NZ diagnosis hub created. Commit `08e1d10`. Pages-only deploy.
+**Session work:** SEO/backlink strategy research; NZ diagnosis guide cluster: hub + Page 1 + Page 2 built and deployed. Commits `08e1d10`, `1a203f7`. Pages-only deploys.
 **Supersedes:** H39 (kept on disk; not pruned). Cumulative session-history table preserved below.
 
 ---
@@ -55,32 +55,33 @@ Key finding: the diagnosis tool and incapacity/carer tool have **no guide conten
 - Covers: disclosure obligations, sick leave, Work and Income (Jobseeker Support / Supported Living Payment, 0800 559 009), KiwiSaver serious illness withdrawal, insurance check, Disability Allowance, National Travel Assistance, prescriptions, EPA and will, support contacts.
 - Requested indexing in Google Search Console ✅
 
-**Page 2 — drafted, NOT YET DEPLOYED:**
-File: `~/Downloads/serious-illness-work-and-income-nz.md` (or saved in outputs from this session)
-Target URL: `/serious-illness-work-and-income-nz/`
-- Covers: what you must/needn't tell your employer, sick leave (10 days/yr, 20 day max), medical certificate rules, reasonable adjustments (Human Rights Act 1993), Work and Income support, job security rights, self-employed gap, record-keeping.
-- **START NEXT SESSION HERE — add this page using the same Claude Code handoff pattern.**
+**Page 2 — live:**
+`Public/serious-illness-work-and-income-nz/index.html` → `cutadrift.org/serious-illness-work-and-income-nz/`
+- Covers: what you must/needn't tell your employer, sick leave (10 days/yr, 20 day max), medical certificate rules, reasonable adjustments (Human Rights Act 1993), Work and Income support (Jobseeker Support / Supported Living Payment), job security rights, self-employed gap, record-keeping.
+- Hub updated to list both pages. Page 1 updated with "More guides" related-links section pointing to Page 2.
+- Indexing in Search Console: pending (do at start of next session).
 
-**Sitemap:** updated with both new URLs (`what-to-do-after-a-serious-diagnosis-nz` and `guides-diagnosis-nz`). Page 2 URL not yet in sitemap.
+**Sitemap:** updated with all three new URLs (`guides-diagnosis-nz`, `what-to-do-after-a-serious-diagnosis-nz`, `serious-illness-work-and-income-nz`).
 
-**Commit:** `08e1d10` — "Add NZ diagnosis guide page and hub" — 3 files, 398 insertions.
+**Commits:** `08e1d10` — hub + Page 1 (3 files, 398 insertions). `1a203f7` — Page 2 + hub/sitemap/Page 1 updates (4 files, 287 insertions).
 
 ---
 
 ## Next session — START HERE
 
-1. **Deploy page 2** — `serious-illness-work-and-income-nz.md` is ready. Use this Claude Code instruction:
+1. **Request indexing in Search Console** for: `https://cutadrift.org/serious-illness-work-and-income-nz/` (Page 2 is live but not yet submitted).
 
-> I have a second NZ diagnosis guide page at `~/Downloads/serious-illness-work-and-income-nz.md`. Add it to the site the same way you added the first diagnosis page — same format, same HTML conversion. Target URL: `/serious-illness-work-and-income-nz/`. Add it to the sitemap, add it to the `/guides-diagnosis-nz/` hub as the second entry, and update the first page (`/what-to-do-after-a-serious-diagnosis-nz/`) to link to it in the "More guides" section at the bottom. Don't deploy — commit and tell me what changed.
+2. **Build remaining 3 NZ diagnosis pages** (same write-verify-deploy-index pattern):
+
+**Claude Code instruction template for each new page:**
+> Add the page the same way you added previous diagnosis pages — same format, same HTML conversion. Add it to the sitemap, the hub, and link it from the previous page. Then STOP: commit and tell me exactly which files changed. Do NOT deploy, do NOT curl or verify whether anything is live, and do NOT start any background polling loops. Deployment and verification are my manual steps.
 
 Then deploy with: `cd ~/Desktop/Cut\ Adrift && npx wrangler pages deploy Public --project-name cutadrift --commit-dirty=true`
 
-Then request indexing in Search Console for: `https://cutadrift.org/serious-illness-work-and-income-nz/`
-
-2. **Build remaining 3 NZ diagnosis pages** (same write-verify-deploy-index pattern):
+**Pages still to build:**
    - Financial help and benefits during serious illness (NZ)
    - Insurance claims after a diagnosis (NZ)
-   - Telling family, work and others about a diagnosis
+   - Telling family, work and others about a diagnosis (NZ)
 
 3. **Once all 5 NZ diagnosis pages are live**, clone the cluster to AU, UK, IE, CA, US (same one-country-at-a-time approach as bereavement hardening).
 
@@ -93,7 +94,7 @@ Then request indexing in Search Console for: `https://cutadrift.org/serious-illn
 ## Outstanding tasks
 
 ### ⚡ Priority
-1. **Deploy diagnosis page 2** (work and income NZ) — see above.
+1. **Request Search Console indexing** for `/serious-illness-work-and-income-nz/`.
 2. **Build remaining NZ diagnosis pages** (3 more).
 3. **Short-diagnosis-response watch** (from H38) — confirm truncated vs brief.
 4. Homepage design system not yet applied site-wide (guides + tool pages still pre-redesign).
@@ -137,7 +138,7 @@ This approach means no big post-hoc audit — contamination is caught at the dra
 ---
 
 ## Diagnosis guide cluster status
-- **NZ:** Hub ✅ live | Page 1 (what to do) ✅ live + indexed | Page 2 (work & income) ⏳ drafted, not deployed | Pages 3–5 ⏳ not started
+- **NZ:** Hub ✅ live | Page 1 (what to do) ✅ live + indexed | Page 2 (work & income) ✅ live, indexing pending | Pages 3–5 ⏳ not started
 - **AU/UK/IE/CA/US:** ⏳ not started — wait for NZ cluster complete
 
 ---
@@ -180,4 +181,4 @@ This approach means no big post-hoc audit — contamination is caught at the dra
 | 37 | **Diagnosis CA-hardened** (5th country). Harness `tests/diag_diagnosis_ca.mjs`; **Worker `ec148b17`**; re-test effectively 47/47. Commit `cec766e`. |
 | 38 | **Diagnosis US-hardened** (6th and final). Harness `tests/diag_diagnosis_us.mjs`; **Worker `67c366a5`**; re-test 47/48 → effectively 48/48. **Diagnosis hardening COMPLETE across all six countries; all three tools now done.** |
 | 39 | **Homepage gallery redesign** — all five output cards (proof card + 4 gallery cards) replaced with visual layouts showing actual tool output format. Job-loss card (card 4 stub) filled with mini Not Redundant CV builder output. Tag-clipping fix across all cards. Commit `3bdf9d5`. Pages-only deploy. |
-| 40 | **SEO/backlink strategy** researched and resolved (journalist platforms ruled out — Wayne doesn't want named attribution; directory shortlist created). **Content gap analysis** completed — diagnosis and incapacity tools have no guide content; Not Redundant barely indexed. **NZ diagnosis guide cluster started:** hub (`/guides-diagnosis-nz/`) + Page 1 (`/what-to-do-after-a-serious-diagnosis-nz/`) live and indexed. Page 2 (`/serious-illness-work-and-income-nz/`) drafted, not yet deployed. Commit `08e1d10`. |
+| 40 | **SEO/backlink strategy** researched and resolved (journalist platforms ruled out — Wayne doesn't want named attribution; directory shortlist created). **Content gap analysis** completed — diagnosis and incapacity tools have no guide content; Not Redundant barely indexed. **NZ diagnosis guide cluster:** hub (`/guides-diagnosis-nz/`) + Page 1 (`/what-to-do-after-a-serious-diagnosis-nz/`) + Page 2 (`/serious-illness-work-and-income-nz/`) all live. Commits `08e1d10`, `1a203f7`. |
