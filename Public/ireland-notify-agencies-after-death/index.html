@@ -56,7 +56,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -173,11 +175,15 @@
       header { padding-top: 32px; }
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+
+    .intro a { color: var(--amber); text-decoration: none; }
+    .intro a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -185,7 +191,7 @@
     </nav>
 
     <h1>Notifying Government Agencies After a Death in Ireland</h1>
-    <p class="intro">After registering the death, there is a list of organisations that need to be informed. A systematic approach — and using the Life Events notification service where possible — saves time and prevents overpayments that may need to be returned.</p>
+    <p class="intro">After registering the death, there is a list of organisations that need to be informed. A systematic approach — and using the Life Events notification service where possible — saves time and prevents overpayments that may need to be returned. If you'd rather have a plan built around your situation, <a href="/when-someone-dies/">answer a few questions and we'll put one together →</a></p>
 
     <h2>The Life Events notification service</h2>
     <p>When registering the death at the Civil Registration Office, ask about the <strong>Life Events</strong> service. This allows you to notify several government bodies — including the Department of Social Protection and Revenue — through a single process, rather than contacting each one separately.</p>

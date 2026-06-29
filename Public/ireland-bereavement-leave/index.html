@@ -56,7 +56,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -173,11 +175,15 @@
       header { padding-top: 32px; }
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+
+    .intro a { color: var(--amber); text-decoration: none; }
+    .intro a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -185,7 +191,7 @@
     </nav>
 
     <h1>Bereavement Leave in Ireland</h1>
-    <p class="intro">Bereavement leave entitlements in Ireland are more limited than in many comparable countries. Here is what the law provides, and what you can reasonably expect from most employers.</p>
+    <p class="intro">Bereavement leave entitlements in Ireland are more limited than in many comparable countries. Here is what the law provides, and what you can reasonably expect from most employers. If you'd rather have a plan built around your situation, <a href="/when-someone-dies/">answer a few questions and we'll put one together →</a></p>
 
     <h2>Parental Bereavement Leave</h2>
     <p>Since 2022, parents are entitled to <strong>5 days’ paid Parental Bereavement Leave</strong> following the death of a child under 18, or a stillbirth after 24 weeks of pregnancy. This applies to both parents and must be taken within 56 weeks of the death. It is paid at normal pay by the employer, who may claim reimbursement from the State.</p>

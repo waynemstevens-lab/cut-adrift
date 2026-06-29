@@ -56,7 +56,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -173,11 +175,15 @@
       header { padding-top: 32px; }
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+
+    .intro a { color: var(--amber); text-decoration: none; }
+    .intro a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -185,7 +191,7 @@
     </nav>
 
     <h1>Bereavement Payments and Benefits in Ireland</h1>
-    <p class="intro">The Department of Social Protection provides several ongoing payments and once-off supports for bereaved people. What you are entitled to depends on your circumstances — whether you were married or in a civil partnership, whether you have children, and the PRSI record of the deceased.</p>
+    <p class="intro">The Department of Social Protection provides several ongoing payments and once-off supports for bereaved people. What you are entitled to depends on your circumstances — whether you were married or in a civil partnership, whether you have children, and the PRSI record of the deceased. If you'd rather have a plan built around your situation, <a href="/when-someone-dies/">answer a few questions and we'll put one together →</a></p>
 
     <h2>Widow’s, Widower’s or Surviving Civil Partner’s Contributory Pension</h2>
     <p>The main ongoing payment for surviving spouses and civil partners. Entitlement is based on <strong>PRSI contributions</strong> — either your own or the deceased’s. You do not need to have paid PRSI yourself if the deceased had sufficient contributions. The payment is non-means-tested and you can continue to work while receiving it.</p>

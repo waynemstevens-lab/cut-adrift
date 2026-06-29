@@ -56,7 +56,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -173,11 +175,15 @@
       header { padding-top: 32px; }
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+
+    .intro a { color: var(--amber); text-decoration: none; }
+    .intro a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -185,7 +191,7 @@
     </nav>
 
     <h1>Notifying Government Agencies After a Death in Canada</h1>
-    <p class="intro">After a death is registered, there is a list of organisations that need to be informed. Here is a systematic guide to who to contact and what to say — covering federal agencies, provincial services, and financial institutions.</p>
+    <p class="intro">After a death is registered, there is a list of organisations that need to be informed. Here is a systematic guide to who to contact and what to say — covering federal agencies, provincial services, and financial institutions. If you'd rather have a plan built around your situation, <a href="/when-someone-dies/">answer a few questions and we'll put one together →</a></p>
 
     <h2>Service Canada</h2>
     <p>Call <strong>1-800-277-9914</strong>. Report the death to stop any Canada Pension Plan (CPP) or Old Age Security (OAS) payments. Payments made after the date of death must be returned. At the same time, apply for the CPP Death Benefit and ask about the Survivor’s Pension and other entitlements.</p>

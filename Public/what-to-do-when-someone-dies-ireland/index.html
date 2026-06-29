@@ -56,7 +56,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -183,11 +185,15 @@
       line-height: 1.6;
       color: rgba(237,232,223,0.55);
     }
+
+    .intro a { color: var(--amber); text-decoration: none; }
+    .intro a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -195,7 +201,7 @@
     </nav>
 
     <h1>What to Do When Someone Dies in Ireland</h1>
-    <p class="intro">The practical steps after a death can feel impossible to navigate when you are grieving. This guide covers what needs to happen and when — from the first phone calls to the longer process of settling the estate.</p>
+    <p class="intro">The practical steps after a death can feel impossible to navigate when you are grieving. This guide covers what needs to happen and when — from the first phone calls to the longer process of settling the estate. If you'd rather have a plan built around your situation, <a href="/when-someone-dies/">answer a few questions and we'll put one together →</a></p>
 
     <h2>In the first hours</h2>
     <p>If the death was expected — at home under palliative care — call the GP. They will attend to certify the death and issue a Medical Certificate of Cause of Death (MCCD). If the deceased was in hospital, staff will handle certification and notify next of kin.</p>

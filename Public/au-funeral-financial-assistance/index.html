@@ -60,7 +60,9 @@
       padding: 0 24px 64px;
     }
 
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
 
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
@@ -212,11 +214,15 @@
       header { padding-top: 32px; }
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+
+    .intro a { color: var(--amber); text-decoration: none; }
+    .intro a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-someone-dies/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -224,7 +230,7 @@
     </nav>
 
     <h1>Help with funeral costs in Australia</h1>
-    <p class="intro">Funerals in Australia are expensive, often arriving at the worst possible financial moment. Several sources of assistance exist — here is what to look for and who to contact.</p>
+    <p class="intro">Funerals in Australia are expensive, often arriving at the worst possible financial moment. Several sources of assistance exist — here is what to look for and who to contact. If you'd rather have a plan built around your situation, <a href="/when-someone-dies/">answer a few questions and we'll put one together →</a></p>
 
     <h2>What a funeral typically costs</h2>
     <ul>
