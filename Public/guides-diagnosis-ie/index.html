@@ -43,7 +43,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -68,7 +70,7 @@
       font-weight: 400;
       line-height: 1.12;
       color: var(--text);
-      margin-bottom: 48px;
+      margin-bottom: 20px;
     }
     .guide-item {
       display: flex;
@@ -118,11 +120,19 @@
       header { padding-top: 32px; }
       footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.72;
+      margin-bottom: 40px;
+    }
   </style>
 </head>
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-you-get-a-diagnosis/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -130,6 +140,8 @@
     </nav>
 
     <h1>Ireland diagnosis guides</h1>
+
+    <p class="intro">These guides cover the key practical steps after a serious diagnosis — work, income, insurance, and the paperwork worth sorting early. If you'd rather have a plan built around your specific situation, <a href="/when-you-get-a-diagnosis/">answer a few questions and we'll build one around you →</a></p>
 
       <a href="/what-to-do-after-a-serious-diagnosis-ie/" class="guide-item">
         <span class="guide-item-title">What to do after a serious diagnosis</span>

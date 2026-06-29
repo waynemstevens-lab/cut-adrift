@@ -43,7 +43,9 @@
       align-items: center;
       padding: 0 24px 64px;
     }
-    header { width: 100%; max-width: 720px; padding: 48px 0 0; }
+    header { width: 100%; max-width: 720px; padding: 48px 0 0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-cta { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-cta:hover { color: var(--amber); }
     .wordmark {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
@@ -129,6 +131,7 @@
 <body>
   <header>
     <a href="/" class="wordmark">Cut Adrift</a>
+    <a href="/when-you-get-a-diagnosis/" class="nav-cta">Get your personalised plan →</a>
   </header>
   <main>
     <nav class="breadcrumb">
@@ -137,7 +140,7 @@
 
     <h1>Canada diagnosis guides</h1>
 
-    <p class="intro">Canada's support system after a serious diagnosis is split between two levels of government. Some programs are <strong>federal</strong> and available to eligible Canadians regardless of province or territory — including Employment Insurance (EI) Sickness Benefits, the Canada Pension Plan (CPP) Disability Pension, the Canada Disability Benefit, and the Disability Tax Credit. But <strong>health coverage, provincial and territorial disability assistance, prescription drug plans, workers' compensation, and powers of attorney are all provincial or territorial</strong> — what you can access and how you apply depends on where you live. These guides cover both levels, and flag where the rules vary by province or territory.</p>
+    <p class="intro">Canada's support system after a serious diagnosis is split between two levels of government. Some programs are <strong>federal</strong> and available to eligible Canadians regardless of province or territory — including Employment Insurance (EI) Sickness Benefits, the Canada Pension Plan (CPP) Disability Pension, the Canada Disability Benefit, and the Disability Tax Credit. But <strong>health coverage, provincial and territorial disability assistance, prescription drug plans, workers' compensation, and powers of attorney are all provincial or territorial</strong> — what you can access and how you apply depends on where you live. These guides cover both levels, and flag where the rules vary by province or territory. If you'd rather have a plan built around your situation, <a href="/when-you-get-a-diagnosis/">answer a few questions and we'll build one around you →</a></p>
 
       <a href="/what-to-do-after-a-serious-diagnosis-ca/" class="guide-item">
         <span class="guide-item-title">What to do after a serious diagnosis</span>
