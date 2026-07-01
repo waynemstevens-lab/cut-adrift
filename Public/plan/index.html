@@ -672,6 +672,22 @@ function caSubmitFeedback() {
 
     marked.setOptions({ breaks: true, gfm: true });
     document.getElementById('plan-content').innerHTML = marked.parse(text);
+
+    // [TEMP — remove once Phase 2 NZ figure verification confirms the verified-figures
+    // block (worker 2bb74ac2) is being respected reliably across multiple test runs.]
+    // Scoped to NZ bereavement and diagnosis only — these are the two tools audited
+    // so far. Do not extend to AU/UK/IE/CA/US until those prompts are checked.
+    try {
+      var nzIntake = JSON.parse(sessionStorage.getItem('cutadrift_intake') || '{}');
+      if (nzIntake.country === 'nz' &&
+          (nzIntake.tool === 'bereavement' || nzIntake.tool === 'diagnosis')) {
+        var note = document.createElement('div');
+        note.style.cssText = 'margin-bottom:1.5rem;padding:0.85rem 1.1rem;border-left:3px solid rgba(210,168,100,0.55);background:rgba(210,168,100,0.06);font-size:0.84rem;color:rgba(237,232,223,0.65);line-height:1.65;border-radius:0 4px 4px 0;';
+        note.textContent = "We’re in the process of re-verifying all dollar figures and thresholds in this tool against official sources. If this plan mentions a specific amount (a grant, benefit, or threshold), please confirm it directly with the relevant agency before relying on it.";
+        document.getElementById('plan-content').insertBefore(note, document.getElementById('plan-content').firstChild);
+      }
+    } catch (_) {}
+
     var disc = document.createElement('p');
     disc.style.cssText = 'font-size:0.78rem;color:rgba(237,232,223,0.35);margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(237,232,223,0.1);line-height:1.6;';
     disc.textContent = 'This plan is a starting point, not legal, financial, or health advice. Always verify details with the relevant government agency or a qualified professional.';
