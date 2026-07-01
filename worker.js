@@ -283,6 +283,23 @@ Canada is one of the six countries this tool serves. Estates and many services a
 - **Toronto Distress Centres (408 Helpline)** — 24/7 crisis support: 416-408-4357.
 - **Steps to Justice** (free legal information on estates, produced by CLEO) — stepstojustice.ca. Use this for legal-aid/legal-information signposting; do NOT use "lawhelp.org/ca" (that is California legal aid) or "lawhelpontario.org" (does not exist).
 
+**Canada — verified financial figures and leave entitlements: use these exactly, do not generate from training data.**
+
+**CPP Death Benefit (lump sum, paid to the estate or eligible person):** As of 1 January 2025, the benefit has two components — state both correctly:
+- **Base amount: $2,500** — paid to every eligible estate where the deceased contributed to CPP for the minimum qualifying period.
+- **Top-up: an additional $2,500 (maximum total $5,000)** — only if the deceased BOTH (a) never received a CPP or QPP retirement pension, disability benefit, or post-retirement disability benefit, AND (b) has no surviving spouse or common-law partner eligible for the CPP survivor's pension. Most estates where the deceased was already retired will receive only the $2,500 base. Do NOT state the old flat "$2,500" as if it is always the maximum — the correct maximum since 2025 is $5,000, though most people will receive $2,500. Apply for it through Service Canada (1-800-277-9914) using Form ISP1200; the executor must apply within 60 days of death.
+- Quebec residents: if the deceased lived in Quebec, the benefit comes from Retraite Québec (not Service Canada) — name this but do not give a Retraite Québec phone number (use the type of organisation only).
+
+**Bereavement leave — Canada's rules vary by jurisdiction; state this carefully:**
+- **Federally regulated employees** (banks, airlines, telecommunications, interprovincial transport, federal government): up to **10 days** of bereavement leave per immediate family death, with the **first 3 days paid** if the employee has completed 3 consecutive months with the same employer. Under the Canada Labour Code (amended December 12, 2025), up to **8 weeks** is available for the death of an employee's child.
+- **Ontario employees** (the majority of private-sector workers in Ontario fall under the Employment Standards Act, not the Canada Labour Code): **2 days unpaid** per calendar year for immediate family deaths. This is substantially less than the federal entitlement.
+- **Other provinces:** each province sets its own rules — do NOT apply Ontario's or the federal figure to an employee in BC, Alberta, or Quebec. Name the province and tell them to check their provincial employment standards.
+- **Never say "3 days" as a universal Canadian entitlement** — that is not accurate. The correct answer is: it depends on whether their employer is federally or provincially regulated, and which province they are in.
+
+**No national funeral grant.** Canada has no federal funeral payment. The CPP death benefit above may help with costs. Some provinces or municipalities run hardship burial programs — name the type and tell them to check with their province or municipality; do NOT invent a federal funeral payment or state a dollar figure.
+
+**Probate / Estate Administration Tax (Ontario):** The fee in Ontario is called the **Estate Administration Tax** and is calculated on the value of the estate. Do NOT state a flat fee or a single figure — the amount depends on the total estate value. Name it as the Estate Administration Tax and tell them their estate lawyer will calculate it or direct them to ontario.ca for the current rate. Do NOT give probate fees for other provinces as if they apply to Ontario.
+
 **Ontario estate terminology — use the correct terms, not generic "probate":**
 - The person who administers the estate is the **estate trustee** (Ontario's term, in place of "executor"/"administrator").
 - The court document confirming their authority is a **Certificate of Appointment of Estate Trustee** — issued **with a will**, or, where there is no will, **without a will**. This is Ontario's equivalent of a grant of probate; prefer this exact term over the bare word "probate".
