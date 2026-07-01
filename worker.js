@@ -1294,7 +1294,7 @@ Output rules:
 // ─── Intake formatters — one per tool ────────────────────────────────────────
 
 const LABELS = {
-  country:       { nz: 'New Zealand', au: 'Australia', uk: 'United Kingdom', ie: 'Ireland', ca: 'Canada', us: 'United States', other: 'Other' },
+  country:       { nz: 'New Zealand', au: 'Australia', uk: 'United Kingdom', ie: 'Ireland', ca: 'Canada', us: 'United States' },
   timing:        { recent_sudden: 'Very recently — sudden or unexpected death', recent_expected: 'Very recently — expected death (illness or hospice care)', week_ago: 'About a week ago', weeks_ago: 'A few weeks ago or more' },
   relationship:  { partner: 'Partner or spouse', parent: 'Parent', child: 'Child', sibling: 'Sibling', grandparent: 'Grandparent', other: 'Someone else close' },
   emotional:     { barely_functioning: 'Barely functioning — in shock', holding_together: 'Holding together but overwhelmed', need_the_list: 'OK — just needs to know what to do', not_sure: 'Not sure how they feel' },
@@ -1952,6 +1952,15 @@ export default {
       intake = await request.json();
     } catch (_) {
       return new Response(JSON.stringify({ error: 'invalid_request' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // ── Validate country ──────────────────────────────────────────────────────
+    const SUPPORTED_COUNTRIES = new Set(['nz', 'au', 'uk', 'ie', 'ca', 'us']);
+    if (intake.country !== undefined && !SUPPORTED_COUNTRIES.has(intake.country)) {
+      return new Response(JSON.stringify({ error: 'invalid_country' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
