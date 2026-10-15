@@ -1,6 +1,6 @@
 # Cut Adrift — Handover Document 48
 **Updated:** 2 July 2026
-**Session work:** Completed the diagnosis guide fact-check workstream across all 25 pages (5 countries × 5 pages). IE: applied the final Illness Benefit day fix to `what-to-do-after-a-serious-diagnosis-ie`. CA: checked remaining pages (what-to-do, telling-people, hub) — all clean; confirmed 3 high-risk pages also clean via web searches. US: confirmed remaining pages (what-to-do, telling-people, hub) clean; high-risk page fixes from previous session (Part D cap, CFPB rule) verified correctly in place. NZ ACC rates checked — still $7,990.30, 2026/27 rates not yet published. Not Redundant fact-check identified as the next major workstream.
+**Session work:** Completed the diagnosis guide fact-check workstream across all 25 pages (5 countries × 5 pages). IE: applied the final Illness Benefit day fix to `what-to-do-after-a-serious-diagnosis-ie`. CA: checked remaining pages (what-to-do, telling-people, hub) — all clean. US: confirmed remaining pages clean; high-risk page fixes from previous session verified in place. NZ ACC rates checked — still $7,990.30. AU Phase 2 bereavement tests (4 scenarios) run via terminal — AU-3 found a gap (Carer Payment 14-week continuation not stated); fixed in Cut Adrift worker and retested PASS. Not Redundant accuracy tests run (4 scenarios across NZ/UK/IE/CA); 4 errors found and fixed via output-level corrections + prompt hardening; all 4 retested PASS. Both workers committed and deployed.
 **Supersedes:** H47 (kept on disk). Cumulative session-history table preserved below.
 
 ---
@@ -13,7 +13,8 @@
 - **Worker:** `npx wrangler deploy` (from `~/Desktop/Cut Adrift/`)
 - **Static site:** `cd ~/Desktop/Cut\ Adrift && npx wrangler pages deploy Public --project-name cutadrift --commit-dirty=true`
 
-**Current worker version:** `6ca30ae5` (no worker changes this session)
+**Current Cut Adrift worker version:** `9bf7ddd4` (AU bereavement Carer Payment fix)
+**Current Not Redundant worker version:** `5b0b4568` (UK/IE/CA accuracy fixes)
 
 **Test-bypass header:** `X-Internal-Test: 498ba6d2a2777d0b23d71705b3e4fab67e69ec2a16ab8f322b065227bde46c04`
 
@@ -52,12 +53,51 @@ ACC funeral grant confirmed $7,990.30 on acc.co.nz as of 2 July 2026. 2026/27 ra
 
 ---
 
+## New this session — AU Phase 2 bereavement tests: COMPLETE
+
+4 scenarios run via terminal curl against live worker (test-bypass header):
+
+| Scenario | Result | Notes |
+|----------|--------|-------|
+| AU-1: Retired/Age Pension | 4/4 ✓ | Soft flag: "DVLA equivalent" leaked but self-corrected inline |
+| AU-2: Employed survivor | 3/3 ✓ | 2 days compassionate leave correct, AU numbers clean |
+| AU-3: Carer/accident/children | 3/4 → 3/3 ✓ | FAIL on 14 weeks → worker fix applied → retest PASS |
+| AU-4: $50k payment myth | 3/3 ✓ | Myth not confirmed, correct referral to Services Australia |
+
+**Worker fix applied (Cut Adrift):** Added Carer Payment 14-week bereavement continuation to AU verified-figures block at line 342 of worker.js. Deploy commit: `92d8351`, worker version `9bf7ddd4`.
+
+---
+
+## New this session — Not Redundant accuracy tests: COMPLETE
+
+4 scenarios tested via terminal curl against firststeps-engine (`bypass_rate_limit: true`):
+
+| Scenario | Initial | After fixes |
+|----------|---------|-------------|
+| NR-1: NZ redundancy | 3/3 ✓ | — |
+| NR-2: UK unfair dismissal | 3/3 → 3/3 ✓ | £643 → £751 via output fix |
+| NR-3: IE WRC complaint | 1/3 → 3/3 ✓ | "two years" → "6 months" via output fix |
+| NR-4: CA notice/EI | 1/3 → 3/3 ✓ | CEAB removed, $650 → $729 via output fix |
+
+**Not Redundant worker had no verified-figures block** — relying entirely on Haiku's training data, which contained 4 stale/wrong facts. Fixes applied:
+
+1. **UK £643 weekly cap** → £751 (April 2026): output-level replacement on both live and cached paths
+2. **IE WRC unfair dismissal "up to two years"** → "up to 6 months": output-level replacement (required `\*{0,2}` regex to handle markdown bold markers around the phrase)
+3. **CA "Canada Emergency Assistance Benefit (CEAB)"**: phantom program sentence removed from output (CEAB is not a current active program)
+4. **CA EI maximum "$650/week"** → "$729/week": output-level replacement (was citing 2024 figure)
+
+Prompt anchors also hardened for UK, IE (WRC deadline), and CA (EI must-mention, CEAB ban, common law must-mention).
+
+Not Redundant final worker version: `5b0b4568`. All fixes committed: `[main 1c37f49]`.
+
+---
+
 ## Country hardening + fact-verification status (all three tools)
 
 | Country | Contamination hardening | Bereavement guide fact-check | Diagnosis guide fact-check | Worker figures verified |
 |---------|------------------------|------------------------------|---------------------------|------------------------|
 | NZ | ✓ | ✓ H46 | ✓ H46 (clean) | ✓ H46 (6 figures pinned; Phase 2 PASS) |
-| AU | ✓ H26 | ✓ H47 (clean) | ✓ H48 (1 fix) | ✓ H47 (blocks added; Phase 2 PENDING) |
+| AU | ✓ H26 | ✓ H47 (clean) | ✓ H48 (1 fix) | ✓ H47+H48 (blocks added; Phase 2 PASS H48) |
 | UK | ✓ H27 | ✓ H47 (1 fix) | ✓ H48 (2 fixes) | ✓ H47 (verified; probate fee watch 13 Jul) |
 | IE | ✓ H28 | ✓ H47 (1 fix) | ✓ H48 (3 fixes) | ✓ H47 (verified correct) |
 | CA | ✓ H37 | ✓ H47 (1 fix) | ✓ H48 (clean) | ✓ H47 (block added; Phase 2 PENDING) |
@@ -109,8 +149,8 @@ CA scenarios (3 — use `X-Internal-Test` header):
 
 1. UK probate fee — 13 July 2026
 2. NZ ACC rates — ~9–12 July 2026
-3. Not Redundant fact-check (new major workstream)
-4. AU + CA Phase 2 bereavement tool tests (still pending from H47)
+3. CA Phase 2 bereavement tool tests (still pending — AU now done)
+4. Not Redundant: AU and US accuracy tests not yet run (NZ/UK/IE/CA done this session)
 
 ### Carried from H47
 
@@ -185,4 +225,4 @@ CA scenarios (3 — use `X-Internal-Test` header):
 | 45 | CA diagnosis cluster complete — SIX-COUNTRY DIAGNOSIS GUIDE CLUSTER FINISHED. CTA workstream — 36 diagnosis + 38 bereavement guide pages link to tool. Commits `6561ebf`+. |
 | 46 | First fact-verification pass — NZ FULLY CLOSED. Removed "Somewhere else" country option. NZ bereavement 3 fixes. Worker NZ figures block added. Phase 2 PASS. Worker `2bb74ac2`. |
 | 47 | Fact-verification extended to AU/UK/IE/CA/US bereavement guides — all six complete. Worker hardening AU + CA bereavement. Static fixes: US VA burial $948→$1,002; UK death cert £11→£12.50; IE false parental bereavement claim corrected; CA CPP death benefit updated. Worker `6ca30ae5`. |
-| 48 | **Diagnosis guide fact-check COMPLETE — all 25 pages across 5 countries.** 8 errors fixed total (AU 1, UK 2, IE 3, CA 0, US 2). NZ ACC rates confirmed $7,990.30 unchanged. Not Redundant fact-check identified as next major workstream. Worker unchanged at `6ca30ae5`. |
+| 48 | **Diagnosis guide fact-check COMPLETE — all 25 pages across 5 countries.** 8 errors fixed. AU Phase 2 bereavement tests PASS (Carer Payment 14-week fix applied, Cut Adrift worker `9bf7ddd4`). Not Redundant accuracy tests run (NZ/UK/IE/CA): 4 errors found and fixed via output-level corrections (£643→£751, IE WRC 6-month deadline, CA CEAB removed, CA EI $650→$729). NR worker `5b0b4568`, commit `1c37f49`. NZ ACC rates confirmed $7,990.30 unchanged. |
