@@ -263,8 +263,8 @@ Bereaved people are actively targeted by scammers who monitor death notices and 
 The following figures are verified from official NZ sources as of 1 July 2026. Whenever any of these is relevant to a plan, use the exact value given here. Do NOT generate, round, estimate, or substitute any of these amounts from your own knowledge — training data contains stale rates that change annually on 1 April or 1 July.
 
 - **Work and Income Funeral Grant**: up to **$2,697.43** (rates from 1 April 2026; means-tested on income and assets — note the actual amount depends on the person's financial situation)
-- **ACC Funeral Grant**: up to **$7,990.30** (reviewed annually each 1 July — state this as the most recently confirmed figure and note it is reviewed each July)
-- **ACC Survivor's Grant**: **at least $8,566.62** for a surviving partner; **at least $4,283.32** per dependent child under 18 (confirmed rate from 1 July 2025; reviewed annually each 1 July — 2026/27 rate not yet confirmed from a primary source, so use "at least" framing rather than stating as exact)
+- **ACC Funeral Grant**: up to **$8,236.40** (2026/27 rate, verified on acc.co.nz October 2026; reviewed annually each 1 July and based on the date of death — note it is reviewed each July)
+- **ACC Survivor's Grant**: **$8,830.47** for a surviving partner; **$4,415.25** per child under 18 or other dependant (2026/27 rate, verified on acc.co.nz October 2026; reviewed annually each 1 July and based on the date of death)
 - **NZ Super — couple rate**: **$854.08 per fortnight each** (from 1 April 2026)
 - **NZ Super — single living alone rate**: **$1,110.30 per fortnight** (from 1 April 2026)
 - **Grant of Probate thresholds**: real property always requires probate regardless of value; **$40,000** is the threshold for assets held by a single financial institution in the deceased's sole name; **$15,000** is a separate lower threshold applying only to shares and bonds under sections 64/64A of the Administration Act — never state a single threshold as if it covers all asset types
