@@ -270,6 +270,7 @@
       color: var(--text-dim);
       margin-bottom: 30px;
     }
+    .gallery-swipe { display: none; }
     .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -338,7 +339,6 @@
     .situations {
       width: 100%;
       max-width: var(--content);
-      margin-bottom: 72px;
       opacity: 0;
       animation: rise 0.7s 0.24s ease forwards;
     }
@@ -417,12 +417,13 @@
     .trust-strip {
       width: 100%;
       max-width: var(--content);
-      margin-top: 28px;
+      margin-top: 22px;
+      margin-bottom: 72px;
       display: flex;
       gap: 8px 24px;
       flex-wrap: wrap;
       opacity: 0;
-      animation: rise 0.6s 0.50s ease forwards;
+      animation: rise 0.6s 0.30s ease forwards;
     }
 
     .trust-item {
@@ -640,7 +641,7 @@
     @media (max-width: 640px) {
       .hero { padding: 40px 0 32px; }
 
-      .situations { margin-bottom: 52px; }
+      .trust-strip { margin-bottom: 52px; gap: 6px 18px; }
 
       .how {
         grid-template-columns: 1fr;
@@ -663,8 +664,27 @@
       .situation:nth-child(odd) { border-right: none; }
       .situation:nth-child(3) { border-bottom: 1px solid var(--border); }
 
-      .gallery-grid { grid-template-columns: 1fr; gap: 30px; }
-      .gallery-card { transform: none !important; }
+      /* letter cards become a swipeable row */
+      .gallery-swipe { display: inline; color: var(--clay); }
+      .gallery-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        align-items: flex-start;
+        -webkit-overflow-scrolling: touch;
+        margin: -16px -24px 0;
+        padding: 16px 24px 28px;
+        scroll-padding: 0 24px;
+        scrollbar-width: none;
+      }
+      .gallery-grid::-webkit-scrollbar { display: none; }
+      .gallery-card {
+        flex: 0 0 86%;
+        scroll-snap-align: start;
+        transform: none !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 24px rgba(0,0,0,0.35);
+      }
 
       footer { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
@@ -732,6 +752,13 @@
 
       </div>
     </section>
+
+    <div class="trust-strip">
+      <span class="trust-item"><span class="trust-check">✓</span> No account needed</span>
+      <span class="trust-item"><span class="trust-check">✓</span> No email address</span>
+      <span class="trust-item"><span class="trust-check">✓</span> We don't sell your data</span>
+      <span class="trust-item"><span class="trust-check">✓</span> AI-assisted, verified against official sources</span>
+    </div>
 
     <section class="how">
       <div class="how-step">
@@ -821,7 +848,7 @@
 
     <!-- Draft gallery: more examples of real drafted output -->
     <section class="gallery">
-      <p class="gallery-label">A few more things we draft for you</p>
+      <p class="gallery-label">A few more things we draft for you <span class="gallery-swipe" aria-hidden="true">· swipe →</span></p>
       <div class="gallery-grid">
 
         <!-- One card per intake situation: bereavement · diagnosis · incapacity · job loss.
@@ -961,12 +988,6 @@
     </section>
 
     <!-- Trust strip: answers the silent "what's the catch?" question -->
-    <div class="trust-strip">
-      <span class="trust-item"><span class="trust-check">✓</span> No account needed</span>
-      <span class="trust-item"><span class="trust-check">✓</span> No email address</span>
-      <span class="trust-item"><span class="trust-check">✓</span> We don't sell your data</span>
-      <span class="trust-item"><span class="trust-check">✓</span> AI-assisted, verified against official sources</span>
-    </div>
 
     <section class="guides" id="guides">
       <p class="guides-label">Bereavement Guides</p>
