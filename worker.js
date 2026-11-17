@@ -387,6 +387,7 @@ If you need any organisation not listed above (a bank, a private pension provide
 
 **Inheritance Tax — use current figures:**
 - The **nil-rate band is £325,000**; there is an additional **residence nil-rate band of up to £175,000** where the home passes to direct descendants. Inheritance Tax is **40%** on the value above the threshold. Transfers to a surviving spouse or civil partner are exempt.
+- **The probate fee depends only on the estate's value.** Do NOT say any part of an estate is "exempt from probate fees" — spouse, civil partner and charity exemptions apply to **Inheritance Tax**, not to the probate fee.
 - For deaths **on or after 1 January 2022 there is NO separate IHT205 or IHT217 form** — those forms are abolished. **Do NOT write "IHT205", "IHT 205", or "IHT217" at all** (they are obsolete and naming them misleads people). For most estates no separate Inheritance Tax form is needed; the estate figures are entered directly in the probate application, which determines whether the estate is "excepted". **Form IHT400** is the only IHT form you may mention, and only where Inheritance Tax is actually due.
 
 **Death certificate (England & Wales):** certified copies cost about **£12.50 each** from the register office; order several, as each bank, pension provider and HMRC will want one.
@@ -1732,7 +1733,7 @@ const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 // Bereavement/incapacity Path B/C plans (sections + contacts + the closing line)
 // were truncating at 2000 (stop_reason: max_tokens), cutting off the closing line.
 const MAX_TOKENS = {
-  bereavement: 3000,
+  bereavement: 4000,
   'bereavement-crisis': 1000,  // deliberately short holding response (fast profile)
   incapacity:  3000,
   diagnosis:   4000,
@@ -1835,38 +1836,88 @@ async function sendApiErrorAlert(env, { status, detail }) {
   } catch (_) {}
 }
 
-// ─── US-only output safety net: "solicitor" → "attorney" ────────────────────
-// The model intermittently uses the British "solicitor" in US plans despite the
-// prompt ban (a sticky generic-word edge-leak, ~10% of US runs). This rewrites it
-// to "attorney" in the streamed SSE response. Scoped by the caller to
-// country === 'us' so legitimate UK / Irish / Australian usage is never touched.
+// ─── Output safety nets (streamed SSE rewrites) ─────────────────────────────
+// The model occasionally ignores a prompt ban. These rewrites fix the known
+// leaks in the streamed response, scoped by country so legitimate usage
+// elsewhere is never touched:
+//   US: the British "solicitor" → "attorney" (~10% of US runs).
+//   UK: "exempt from probate fees" (exemptions are Inheritance Tax, not the
+//       probate fee) and the abolished IHT205 form (no longer used for deaths
+//       from 1 January 2022).
 //
-// Two split cases are handled so it is not just a common-case fix:
-//   1. SSE framing split across network chunks — only complete events (delimited
-//      by a blank line) are processed; a partial trailing event stays buffered.
-//   2. The word split across two text_delta deltas — delta text is accumulated and
-//      the trailing maximal letter-run is HELD BACK each flush (it could still be
-//      growing into "solicitor"), so replacement only ever runs on text that ends
-//      at a non-letter boundary and a target word is never cut mid-stream. The
-//      carry is flushed before the block/message stop events and in flush().
-function makeSolicitorRewriteStream() {
-  const TARGET = /\bsolicitors?\b(?!\s+General)/gi;  // skip "Solicitor General"
-  const deBritify = (t) => t.replace(TARGET, (m) => {
-    const cap = m[0] === 'S';
-    const plural = /s$/i.test(m);            // "solicitors" ends in s
-    return (cap ? 'Attorney' : 'attorney') + (plural ? 's' : '');
-  });
+// Split cases handled:
+//   1. SSE framing split across network chunks — only complete events (blank-
+//      line delimited) are processed; a partial trailing event stays buffered.
+//   2. A target phrase split across text_delta events — the rewrite runs on the
+//      accumulated text and the last HOLD characters are always held back, so a
+//      phrase can never be emitted half-matched. Rewrites are idempotent, so
+//      re-running them on held text is safe. The carry is flushed before the
+//      block/message stop events and in flush().
+const HOLD = 64;   // longer than any target phrase
 
+// Each rule: a global regex and its replacement (string or function).
+const US_RULES = [
+  [/\b(?:[Aa] )?[Ss]olicitors?\b(?!\s+General)/g, (m) => {   // skip "Solicitor General"
+    const art = /^[Aa] /.test(m) ? (m[0] === 'A' ? 'An ' : 'an ') : '';
+    const word = art ? m.slice(2) : m;
+    const cap = word[0] === 'S';
+    const plural = /s$/i.test(word);
+    return art + (cap ? 'Attorney' : 'attorney') + (plural ? 's' : '');
+  }],
+  [/\bSOLICITORS?\b/g, (m) => (m.endsWith('S') ? 'ATTORNEYS' : 'ATTORNEY')],
+];
+const UK_RULES = [
+  [/\bexempt from (?:the )?probate (?:application )?fees?\b/gi, 'exempt from Inheritance Tax'],
+  [/\b(?:forms?\s+)?IHT\s?205\b(?:\s*(?:form|return)\b)?/gi,
+   'form IHT400 (only needed if the estate owes Inheritance Tax or is not an excepted estate)'],
+];
+
+// Find non-overlapping rule matches in `text` (full context, so lookaheads and
+// optional suffixes see everything already received).
+function findMatches(text, rules) {
+  const found = [];
+  for (const [re, rep] of rules) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      if (m[0].length === 0) { re.lastIndex++; continue; }
+      found.push({ start: m.index, end: m.index + m[0].length, out: typeof rep === 'function' ? rep(m[0]) : rep });
+    }
+  }
+  found.sort((a, b) => a.start - b.start);
+  const kept = [];
+  let lastEnd = -1;
+  for (const f of found) if (f.start >= lastEnd) { kept.push(f); lastEnd = f.end; }
+  return kept;
+}
+
+// Rewrite text[0:limit] using matches found in the whole of `text`.
+function applyMatches(text, matches, limit) {
+  let out = '', pos = 0;
+  for (const f of matches) {
+    if (f.end > limit) break;
+    out += text.slice(pos, f.start) + f.out;
+    pos = f.end;
+  }
+  return out + text.slice(pos, limit);
+}
+
+function makeRewriteStream(rules) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
   let sseBuf = '';      // incomplete SSE framing across network chunks
-  let textCarry = '';   // held-back trailing letter-run (possible word prefix)
+  let textCarry = '';   // raw (not yet rewritten) tail of the text
   let blockIndex = 0;
 
   const emitText = (controller, text) => {
     if (!text) return;
     const payload = { type: 'content_block_delta', index: blockIndex, delta: { type: 'text_delta', text } };
     controller.enqueue(encoder.encode(`event: content_block_delta\ndata: ${JSON.stringify(payload)}\n\n`));
+  };
+  const flushCarry = (controller) => {
+    if (!textCarry) return;
+    emitText(controller, applyMatches(textCarry, findMatches(textCarry, rules), textCarry.length));
+    textCarry = '';
   };
 
   return new TransformStream({
@@ -1882,22 +1933,28 @@ function makeSolicitorRewriteStream() {
 
         if (j && j.type === 'content_block_delta' && j.delta?.type === 'text_delta') {
           if (typeof j.index === 'number') blockIndex = j.index;
-          const pending = textCarry + j.delta.text;
-          const tail = pending.match(/[A-Za-z]+$/);          // could still grow into a word
-          const hold = tail ? tail[0] : '';
-          textCarry = hold;
-          emitText(controller, deBritify(pending.slice(0, pending.length - hold.length)));
+          const raw = textCarry + j.delta.text;
+          if (raw.length < 2 * HOLD) { textCarry = raw; continue; }
+          // Emit everything except the last HOLD chars. Cut on whitespace so the
+          // held text never starts mid-word, and never inside a match.
+          let cut = raw.length - HOLD;
+          const ws = raw.lastIndexOf(' ', cut);
+          if (ws > cut - HOLD) cut = ws;
+          const matches = findMatches(raw, rules);
+          for (const f of matches) if (f.start < cut && f.end > cut) cut = f.end;
+          if (/[\uDC00-\uDFFF]/.test(raw[cut] || '')) cut -= 1;   // keep surrogate pairs whole
+          emitText(controller, applyMatches(raw, matches, cut));
+          textCarry = raw.slice(cut);
         } else {
-          // flush any held text before the stream's terminal events
           if (j && (j.type === 'content_block_stop' || j.type === 'message_delta' || j.type === 'message_stop')) {
-            if (textCarry) { emitText(controller, deBritify(textCarry)); textCarry = ''; }
+            flushCarry(controller);
           }
           controller.enqueue(encoder.encode(rawEvent + '\n\n'));
         }
       }
     },
     flush(controller) {
-      if (textCarry) { emitText(controller, deBritify(textCarry)); textCarry = ''; }
+      flushCarry(controller);
       if (sseBuf) controller.enqueue(encoder.encode(sseBuf));
     },
   });
@@ -2062,11 +2119,12 @@ export default {
     }
 
     // ── Stream response back to client ────────────────────────────────────────
-    // US-only safety net: rewrite the British "solicitor" → "attorney" in-stream
-    // (the prompt ban leaks ~10% of the time). Gated on country so no other
-    // jurisdiction's legitimate usage is affected; handles cross-chunk splits.
-    const body = (intake.country === 'us')
-      ? claudeResponse.body.pipeThrough(makeSolicitorRewriteStream())
+    // Country-scoped output safety nets (see makeRewriteStream above).
+    const rules = intake.country === 'us' ? US_RULES
+                : intake.country === 'uk' ? UK_RULES
+                : null;
+    const body = rules
+      ? claudeResponse.body.pipeThrough(makeRewriteStream(rules))
       : claudeResponse.body;
 
     return new Response(body, {
