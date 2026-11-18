@@ -19,23 +19,23 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --navy: #0c1520; --navy-light: #121e2e; --amber: #d2a864; --amber-muted: #a07f4a; --text: #bdb5a4; --text-strong: #e4ddd0; --text-muted: #6a6255; --border: rgba(210,168,100,0.13); --border-mid: rgba(210,168,100,0.22); --border-strong: rgba(210,168,100,0.32); }
+    :root { --navy: #F3F4EF; --navy-light: #FFFFFF; --amber: #2E5E4E; --amber-muted: #3E6F60; --text: #2F3A46; --text-strong: #1F2B38; --text-muted: #5B6570; --border: rgba(46,94,78,0.13); --border-mid: rgba(46,94,78,0.22); --border-strong: rgba(46,94,78,0.32); }
     html { scroll-behavior: smooth; }
     body { background: var(--navy); color: var(--text); font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 17px; line-height: 1.75; min-height: 100vh; }
     .nav-wrap { border-bottom: 1px solid var(--border); }
     nav { max-width: 860px; margin: 0 auto; padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { color: var(--amber); text-decoration: none; font-family: 'Lora', serif; font-size: 1.05rem; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.55rem; border: none; }
+    .nav-logo { color: var(--amber); text-decoration: none; font-family: 'Spectral', serif; font-size: 1.05rem; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.55rem; border: none; }
     .nav-logo svg { width: 18px; height: 18px; flex-shrink: 0; }
     .nav-cta { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.02em; border: none; transition: color 0.2s; }
     .nav-cta:hover { color: var(--amber); }
     .container { max-width: 720px; margin: 0 auto; padding: 0 2rem 5rem; }
     .hero { padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
     .hero-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-muted); margin-bottom: 1.1rem; }
-    h1 { font-family: 'Lora', serif; font-size: clamp(1.65rem, 4vw, 2.3rem); font-weight: 500; color: var(--text-strong); line-height: 1.22; margin-bottom: 1.1rem; }
+    h1 { font-family: 'Spectral', serif; font-size: clamp(1.65rem, 4vw, 2.3rem); font-weight: 500; color: var(--text-strong); line-height: 1.22; margin-bottom: 1.1rem; }
     .hero-intro { font-size: 1.05rem; color: var(--text); max-width: 580px; line-height: 1.8; margin-bottom: 0.9rem; }
     .hero-meta { font-size: 0.78rem; color: var(--text-muted); }
     .quicknav { background: var(--navy-light); border: 1px solid var(--border-mid); border-radius: 4px; padding: 1.4rem 1.7rem; margin-bottom: 3rem; }
@@ -43,31 +43,31 @@
     .quicknav ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.35rem; }
     .quicknav li { font-size: 0.93rem; color: var(--text); }
     .quicknav a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.15s, border-color 0.15s; }
-    .quicknav a:hover { color: var(--amber); border-color: rgba(210,168,100,0.5); }
+    .quicknav a:hover { color: var(--amber); border-color: rgba(46,94,78,0.5); }
     .guide-section { margin-bottom: 3.5rem; }
     .step-label { display: block; font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-muted); margin-bottom: 0.3rem; }
-    h2.section-title { font-family: 'Lora', serif; font-size: 1.45rem; font-weight: 500; color: var(--text-strong); line-height: 1.28; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); margin-bottom: 1.3rem; }
-    h3 { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-strong); margin: 1.8rem 0 0.55rem; }
+    h2.section-title { font-family: 'Spectral', serif; font-size: 1.45rem; font-weight: 500; color: var(--text-strong); line-height: 1.28; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); margin-bottom: 1.3rem; }
+    h3 { font-family: 'Spectral', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-strong); margin: 1.8rem 0 0.55rem; }
     p { margin-bottom: 1rem; }
     p:last-child { margin-bottom: 0; }
     ul, ol { padding-left: 1.35rem; margin-bottom: 1rem; }
     li { margin-bottom: 0.38rem; color: var(--text); }
-    a { color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(210,168,100,0.3); transition: border-color 0.15s; }
+    a { color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(46,94,78,0.3); transition: border-color 0.15s; }
     a:hover { border-color: var(--amber); }
     strong { color: var(--text-strong); font-weight: 600; }
-    .info-box { background: rgba(210,168,100,0.055); border-left: 3px solid var(--amber-muted); padding: 0.9rem 1.2rem; margin: 1.2rem 0; border-radius: 0 3px 3px 0; }
+    .info-box { background: rgba(46,94,78,0.055); border-left: 3px solid var(--amber-muted); padding: 0.9rem 1.2rem; margin: 1.2rem 0; border-radius: 0 3px 3px 0; }
     .info-box p { font-size: 0.91rem; margin-bottom: 0; }
     .cta-section { background: var(--navy-light); border: 1px solid var(--border-strong); border-radius: 5px; padding: 2.6rem 2rem; text-align: center; margin: 3rem 0; }
-    .cta-section h2 { font-family: 'Lora', serif; font-size: 1.45rem; font-weight: 500; color: var(--text-strong); margin-bottom: 0.75rem; }
+    .cta-section h2 { font-family: 'Spectral', serif; font-size: 1.45rem; font-weight: 500; color: var(--text-strong); margin-bottom: 0.75rem; }
     .cta-section p { font-size: 0.95rem; max-width: 460px; margin: 0 auto 1.5rem; }
     .cta-btn { display: inline-block; background: var(--amber); color: var(--navy); font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 0.92rem; letter-spacing: 0.02em; padding: 0.75rem 1.9rem; border-radius: 3px; text-decoration: none; border: none; transition: opacity 0.2s; }
     .cta-btn:hover { opacity: 0.88; }
     footer { border-top: 1px solid var(--border); max-width: 720px; margin: 0 auto; padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .footer-brand { color: var(--amber-muted); font-family: 'Lora', serif; font-size: 0.88rem; }
+    .footer-brand { color: var(--amber-muted); font-family: 'Spectral', serif; font-size: 0.88rem; }
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { color: var(--text-muted); font-size: 0.78rem; text-decoration: none; border: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--amber); }
-    .page-disclaimer { margin: 2.5rem auto 0; max-width: 680px; padding: 1rem 1.25rem; border-top: 1px solid rgba(237,232,223,0.15); font-size: 0.8rem; line-height: 1.6; color: rgba(237,232,223,0.55); }
+    .page-disclaimer { margin: 2.5rem auto 0; max-width: 680px; padding: 1rem 1.25rem; border-top: 1px solid rgba(31,43,56,0.155); font-size: 0.8rem; line-height: 1.6; color: rgba(31,43,56,0.69); }
     @media (max-width: 600px) { .container { padding: 0 1.25rem 4rem; } nav { padding: 1rem 1.25rem; } .hero { padding: 2.5rem 0 2rem; } .cta-section { padding: 2rem 1.5rem; } footer { padding: 1.5rem 1.25rem; } }
   </style>
 </head>
@@ -77,8 +77,8 @@
     <nav>
       <a href="/" class="nav-logo" aria-label="Cut Adrift home">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2L13.8 10.2L22 12L13.8 13.8L12 22L10.2 13.8L2 12L10.2 10.2L12 2Z" fill="#d2a864"/>
-          <circle cx="12" cy="12" r="2.2" fill="#0c1520"/>
+          <path d="M12 2L13.8 10.2L22 12L13.8 13.8L12 22L10.2 13.8L2 12L10.2 10.2L12 2Z" fill="#2E5E4E"/>
+          <circle cx="12" cy="12" r="2.2" fill="#F3F4EF"/>
         </svg>
         Cut Adrift
       </a>

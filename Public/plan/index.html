@@ -6,21 +6,21 @@
   <title>Your plan — Cut Adrift</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"></noscript>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0c1520;
-      --bg-card:   #111e2c;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #ede8df;
-      --text-muted:rgba(237,232,223,0.75);
-      --text-dim:  rgba(237,232,223,0.5);
-      --amber:     #d2a864;
-      --amber-dim: rgba(210,168,100,0.15);
+      --bg:        #F3F4EF;
+      --bg-card:   #FFFFFF;
+      --border:    rgba(31,43,56,0.112);
+      --text:      #1F2B38;
+      --text-muted:rgba(31,43,56,0.83);
+      --text-dim:  rgba(31,43,56,0.64);
+      --amber:     #2E5E4E;
+      --amber-dim: rgba(46,94,78,0.15);
       --radius:    12px;
     }
 
@@ -29,10 +29,10 @@
     body {
       background-color: var(--bg);
       background-image:
-        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(93,158,168,0.05) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 95% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(91,116,134,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 95% 100%, rgba(46,94,78,0.04) 0%, transparent 55%);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-weight: 300;
       -webkit-font-smoothing: antialiased;
       min-height: 100%;
@@ -53,7 +53,7 @@
     }
 
     .wordmark {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Spectral', serif;
       font-size: 0.95rem;
       font-weight: 500;
       letter-spacing: 0.18em;
@@ -102,7 +102,7 @@
     }
 
     .loading-text {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Spectral', serif;
       font-size: 1.5rem;
       font-weight: 400;
       color: var(--text-muted);
@@ -130,8 +130,17 @@
     }
 
     /* Markdown styles */
-    #plan-content p:first-child {
-      font-family: 'Cormorant Garamond', serif;
+    #plan-content h1 {
+      font-family: 'Spectral', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    #plan-content > p:first-child, #plan-content > h1 + p {
+      font-family: 'Spectral', serif;
       font-size: 1.25rem;
       font-weight: 400;
       font-style: italic;
@@ -143,7 +152,7 @@
     }
 
     #plan-content h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Spectral', serif;
       font-size: 1.55rem;
       font-weight: 500;
       color: var(--amber);
@@ -179,9 +188,9 @@
 
     #plan-content ol li {
       counter-increment: plan-counter;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
+      position: relative;
+      display: block;
+      padding-left: 58px !important;
       font-size: 0.97rem;
       font-weight: 300;
       line-height: 1.65;
@@ -195,12 +204,13 @@
 
     #plan-content ol li::before {
       content: counter(plan-counter);
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Spectral', serif;
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--amber);
-      min-width: 22px;
-      padding-top: 1px;
+      position: absolute;
+      left: 22px;
+      top: 15px;
     }
 
     #plan-content ul {
@@ -210,27 +220,51 @@
     }
 
     #plan-content ul li {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
+      position: relative;
+      display: block;
+      padding-left: 42px !important;
       font-size: 0.93rem;
       font-weight: 300;
       line-height: 1.6;
       color: var(--text-muted);
       margin-bottom: 8px;
       padding: 12px 16px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(31,43,56,0.032);
       border-radius: 8px;
     }
 
     #plan-content ul li::before {
       content: '—';
       color: var(--text-dim);
-      flex-shrink: 0;
+      position: absolute;
+      left: 16px;
     }
 
+    #plan-content blockquote {
+      margin: 8px 0 24px;
+      padding: 20px 24px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--amber);
+      border-radius: 4px;
+    }
+    #plan-content blockquote p {
+      font-family: 'Spectral', serif;
+      font-size: 1.05rem;
+      font-style: normal;
+      color: var(--text);
+      margin-bottom: 10px;
+      padding: 0;
+      border: 0;
+    }
+    #plan-content blockquote p:last-child { margin-bottom: 0; }
+
+    #plan-content table { width: 100%; border-collapse: collapse; margin: 8px 0 24px; font-size: 0.95rem; }
+    #plan-content th { text-align: left; font-weight: 600; color: var(--text); border-bottom: 1.5px solid var(--text); padding: 8px 10px; }
+    #plan-content td { color: var(--text-muted); border-bottom: 1px solid var(--border); padding: 9px 10px; vertical-align: top; }
+
     #plan-content strong {
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text);
     }
 
@@ -259,7 +293,7 @@
     }
 
     .error-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Spectral', serif;
       font-size: 1.6rem;
       font-weight: 400;
       color: var(--text);
@@ -279,11 +313,11 @@
 
     .btn-retry {
       background: var(--amber);
-      color: #0c1520;
+      color: #F3F4EF;
       border: none;
       border-radius: 8px;
       padding: 12px 28px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.92rem;
       font-weight: 500;
       cursor: pointer;
@@ -320,7 +354,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 9px 18px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.82rem;
       font-weight: 300;
       color: var(--text-muted);
@@ -331,7 +365,7 @@
     }
 
     .btn-outline:hover {
-      border-color: rgba(210,168,100,0.3);
+      border-color: rgba(46,94,78,0.3);
       color: var(--text);
     }
 
@@ -343,7 +377,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 11px 18px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.86rem;
       font-weight: 400;
       color: var(--amber);
@@ -351,7 +385,7 @@
       transition: border-color 0.2s, color 0.2s, background 0.2s;
     }
     .diwm-trigger:hover {
-      border-color: rgba(210,168,100,0.4);
+      border-color: rgba(46,94,78,0.4);
       background: var(--amber-dim);
     }
     .diwm-trigger[aria-expanded="true"] { display: none; }
@@ -387,18 +421,18 @@
     .diwm-field select {
       width: 100%;
       padding: 10px 12px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(31,43,56,0.048);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.9rem;
       font-weight: 300;
     }
     .diwm-field input:focus,
     .diwm-field select:focus {
       outline: none;
-      border-color: rgba(210,168,100,0.4);
+      border-color: rgba(46,94,78,0.4);
     }
     .diwm-field select option { background: var(--bg-card); color: var(--text); }
 
@@ -406,11 +440,11 @@
 
     .diwm-go {
       background: var(--amber);
-      color: #0c1520;
+      color: #F3F4EF;
       border: none;
       border-radius: 8px;
       padding: 11px 22px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.88rem;
       font-weight: 500;
       cursor: pointer;
@@ -424,14 +458,14 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 11px 18px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.84rem;
       font-weight: 300;
       color: var(--text-muted);
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
-    .diwm-secondary:hover { border-color: rgba(210,168,100,0.3); color: var(--text); }
+    .diwm-secondary:hover { border-color: rgba(46,94,78,0.3); color: var(--text); }
 
     .diwm-status {
       font-size: 0.86rem;
@@ -442,12 +476,12 @@
 
     .diwm-output-text {
       white-space: pre-wrap;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       font-size: 0.92rem;
       font-weight: 300;
       line-height: 1.7;
       color: var(--text);
-      background: rgba(255,255,255,0.02);
+      background: rgba(31,43,56,0.032);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 18px;
@@ -505,19 +539,19 @@
   </div>
 </div>
 
-<div id="feedback-section" style="display:none; margin: 2rem auto 0; max-width: 680px; padding: 1.5rem; border-top: 1px solid rgba(237,232,223,0.15);">
-  <p style="font-size: 0.85rem; color: rgba(237,232,223,0.6); margin-bottom: 1rem;">Help us improve — this tool is free and built based on what people actually need.</p>
+<div id="feedback-section" style="display:none; margin: 2rem auto 0; max-width: 680px; padding: 1.5rem; border-top: 1px solid rgba(31,43,56,0.155);">
+  <p style="font-size: 0.85rem; color: rgba(31,43,56,0.74); margin-bottom: 1rem;">Help us improve — this tool is free and built based on what people actually need.</p>
   <div id="feedback-prompt">
-    <p style="font-weight: 500; margin-bottom: 0.75rem; font-size: 0.9rem; color: rgba(237,232,223,0.85);">Was this helpful?</p>
+    <p style="font-weight: 500; margin-bottom: 0.75rem; font-size: 0.9rem; color: rgba(31,43,56,0.92);">Was this helpful?</p>
     <div style="display:flex; gap:0.75rem; margin-bottom:1.25rem;">
-      <button onclick="caFeedback(true)" style="padding:0.5rem 1.25rem; border:1px solid rgba(237,232,223,0.2); background:rgba(237,232,223,0.08); color:rgba(237,232,223,0.85); border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Yes, helpful</button>
-      <button onclick="caFeedback(false)" style="padding:0.5rem 1.25rem; border:1px solid rgba(237,232,223,0.2); background:rgba(237,232,223,0.08); color:rgba(237,232,223,0.85); border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Not really</button>
+      <button onclick="caFeedback(true)" style="padding:0.5rem 1.25rem; border:1px solid rgba(31,43,56,0.2); background:rgba(31,43,56,0.092); color:rgba(31,43,56,0.92); border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Yes, helpful</button>
+      <button onclick="caFeedback(false)" style="padding:0.5rem 1.25rem; border:1px solid rgba(31,43,56,0.2); background:rgba(31,43,56,0.092); color:rgba(31,43,56,0.92); border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Not really</button>
     </div>
-    <p style="font-weight:500; margin-bottom:0.5rem; font-size:0.9rem; color:rgba(237,232,223,0.85);">What would make this better?</p>
-    <textarea id="ca-feedback-text" placeholder="Missing something? Not right for your situation? Any tools you wish existed?" style="width:100%; min-height:80px; padding:0.75rem; border:1px solid rgba(237,232,223,0.2); border-radius:4px; font-family:inherit; font-size:0.85rem; background:rgba(237,232,223,0.06); color:rgba(237,232,223,0.85); resize:vertical; margin-bottom:0.75rem;"></textarea>
+    <p style="font-weight:500; margin-bottom:0.5rem; font-size:0.9rem; color:rgba(31,43,56,0.92);">What would make this better?</p>
+    <textarea id="ca-feedback-text" placeholder="Missing something? Not right for your situation? Any tools you wish existed?" style="width:100%; min-height:80px; padding:0.75rem; border:1px solid rgba(31,43,56,0.2); border-radius:4px; font-family:inherit; font-size:0.85rem; background:rgba(31,43,56,0.074); color:rgba(31,43,56,0.92); resize:vertical; margin-bottom:0.75rem;"></textarea>
     <button onclick="caSubmitFeedback()" style="padding:0.5rem 1.5rem; background:#3d7a54; color:white; border:none; border-radius:4px; cursor:pointer; font-family:inherit; font-size:0.85rem;">Send feedback</button>
   </div>
-  <div id="ca-feedback-thanks" style="display:none; color:rgba(237,232,223,0.6); font-size:0.85rem;">Thanks — that genuinely helps.</div>
+  <div id="ca-feedback-thanks" style="display:none; color:rgba(31,43,56,0.74); font-size:0.85rem;">Thanks — that genuinely helps.</div>
 </div>
 <script>
 var caFeedbackHelpful = null;
@@ -674,7 +708,7 @@ function caSubmitFeedback() {
     document.getElementById('plan-content').innerHTML = marked.parse(text);
 
     var disc = document.createElement('p');
-    disc.style.cssText = 'font-size:0.78rem;color:rgba(237,232,223,0.35);margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(237,232,223,0.1);line-height:1.6;';
+    disc.style.cssText = 'font-size:0.78rem;color:rgba(31,43,56,0.45);margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(31,43,56,0.11);line-height:1.6;';
     disc.textContent = 'This plan is a starting point, not legal, financial, or health advice. Always verify details with the relevant government agency or a qualified professional.';
     document.getElementById('plan-content').appendChild(disc);
     show('plan');

@@ -19,22 +19,22 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:          #0c1520;
-      --navy-light:    #121e2e;
-      --amber:         #d2a864;
-      --amber-muted:   #a07f4a;
-      --text:          #bdb5a4;
-      --text-strong:   #e4ddd0;
-      --text-muted:    #6a6255;
-      --border:        rgba(210,168,100,0.13);
-      --border-mid:    rgba(210,168,100,0.22);
-      --border-strong: rgba(210,168,100,0.32);
+      --navy:          #F3F4EF;
+      --navy-light:    #FFFFFF;
+      --amber:         #2E5E4E;
+      --amber-muted:   #3E6F60;
+      --text:          #2F3A46;
+      --text-strong:   #1F2B38;
+      --text-muted:    #5B6570;
+      --border:        rgba(46,94,78,0.13);
+      --border-mid:    rgba(46,94,78,0.22);
+      --border-strong: rgba(46,94,78,0.32);
     }
 
     html { scroll-behavior: smooth; }
@@ -60,7 +60,7 @@
     .nav-logo {
       color: var(--amber);
       text-decoration: none;
-      font-family: 'Lora', serif;
+      font-family: 'Spectral', serif;
       font-size: 1.05rem;
       letter-spacing: 0.05em;
       display: flex;
@@ -81,7 +81,7 @@
     }
     .hero-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-muted); margin-bottom: 1rem; }
     h1 {
-      font-family: 'Lora', serif;
+      font-family: 'Spectral', serif;
       font-size: clamp(1.6rem, 4vw, 2.1rem);
       font-weight: 500;
       color: var(--text-strong);
@@ -105,7 +105,7 @@
     .fact-value { font-size: 1rem; color: var(--text-strong); font-weight: 600; }
 
     h2 {
-      font-family: 'Lora', serif;
+      font-family: 'Spectral', serif;
       font-size: 1.25rem;
       font-weight: 500;
       color: var(--text-strong);
@@ -117,12 +117,12 @@
     p:last-child { margin-bottom: 0; }
     ul, ol { padding-left: 1.35rem; margin-bottom: 1rem; }
     li { margin-bottom: 0.4rem; color: var(--text); }
-    a { color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(210,168,100,0.3); transition: border-color 0.15s; }
+    a { color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(46,94,78,0.3); transition: border-color 0.15s; }
     a:hover { border-color: var(--amber); }
     strong { color: var(--text-strong); font-weight: 600; }
 
     .info-box {
-      background: rgba(210,168,100,0.055);
+      background: rgba(46,94,78,0.055);
       border-left: 3px solid var(--amber-muted);
       padding: 0.9rem 1.2rem;
       margin: 1.2rem 0;
@@ -163,7 +163,7 @@
       background: var(--navy-light);
       border: 1px solid var(--border-mid);
       color: var(--amber);
-      font-family: 'Lora', serif;
+      font-family: 'Spectral', serif;
       font-size: 0.85rem;
       font-weight: 600;
       width: 28px;
@@ -184,7 +184,7 @@
       padding: 2rem;
       margin: 2.5rem 0;
     }
-    .cta-section h2 { font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 500; color: var(--text-strong); margin: 0 0 0.6rem; padding: 0; border: none; }
+    .cta-section h2 { font-family: 'Spectral', serif; font-size: 1.2rem; font-weight: 500; color: var(--text-strong); margin: 0 0 0.6rem; padding: 0; border: none; }
     .cta-section p { font-size: 0.93rem; margin-bottom: 1.2rem; }
     .cta-links { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
     .cta-btn {
@@ -215,7 +215,7 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-    .footer-brand { color: var(--amber-muted); font-family: 'Lora', serif; font-size: 0.88rem; }
+    .footer-brand { color: var(--amber-muted); font-family: 'Spectral', serif; font-size: 0.88rem; }
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { color: var(--text-muted); font-size: 0.78rem; text-decoration: none; border: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--amber); }
@@ -233,10 +233,10 @@
       margin: 2.5rem auto 0;
       max-width: 680px;
       padding: 1rem 1.25rem;
-      border-top: 1px solid rgba(237,232,223,0.15);
+      border-top: 1px solid rgba(31,43,56,0.155);
       font-size: 0.8rem;
       line-height: 1.6;
-      color: rgba(237,232,223,0.55);
+      color: rgba(31,43,56,0.69);
     }
   </style>
 </head>
@@ -246,8 +246,8 @@
     <nav>
       <a href="/" class="nav-logo" aria-label="Cut Adrift home">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2L13.8 10.2L22 12L13.8 13.8L12 22L10.2 13.8L2 12L10.2 10.2L12 2Z" fill="#d2a864"/>
-          <circle cx="12" cy="12" r="2.2" fill="#0c1520"/>
+          <path d="M12 2L13.8 10.2L22 12L13.8 13.8L12 22L10.2 13.8L2 12L10.2 10.2L12 2Z" fill="#2E5E4E"/>
+          <circle cx="12" cy="12" r="2.2" fill="#F3F4EF"/>
         </svg>
         Cut Adrift
       </a>
