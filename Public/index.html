@@ -18,779 +18,258 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Public+Sans:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #15120e;
-      --border:     rgba(255,255,255,0.07);
-      --text:       #e9e2d3;
-      --text-muted: rgba(233,226,211,0.70);
-      --text-dim:   rgba(233,226,211,0.46);
-
-      --clay:       #c1734f;
-      --clay-soft:  rgba(193,115,79,0.13);
-      --sage:       #7c8d76;
-      --sage-soft:  rgba(124,141,118,0.12);
-
-      --content:    760px;
+      --paper:     #F3F4EF;  /* cool linen */
+      --card:      #FFFFFF;
+      --ink:       #1F2B38;  /* fountain-pen navy */
+      --ink-2:     #4A5563;
+      --ink-3:     #6B7480;
+      --green:     #2E5E4E;  /* evergreen: actions and links */
+      --green-dk:  #234A3D;
+      --mist:      #E2E8E8;
+      --rule:      #D2D8D7;
+      --clay:      #2E5E4E;  /* used by inline styles in the example cards */
+      --serif: 'Spectral', Georgia, serif;
+      --sans:  'Public Sans', system-ui, -apple-system, sans-serif;
+      --wide: 1080px;
+      --text: 680px;
     }
 
-    html { min-height: 100%; scroll-behavior: smooth; }
-
+    html { scroll-behavior: smooth; }
     body {
-      min-height: 100%;
-      background-color: var(--bg);
-      background-image:
-        radial-gradient(ellipse 75% 55% at 12% -8%, rgba(193,115,79,0.10) 0%, transparent 58%),
-        radial-gradient(ellipse 65% 50% at 92% 105%, rgba(124,141,118,0.07) 0%, transparent 58%);
-      background-repeat: no-repeat;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1.0625rem;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 24px 72px;
     }
+    a { color: var(--green); text-underline-offset: 3px; }
+    a:hover { color: var(--green-dk); }
+    :focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 2px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .skip { position: absolute; left: -999px; top: 8px; background: var(--card); padding: 8px 14px; z-index: 10; }
+    .skip:focus { left: 16px; }
 
-    .wrap {
-      width: 100%;
-      max-width: var(--content);
+    main, .site-header, .site-footer { width: 100%; max-width: var(--wide); margin: 0 auto; padding: 0 32px; }
+
+    /* Header */
+    .site-header { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; padding-bottom: 28px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .brand-mark { width: 24px; height: 24px; }
+    .wordmark { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; letter-spacing: 0.01em; }
+    .site-nav { display: flex; gap: 28px; }
+    .site-nav a { color: var(--ink-2); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+    .site-nav a:hover { color: var(--ink); text-decoration: underline; }
+
+    /* Headings */
+    h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--ink); }
+    h2 { font-size: clamp(1.75rem, 3.2vw, 2.25rem); line-height: 1.2; margin-bottom: 14px; }
+    h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .section-intro { color: var(--ink-2); max-width: 60ch; margin-bottom: 32px; }
+    main > section { padding: 88px 0 0; }
+
+    /* Buttons */
+    .btn {
+      display: inline-block; background: var(--green); color: #fff; text-decoration: none;
+      font-family: var(--sans); font-size: 1rem; font-weight: 600;
+      padding: 14px 26px; border-radius: 6px; border: 0; cursor: pointer;
     }
+    .btn:hover { background: var(--green-dk); color: #fff; }
+    .btn-quiet { background: var(--ink); }
+    .btn-quiet:hover { background: #111a24; }
+    .btn:disabled { opacity: 0.5; cursor: default; }
 
-    /* ── Header / nav ─────────────────────────────────── */
-    .site-header {
-      width: 100%;
-      max-width: var(--content);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 24px 0 22px;
-      border-bottom: 1px solid var(--border);
-      opacity: 0;
-      animation: rise 0.7s ease forwards;
+    /* Hero: the letter is the memorable thing */
+    main > .hero {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 64px; align-items: center;
+      padding: 40px 0 24px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0;
-    }
-
-    .wordmark {
-      font-family: 'Fraunces', serif;
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-
-    .site-nav {
-      display: flex;
-      gap: 24px;
-    }
-
-    .site-nav a {
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .site-nav a:hover { color: var(--text); }
-
-    /* ── Hero ─────────────────────────────────────────── */
-    .hero {
-      width: 100%;
-      max-width: var(--content);
-      padding: 80px 0 44px;
-      opacity: 0;
-      animation: rise 0.7s 0.12s ease forwards;
-    }
-
     .hero h1 {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(2.4rem, 5.6vw, 3.9rem);
-      font-weight: 400;
-      line-height: 1.12;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 22px;
+      font-size: clamp(2.6rem, 5.4vw, 4.1rem); font-weight: 300; line-height: 1.06; letter-spacing: -0.015em;
+      margin-bottom: 26px; max-width: 13ch;
     }
+    .lede { font-size: 1.2rem; color: var(--ink-2); max-width: 34ch; margin-bottom: 32px; }
+    .byline { margin-top: 36px; font-size: 0.95rem; color: var(--ink-3); max-width: 44ch; }
+    .byline a { color: var(--ink); font-weight: 500; }
 
-    .hero h1 em {
-      display: block;
-      font-style: italic;
-      color: var(--clay);
+    .hero-plan { position: relative; }
+    .hero-plan .proof-card {
+      background: var(--card); border-radius: 3px; transform: rotate(1.2deg);
+      box-shadow: 0 1px 1px rgba(31,43,56,0.06), 0 6px 14px rgba(31,43,56,0.07), 0 30px 60px -10px rgba(31,43,56,0.22);
+      zoom: 1.12;
     }
-
-    .hero p {
-      font-size: 1.08rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.62;
-      max-width: 500px;
+    .hero-plan::before { /* a second sheet underneath: the plan is a stack of real papers */
+      content: ""; position: absolute; inset: 14px -10px -12px 16px; background: #fbfbf9;
+      transform: rotate(-2.4deg); border-radius: 3px; box-shadow: 0 10px 30px -8px rgba(31,43,56,0.18);
     }
-
-    /* ── How it works ─────────────────────────────────── */
-    .how {
-      width: 100%;
-      max-width: var(--content);
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      margin-bottom: 64px;
-      opacity: 0;
-      animation: rise 0.7s 0.40s ease forwards;
-    }
-
-    .how-step {
-      padding: 0 26px;
-    }
-    .how-step:first-child { padding-left: 0; }
-    .how-step:last-child  { padding-right: 0; }
-    .how-step + .how-step { border-left: 1px solid var(--border); }
-
-    .how-num {
-      display: block;
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-size: 1.7rem;
-      font-weight: 500;
-      color: var(--clay);
-      margin-bottom: 12px;
-    }
-
-    .how-step p {
-      font-size: 0.92rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.58;
-    }
-
-    .how-doc {
-      width: 26px;
-      height: 26px;
-      margin-top: 14px;
-      color: var(--text-dim);
-    }
-
-    /* ── Proof card ───────────────────────────────────── */
-    .proof {
-      width: 100%;
-      max-width: var(--content);
-      margin-bottom: 72px;
-      opacity: 0;
-      animation: rise 0.7s 0.32s ease forwards;
-    }
-
-    .proof-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 26px;
-    }
-
-    .proof-card {
-      position: relative;
-      max-width: 460px;
-      margin: 0 auto;
-      background: #FBF8F2;
-      color: #211d17;
-      border-radius: 4px;
-      padding: 30px 30px 28px;
-      transform: rotate(-0.6deg);
-      box-shadow:
-        0 1px 2px rgba(0,0,0,0.25),
-        0 18px 44px rgba(0,0,0,0.40);
-    }
-
+    .proof-card { position: relative; z-index: 1; }
     .proof-tag {
-      position: absolute;
-      top: -13px;
-      left: 24px;
-      background: var(--clay);
-      color: #fff;
-      font-size: 0.66rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 11px;
-      border-radius: 3px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      position: absolute; top: -14px; left: 22px; z-index: 2;
+      background: var(--green); color: #fff; font-size: 0.72rem; font-weight: 600;
+      padding: 5px 11px; border-radius: 3px;
     }
+    .hero-plan figcaption { position: relative; z-index: 1; margin-top: 26px; font-size: 0.88rem; color: var(--ink-3); font-style: italic; font-family: var(--serif); text-align: center; }
 
-    .proof-meta {
-      font-size: 0.74rem;
-      font-weight: 500;
-      color: rgba(33,29,23,0.55);
-      padding-bottom: 14px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid rgba(33,29,23,0.10);
-    }
-
-    .proof-body {
-      font-size: 0.92rem;
-      font-weight: 400;
-      line-height: 1.62;
-      color: #2c271f;
-    }
-    .proof-body .sign {
-      display: block;
-      margin-top: 14px;
-    }
-
-    /* ── Draft gallery (4-card grid) ──────────────────── */
-    .gallery {
-      width: 100%;
-      max-width: var(--content);
-      margin-bottom: 72px;
-      opacity: 0;
-      animation: rise 0.7s 0.44s ease forwards;
-    }
-    .gallery-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 30px;
-    }
-    .gallery-swipe { display: none; }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px 30px;
-    }
-    .gallery-card {
-      position: relative;
-      background: #FBF8F2;
-      color: #211d17;
-      border-radius: 4px;
-      padding: 28px 26px 26px;
-      box-shadow:
-        0 1px 2px rgba(0,0,0,0.25),
-        0 18px 44px rgba(0,0,0,0.40);
-    }
-    .gallery-card:nth-child(1) { transform: rotate(-0.5deg); }
-    .gallery-card:nth-child(2) { transform: rotate(0.4deg); }
-    .gallery-card:nth-child(3) { transform: rotate(0.5deg); }
-    .gallery-card:nth-child(4) { transform: rotate(-0.4deg); }
-    .gallery-tag {
-      position: absolute;
-      top: -13px;
-      left: 22px;
-      background: var(--clay);
-      color: #fff;
-      font-size: 0.66rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 11px;
-      border-radius: 3px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    }
-    .gallery-tag.clay { background: var(--clay); }
-    .gallery-tag.sage { background: var(--sage); }
-    .gallery-meta {
-      font-size: 0.74rem;
-      font-weight: 500;
-      color: rgba(33,29,23,0.55);
-      padding-bottom: 12px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid rgba(33,29,23,0.10);
-    }
-    .gallery-body {
-      font-size: 0.86rem;
-      font-weight: 400;
-      line-height: 1.56;
-      color: #2c271f;
-    }
-    .gallery-body .sign { display: block; margin-top: 12px; }
-    .gallery-h {
-      display: block;
-      font-weight: 600;
-      margin-top: 12px;
-      margin-bottom: 2px;
-    }
-    .gallery-h:first-child { margin-top: 0; }
-    .gallery-more {
-      display: block;
-      margin-top: 10px;
-      color: rgba(33,29,23,0.60);
-      font-style: italic;
-    }
-
-    /* ── Situation cards ──────────────────────────────── */
-    .situations {
-      width: 100%;
-      max-width: var(--content);
-      opacity: 0;
-      animation: rise 0.7s 0.24s ease forwards;
-    }
-
-    .situations-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 20px;
-    }
-
-    .situation-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
+    /* Situations: an index, not a card grid */
+    .situation-list { border-top: 1px solid var(--ink); }
     .situation {
-      display: block;
-      padding: 30px 30px 32px;
-      text-decoration: none;
-      color: var(--text);
-      transition: background 0.22s ease;
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 190px; gap: 32px; align-items: center;
+      padding: 30px 4px; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink);
+      transition: background-color 0.15s;
     }
-    .situation:nth-child(odd)  { border-right: 1px solid var(--border); }
-    .situation:nth-child(1),
-    .situation:nth-child(2)    { border-bottom: 1px solid var(--border); }
-    .situation:hover { background: rgba(255,255,255,0.025); }
-
-    .situation-icon {
-      width: 30px;
-      height: 30px;
-      margin-bottom: 18px;
-      fill: none;
-      stroke-width: 1.3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .situation:hover { background: rgba(255,255,255,0.65); color: var(--ink); }
+    .situation-name { font-family: var(--serif); font-size: 1.6rem; line-height: 1.2; }
+    .situation-desc { color: var(--ink-2); font-size: 1rem; }
+    .situation-go {
+      justify-self: end; white-space: nowrap; font-weight: 600; font-size: 0.95rem; color: var(--green);
+      border: 1.5px solid var(--green); border-radius: 6px; padding: 9px 18px;
     }
-    .situation-icon.clay { stroke: var(--clay); }
-    .situation-icon.sage { stroke: var(--sage); }
+    .situation:hover .situation-go { background: var(--green); color: #fff; }
+    .promise { margin-top: 22px; color: var(--ink-3); font-size: 0.95rem; }
 
-    .situation-title {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      font-family: 'Fraunces', serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 8px;
+    /* How it works: a real sequence */
+    .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 28px; }
+    .steps li { border-top: 1px solid var(--rule); padding-top: 20px; }
+    .step-n { display: block; font-family: var(--serif); font-size: 2.6rem; font-weight: 300; line-height: 1; color: var(--green); margin-bottom: 14px; }
+    .steps p { color: var(--ink-2); max-width: 28ch; }
+
+    /* Gallery */
+    .gallery-swipe { display: none; }
+    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px 40px; margin-top: 8px; }
+    .gallery-card {
+      position: relative; background: var(--card); border-radius: 3px;
+      box-shadow: 0 1px 1px rgba(31,43,56,0.06), 0 14px 34px -8px rgba(31,43,56,0.18);
     }
-
-    .situation-ext {
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 2px 6px;
-      transform: translateY(-2px);
+    .gallery-card > div { zoom: 1.22; }
+    .gallery-tag {
+      position: absolute; top: -13px; left: 20px; z-index: 2; color: #fff;
+      font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 3px;
     }
+    .gallery-tag.clay { background: var(--green); }
+    .gallery-tag.sage { background: #5B7486; }
 
-    .situation-desc {
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.56;
+    /* Founder note */
+    main > .founder { padding-top: 104px; }
+    .founder blockquote {
+      max-width: 820px; margin: 0 auto; padding: 56px 64px; background: var(--card);
+      border-radius: 3px; box-shadow: 0 1px 1px rgba(31,43,56,0.05), 0 18px 40px -14px rgba(31,43,56,0.16);
     }
+    .founder blockquote p { font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 300; line-height: 1.55; color: var(--ink); }
+    .founder blockquote footer { margin-top: 26px; font-size: 0.95rem; color: var(--ink-3); }
 
-    /* ── Trust strip ──────────────────────────────────── */
-    .trust-strip {
-      width: 100%;
-      max-width: var(--content);
-      margin-top: 22px;
-      margin-bottom: 72px;
-      display: flex;
-      gap: 8px 24px;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: rise 0.6s 0.30s ease forwards;
-    }
+    /* Guides */
+    .guide-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .guide-groups ul { list-style: none; columns: 2; column-gap: 32px; border-top: 1px solid var(--rule); padding-top: 12px; }
+    .guide-groups li { padding: 7px 0; }
+    .guide-groups a { text-decoration: none; font-weight: 500; }
+    .guide-groups a:hover { text-decoration: underline; }
 
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 0.78rem;
-      font-weight: 400;
-      color: var(--text-dim);
-    }
-
-    .trust-check {
-      color: var(--sage);
-      font-size: 0.72rem;
-      line-height: 1;
-    }
-
-    /* ── Guides ───────────────────────────────────────── */
-    .guides {
-      width: 100%;
-      max-width: var(--content);
-      margin-top: 64px;
-      scroll-margin-top: 24px;
-      opacity: 0;
-      animation: rise 0.6s 0.56s ease forwards;
-    }
-
-    .guides-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 16px;
-    }
-
-    .guides-featured {
-      display: inline-block;
-      font-family: 'Fraunces', serif;
-      font-size: 1.02rem;
-      font-weight: 400;
-      color: var(--clay);
-      text-decoration: none;
-      margin-bottom: 18px;
-      transition: opacity 0.2s;
-    }
-    .guides-featured:hover { opacity: 0.78; }
-
-    .guides-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 28px;
-      border-top: 1px solid var(--border);
-      padding-top: 16px;
-    }
-
-    .guides-country-link {
-      font-size: 0.82rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .guides-country-link:hover { color: var(--clay); }
-
-    .guides-desc {
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.56;
-      margin-bottom: 16px;
-      max-width: 520px;
-    }
-
-    /* ── Mission ──────────────────────────────────────── */
-    .mission {
-      width: 100%;
-      max-width: var(--content);
-      margin-top: 72px;
-      scroll-margin-top: 24px;
-      text-align: center;
-      opacity: 0;
-      animation: rise 0.6s 0.62s ease forwards;
-    }
-
-    .mission p {
-      font-family: 'Fraunces', serif;
-      font-size: 1.18rem;
-      font-style: italic;
-      font-weight: 400;
-      color: var(--text-muted);
-      line-height: 1.7;
-      max-width: 560px;
-      margin: 0 auto;
-    }
-
-    /* ── Suggest ──────────────────────────────────────── */
-    .suggest {
-      width: 100%;
-      max-width: var(--content);
-      margin-top: 64px;
-      opacity: 0;
-      animation: rise 0.6s 0.68s ease forwards;
-    }
-
-    .suggest-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 10px;
-    }
-
-    .suggest-desc {
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 16px;
-      max-width: 520px;
-    }
-
+    /* Suggest */
     .suggest-textarea {
-      display: block;
-      width: 100%;
-      max-width: 520px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 14px 16px;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.5;
-      resize: vertical;
-      min-height: 80px;
-      outline: none;
-      transition: border-color 0.2s;
+      display: block; width: 100%; max-width: 620px; min-height: 110px; margin-bottom: 16px;
+      background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px;
+      font: inherit; color: var(--ink); resize: vertical;
     }
-    .suggest-textarea::placeholder { color: var(--text-dim); }
-    .suggest-textarea:focus { border-color: rgba(193,115,79,0.45); }
+    .suggest-textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(46,94,78,0.18); }
+    .suggest-thanks { display: none; margin-top: 14px; color: var(--green); font-weight: 500; }
 
-    .suggest-btn {
-      margin-top: 12px;
-      padding: 10px 22px;
-      background: var(--clay-soft);
-      border: 1px solid rgba(193,115,79,0.30);
-      border-radius: 6px;
-      color: var(--clay);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.84rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+    /* Footer */
+    .site-footer {
+      margin-top: 104px; padding-top: 32px; padding-bottom: 48px; border-top: 1px solid var(--rule);
+      display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; color: var(--ink-3); font-size: 0.92rem;
     }
-    .suggest-btn:hover:not(:disabled) {
-      background: rgba(193,115,79,0.20);
-      border-color: rgba(193,115,79,0.50);
-    }
-    .suggest-btn:disabled { opacity: 0.45; cursor: default; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: var(--ink-2); text-decoration: none; }
+    .footer-links a:hover { color: var(--ink); text-decoration: underline; }
 
-    .suggest-thanks {
-      margin-top: 12px;
-      font-size: 0.84rem;
-      color: var(--text-dim);
-      display: none;
-    }
+    /* One quiet entrance: the plan settles onto the page */
+    @keyframes settle { from { opacity: 0; transform: translateY(18px) rotate(3deg); } to { opacity: 1; transform: rotate(1.2deg); } }
+    .hero-plan .proof-card { animation: settle 0.9s 0.15s cubic-bezier(.2,.7,.2,1) both; }
+    @media (prefers-reduced-motion: reduce) { .hero-plan .proof-card { animation: none; } html { scroll-behavior: auto; } }
 
-    /* ── Footer ───────────────────────────────────────── */
-    footer {
-      width: 100%;
-      max-width: var(--content);
-      margin-top: 72px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+    /* Tablet and phone */
+    @media (max-width: 880px) {
+      main > .hero { grid-template-columns: 1fr; gap: 56px; }
+      .hero-plan { max-width: 470px; }
+      .situation { grid-template-columns: 1fr auto; gap: 10px 20px; }
+      .situation-desc { grid-column: 1; }
+      .situation-go { grid-row: 1 / span 2; grid-column: 2; }
     }
-
-    footer p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    footer .footer-links {
-      display: flex;
-      gap: 22px;
-    }
-
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.82rem;
-      transition: color 0.2s;
-    }
-    footer a:hover { color: var(--text); }
-
-    /* ── Animation ────────────────────────────────────── */
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; }
-      [class] { opacity: 1 !important; }
-    }
-
-    /* ── Mobile ───────────────────────────────────────── */
     @media (max-width: 640px) {
-      .hero { padding: 40px 0 32px; }
-
-      .trust-strip { margin-bottom: 52px; gap: 6px 18px; }
-
-      .how {
-        grid-template-columns: 1fr;
-        gap: 14px;
-        margin-bottom: 52px;
-      }
-      .how-step { padding: 0; display: flex; align-items: baseline; gap: 14px; }
-      .how-step + .how-step { border-left: none; }
-      .how-num { font-size: 1.15rem; margin-bottom: 0; min-width: 28px; }
-
-      .situation-grid { grid-template-columns: 1fr; }
-      .situation { padding: 22px 0; }
-      .situation-icon { width: 26px; height: 26px; margin-bottom: 12px; }
-
-      /* comfortable tap targets (~44px) */
-      .site-nav a,
-      .guides-country-link,
-      footer a { display: inline-block; padding: 12px 0; }
-      .guides-row { gap: 0 24px; padding-top: 4px; }
-      .situation:nth-child(odd) { border-right: none; }
-      .situation:nth-child(3) { border-bottom: 1px solid var(--border); }
-
-      /* letter cards become a swipeable row */
-      .gallery-swipe { display: inline; color: var(--clay); }
+      main, .site-header, .site-footer { padding-left: 20px; padding-right: 20px; }
+      .site-nav { gap: 18px; }
+      .site-nav a[href="#mission"] { display: none; }
+      .site-nav a { padding: 10px 0; }
+      .hero h1 { max-width: none; }
+      main > section { padding-top: 64px; }
+      .hero-plan .proof-card { zoom: 1; transform: rotate(0.8deg); }
+      .situation { grid-template-columns: 1fr; padding: 24px 0; }
+      .situation-go { grid-row: auto; grid-column: 1; justify-self: start; }
+      .situation-name { font-size: 1.4rem; }
+      .steps { grid-template-columns: 1fr; gap: 20px; }
+      .gallery-swipe { display: inline; }
       .gallery-grid {
-        display: flex;
-        gap: 16px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        align-items: flex-start;
-        -webkit-overflow-scrolling: touch;
-        margin: -16px -24px 0;
-        padding: 16px 24px 28px;
-        scroll-padding: 0 24px;
-        scrollbar-width: none;
+        display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; align-items: flex-start;
+        margin: 0 -20px; padding: 18px 20px 28px; scrollbar-width: none;
       }
       .gallery-grid::-webkit-scrollbar { display: none; }
-      .gallery-card {
-        flex: 0 0 86%;
-        scroll-snap-align: start;
-        transform: none !important;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 24px rgba(0,0,0,0.35);
-      }
-
-      footer { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .gallery-card { flex: 0 0 86%; scroll-snap-align: start; }
+      .gallery-card > div { zoom: 1; }
+      .founder blockquote { padding: 36px 26px; }
+      .guide-groups { grid-template-columns: 1fr; gap: 32px; }
+      .guide-groups a { display: inline-block; padding: 4px 0; }
+      .site-footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
+  <a class="skip" href="#start">Skip to the four situations</a>
 
   <header class="site-header">
     <a href="/" class="brand" aria-label="Cut Adrift home">
       <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
-        <path d="M50,8 L61,38 L92,50 L61,62 L50,92 L39,62 L8,50 L39,38 Z" fill="#7c8d76"/>
-        <circle cx="50" cy="50" r="5" fill="#15120e"/>
-        <circle cx="50" cy="50" r="2" fill="#7c8d76"/>
+        <path d="M50,8 L61,38 L92,50 L61,62 L50,92 L39,62 L8,50 L39,38 Z" fill="#2E5E4E"/>
+        <circle cx="50" cy="50" r="5" fill="#F3F4EF"/>
+        <circle cx="50" cy="50" r="2" fill="#2E5E4E"/>
       </svg>
       <span class="wordmark">Cut Adrift</span>
     </a>
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Main">
       <a href="#guides">Guides</a>
       <a href="#mission">Why it's free</a>
       <a href="/about/">About</a>
     </nav>
   </header>
 
-  <main class="wrap">
+  <main>
 
     <section class="hero">
-      <h1>When you don't know where to start<em>— or what to say.</em></h1>
-      <p>Free, step-by-step guidance for life's hardest moments — with the letters, calls, and messages already drafted for you.</p>
-    </section>
-
-    <section class="situations">
-      <p class="situations-label">Start here — what best describes your situation?</p>
-      <div class="situation-grid">
-
-        <a href="/when-someone-dies/" class="situation">
-          <svg class="situation-icon clay" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 21c-3 0-5-1.8-5-4.6 0-2.4 1.8-4 3-6.4 0 1.6 1 2 1 2 .3-2.6-1-4-1-7 3 1.6 5.5 5 5.5 8.6 0 1.2-.4 2-.4 2s1-.4 1.5-1.6c.6 1 .9 2 .9 2.8 0 2.8-2 4.2-4.5 4.2z"/>
-          </svg>
-          <div class="situation-title">Someone I love has died</div>
-          <p class="situation-desc">What to do in the hours, days, and weeks after losing someone — including letters to their employer and messages to family, already drafted for you.</p>
-        </a>
-
-        <a href="/when-you-get-a-diagnosis/" class="situation">
-          <svg class="situation-icon sage" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M3 12h4l2 6 3-12 2 6h7"/>
-          </svg>
-          <div class="situation-title">I've had a serious diagnosis</div>
-          <p class="situation-desc">The first week's plan — what to sort, what NOT to do yet, and the income protection cover you may not realise you have, with the calls already drafted to claim it.</p>
-        </a>
-
-        <a href="/when-someone-cant-manage/" class="situation">
-          <svg class="situation-icon sage" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/>
-          </svg>
-          <div class="situation-title">When someone can no longer manage</div>
-          <p class="situation-desc">When a parent, partner, or someone close can no longer manage on their own — and you're the one who has to figure it out.</p>
-        </a>
-
-        <a href="https://notredundant.com" target="_blank" rel="noopener" class="situation">
-          <svg class="situation-icon clay" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3.5" y="8" width="17" height="11" rx="1.5"/><path d="M8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2"/>
-          </svg>
-          <div class="situation-title">I've lost my job <span class="situation-ext">notredundant.com ↗</span></div>
-          <p class="situation-desc">A free action plan for redundancy — what to do, what you're entitled to, and how to move forward.</p>
-        </a>
-
+      <div class="hero-text">
+        <h1>When you don't know where to start, or what to say.</h1>
+        <p class="lede">Free, step-by-step guidance for life's hardest moments, with the letters, calls and messages already drafted for you.</p>
+        <a class="btn" href="#start">Choose your situation</a>
+        <p class="byline">Made by <a href="/about/">Wayne Stevens</a> in New Zealand. Every figure is checked weekly against official sources in six countries.</p>
       </div>
-    </section>
-
-    <div class="trust-strip">
-      <span class="trust-item"><span class="trust-check">✓</span> No account needed</span>
-      <span class="trust-item"><span class="trust-check">✓</span> No email address</span>
-      <span class="trust-item"><span class="trust-check">✓</span> We don't sell your data</span>
-      <span class="trust-item"><span class="trust-check">✓</span> AI-assisted, verified against official sources</span>
-    </div>
-
-    <section class="how">
-      <div class="how-step">
-        <span class="how-num">I.</span>
-        <p>Answer a few quiet questions about your situation — nothing clinical, no jargon.</p>
-      </div>
-      <div class="how-step">
-        <span class="how-num">II.</span>
-        <p>We build your plan — what to do first, what can wait, specific to your country.</p>
-      </div>
-      <div class="how-step">
-        <span class="how-num">III.</span>
-        <p>We draft what you actually need to send — ready to use.</p>
-      </div>
-    </section>
-
-    <section class="proof">
-      <p class="proof-label">An example of the plan we build for you</p>
+          <figure class="hero-plan" aria-label="An example of a bereavement plan Cut Adrift writes">
       <div class="proof-card" style="padding: 0; overflow: visible; max-width: 500px;">
         <span class="proof-tag">Your bereavement plan</span>
         <div style="overflow: hidden; border-radius: 4px;">
 
           <!-- Plan header -->
-          <div style="background: #2c271f; padding: 13px 22px 12px;">
+          <div style="background: #1F2B38; padding: 13px 22px 12px;">
             <span style="font-size: 0.62rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(251,248,242,0.45);">Priority actions — next 48 hours</span>
           </div>
 
           <!-- Step 1 with DIWM peek -->
           <div style="background: #FBF8F2; padding: 18px 22px 16px; border-bottom: 1px solid rgba(44,39,31,0.08);">
             <div style="display: flex; gap: 11px; align-items: flex-start;">
-              <span style="font-family: 'Fraunces', serif; font-size: 0.72rem; color: var(--clay); font-weight: 600; padding-top: 1px; min-width: 16px;">1.</span>
+              <span style="font-family: 'Spectral', serif; font-size: 0.72rem; color: var(--clay); font-weight: 600; padding-top: 1px; min-width: 16px;">1.</span>
               <div style="flex: 1;">
                 <div style="font-size: 0.84rem; font-weight: 600; color: #2c271f; margin-bottom: 4px;">Let your employer know</div>
                 <div style="font-size: 0.80rem; line-height: 1.55; color: rgba(44,39,31,0.65);">You're entitled to bereavement leave. Notify HR as soon as you can — most employers want to hear from you directly.</div>
@@ -818,7 +297,7 @@
           <!-- Step 2 -->
           <div style="background: #FBF8F2; padding: 18px 22px 16px; border-bottom: 1px solid rgba(44,39,31,0.08);">
             <div style="display: flex; gap: 11px; align-items: flex-start;">
-              <span style="font-family: 'Fraunces', serif; font-size: 0.72rem; color: var(--clay); font-weight: 600; padding-top: 1px; min-width: 16px;">2.</span>
+              <span style="font-family: 'Spectral', serif; font-size: 0.72rem; color: var(--clay); font-weight: 600; padding-top: 1px; min-width: 16px;">2.</span>
               <div>
                 <div style="font-size: 0.84rem; font-weight: 600; color: #2c271f; margin-bottom: 4px;">Notify their bank</div>
                 <div style="font-size: 0.80rem; line-height: 1.55; color: rgba(44,39,31,0.65);">Flag the account and request a freeze. You don't need to have everything sorted first — the bank will guide you from there.</div>
@@ -829,7 +308,7 @@
           <!-- Step 3 -->
           <div style="background: #FBF8F2; padding: 18px 22px 16px; border-bottom: 1px solid rgba(44,39,31,0.08);">
             <div style="display: flex; gap: 11px; align-items: flex-start;">
-              <span style="font-family: 'Fraunces', serif; font-size: 0.72rem; color: var(--clay); font-weight: 600; padding-top: 1px; min-width: 16px;">3.</span>
+              <span style="font-family: 'Spectral', serif; font-size: 0.72rem; color: var(--clay); font-weight: 600; padding-top: 1px; min-width: 16px;">3.</span>
               <div>
                 <div style="font-size: 0.84rem; font-weight: 600; color: #2c271f; margin-bottom: 4px;">Check what financial support applies</div>
                 <div style="font-size: 0.80rem; line-height: 1.55; color: rgba(44,39,31,0.65);">Depending on your situation, there may be a bereavement payment, leave entitlements, or help with immediate costs — specific to your country.</div>
@@ -844,12 +323,49 @@
 
         </div>
       </div>
+      <figcaption>An example plan. Yours is written for your situation and country.</figcaption>
+      </figure>
     </section>
 
+    <section class="situations" id="start">
+      <h2>What's happened?</h2>
+      <div class="situation-list">
+        <a href="/when-someone-dies/" class="situation">
+          <span class="situation-name">Someone I love has died</span>
+          <span class="situation-desc">What to do in the hours, days and weeks after losing someone, including letters to their employer and messages to family.</span>
+          <span class="situation-go">Start</span>
+        </a>
+        <a href="/when-you-get-a-diagnosis/" class="situation">
+          <span class="situation-name">I've had a serious diagnosis</span>
+          <span class="situation-desc">The first week's plan: what to sort, what not to do yet, and the income protection you may not realise you have, with the calls drafted to claim it.</span>
+          <span class="situation-go">Start</span>
+        </a>
+        <a href="/when-someone-cant-manage/" class="situation">
+          <span class="situation-name">Someone close can no longer manage</span>
+          <span class="situation-desc">When a parent, partner or someone close can't manage on their own any more, and you're the one who has to work it out.</span>
+          <span class="situation-go">Start</span>
+        </a>
+        <a href="https://notredundant.com" target="_blank" rel="noopener" class="situation">
+          <span class="situation-name">I've lost my job</span>
+          <span class="situation-desc">A free action plan for redundancy: what to do, what you're entitled to, and how to move forward. Opens our sister site, Not Redundant.</span>
+          <span class="situation-go">Open Not Redundant</span>
+        </a>
+      </div>
+      <p class="promise">No account, no email address and no ads. Your information is never sold. <a href="/privacy/">Read the privacy page</a></p>
+    </section>
 
-    <!-- Draft gallery: more examples of real drafted output -->
+    <section class="how">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><span class="step-n">1</span><p>Answer a few gentle questions about what's happened and where you live.</p></li>
+        <li><span class="step-n">2</span><p>Get your plan: what to do first, what can wait, and who to contact.</p></li>
+        <li><span class="step-n">3</span><p>Use the letters, calls and messages written for you, ready to send.</p></li>
+      </ol>
+    </section>
+
     <section class="gallery">
-      <p class="gallery-label">A few more things we draft for you <span class="gallery-swipe" aria-hidden="true">· swipe →</span></p>
+      <h2>Some of the things it writes for you</h2>
+      <p class="section-intro">Real excerpts. Every draft is written around the details you give, ready to send or read out.<span class="gallery-swipe"> Swipe to see more.</span></p>
       <div class="gallery-grid">
 
         <!-- One card per intake situation: bereavement · diagnosis · incapacity · job loss.
@@ -860,7 +376,7 @@
         <div class="gallery-card" style="padding: 0; overflow: visible;">
           <span class="gallery-tag sage">Bereavement</span>
           <div style="overflow: hidden; border-radius: 4px;">
-            <div style="background: #c1734f; height: 4px;"></div>
+            <div style="background: #2E5E4E; height: 4px;"></div>
             <div style="background: #f5f1e8; padding: 14px 18px 12px; border-bottom: 1px solid rgba(44,39,31,0.10);">
               <div style="font-size: 0.56rem; font-weight: 500; color: rgba(44,39,31,0.55); margin-bottom: 3px;">To: ANZ Bank New Zealand</div>
               <div style="font-size: 0.56rem; font-weight: 500; color: rgba(44,39,31,0.55);">Re: Estate of Robert James Whitford</div>
@@ -880,15 +396,15 @@
         <div class="gallery-card" style="padding: 0; overflow: visible;">
           <span class="gallery-tag clay">Diagnosis</span>
           <div style="overflow: hidden; border-radius: 4px;">
-            <div style="background: #c1734f; padding: 10px 18px 9px;">
+            <div style="background: #2E5E4E; padding: 10px 18px 9px;">
               <span style="font-size: 0.52rem; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; color: rgba(255,255,255,0.88);">Partners Life · Income Protection · Call Script</span>
             </div>
             <div style="background: #FBF8F2; padding: 13px 18px 11px; border-bottom: 1px solid rgba(44,39,31,0.08);">
-              <div style="font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #c1734f; margin-bottom: 6px;">What to say</div>
+              <div style="font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #2E5E4E; margin-bottom: 6px;">What to say</div>
               <div style="font-size: 0.58rem; line-height: 1.64; color: #2c271f;">Hi, my name is [your full name] and I hold an income protection policy with Partners Life. I'd like to speak with someone who can help me understand whether I can make a claim under my policy, and if so, how to go about it.</div>
             </div>
             <div style="background: #FBF8F2; padding: 13px 18px 11px;">
-              <div style="font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7c8d76; margin-bottom: 6px;">What to ask</div>
+              <div style="font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5B7486; margin-bottom: 6px;">What to ask</div>
               <div style="font-size: 0.58rem; line-height: 1.75; color: #2c271f;">
                 — Does this policy pay out on diagnosis alone, or only once I am unable to work?<br>
                 — Is there a stand-down or waiting period before payments begin, and how long is the benefit period?
@@ -934,7 +450,7 @@
             <!-- Sidebar -->
             <div style="background: #8596A8; width: 38%; padding: 20px 12px 18px; display: flex; flex-direction: column; gap: 14px; flex-shrink: 0;">
               <div>
-                <div style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 4px;">Sarah Chendle</div>
+                <div style="font-family: 'Spectral', serif; font-size: 1.15rem; font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 4px;">Sarah Chendle</div>
                 <div style="font-size: 0.6rem; color: rgba(255,255,255,0.72); letter-spacing: 0.01em;">Operations Coordinator</div>
               </div>
               <div style="font-size: 0.56rem; color: rgba(255,255,255,0.6); line-height: 1.9;">
@@ -988,62 +504,61 @@
       </div>
     </section>
 
-    <!-- Trust strip: answers the silent "what's the catch?" question -->
+    <section class="founder" id="mission">
+      <blockquote>
+        <p>A lot of my friends were struggling with these exact issues and didn't know where to turn. My parents aren't getting any younger, and knowing this resource is here is a great comfort to me. It's free because it's my gift to the people who need it.</p>
+        <footer>Wayne Stevens, who built and runs Cut Adrift. <a href="/about/">More about the site</a></footer>
+      </blockquote>
+    </section>
 
     <section class="guides" id="guides">
-      <p class="guides-label">Bereavement Guides</p>
-      <div class="guides-row">
-        <a href="/guides-nz/" target="_blank" rel="noopener" class="guides-country-link">New Zealand →</a>
-        <a href="/guides-au/" target="_blank" rel="noopener" class="guides-country-link">Australia →</a>
-        <a href="/guides-uk/" target="_blank" rel="noopener" class="guides-country-link">United Kingdom →</a>
-        <a href="/guides-ireland/" target="_blank" rel="noopener" class="guides-country-link">Republic of Ireland →</a>
-        <a href="/guides-canada/" target="_blank" rel="noopener" class="guides-country-link">Canada →</a>
-        <a href="/guides-us/" target="_blank" rel="noopener" class="guides-country-link">United States →</a>
+      <h2>Guides by country</h2>
+      <p class="section-intro">Plain-English guides to what happens next, written from official sources and updated every week.</p>
+      <div class="guide-groups">
+        <div>
+          <h3>After a death</h3>
+          <ul>
+            <li><a href="/guides-nz/">New Zealand</a></li>
+            <li><a href="/guides-au/">Australia</a></li>
+            <li><a href="/guides-uk/">United Kingdom</a></li>
+            <li><a href="/guides-ireland/">Ireland</a></li>
+            <li><a href="/guides-canada/">Canada</a></li>
+            <li><a href="/guides-us/">United States</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>After a diagnosis</h3>
+          <ul>
+            <li><a href="/guides-diagnosis-nz/">New Zealand</a></li>
+            <li><a href="/guides-diagnosis-au/">Australia</a></li>
+            <li><a href="/guides-diagnosis-uk/">United Kingdom</a></li>
+            <li><a href="/guides-diagnosis-ie/">Ireland</a></li>
+            <li><a href="/guides-diagnosis-ca/">Canada</a></li>
+            <li><a href="/guides-diagnosis-us/">United States</a></li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="guides" id="guides-diagnosis">
-      <p class="guides-label">Diagnosis Guides — what to do next, by country</p>
-      <p class="guides-desc">A serious diagnosis brings immediate decisions about work, money, and who to tell. These guides walk you through the first steps — specific to where you live.</p>
-      <div class="guides-row">
-        <a href="/guides-diagnosis-nz/" target="_blank" rel="noopener" class="guides-country-link">New Zealand →</a>
-        <a href="/guides-diagnosis-au/" target="_blank" rel="noopener" class="guides-country-link">Australia →</a>
-        <a href="/guides-diagnosis-uk/" target="_blank" rel="noopener" class="guides-country-link">United Kingdom →</a>
-        <a href="/guides-diagnosis-ie/" target="_blank" rel="noopener" class="guides-country-link">Republic of Ireland →</a>
-        <a href="/guides-diagnosis-ca/" target="_blank" rel="noopener" class="guides-country-link">Canada →</a>
-        <a href="/guides-diagnosis-us/" target="_blank" rel="noopener" class="guides-country-link">United States →</a>
-      </div>
+    <section class="suggest">
+      <h2>Is something missing?</h2>
+      <p class="section-intro">If there's a situation we don't cover yet, tell us and we'll consider it for a future tool.</p>
+      <label class="sr-only" for="suggestInput">Describe the situation you needed help with</label>
+      <textarea class="suggest-textarea" id="suggestInput" placeholder="Describe the situation you needed help with"></textarea>
+      <button class="btn btn-quiet" id="suggestBtn" onclick="submitSuggestion()">Send suggestion</button>
+      <p class="suggest-thanks" id="suggestThanks" role="status">Suggestion sent. Thank you.</p>
     </section>
-
-    <!-- Mission statement -->
-    <div class="mission" id="mission">
-      <p>Built by one person, not a company chasing growth. Free to use. No account, no catch. <a href="/about/" style="color:var(--amber);text-decoration:none;white-space:nowrap;">Who&rsquo;s behind it &rarr;</a></p>
-    </div>
-
-    <!-- Suggest a tool -->
-    <div class="suggest">
-      <p class="suggest-label">Missing something?</p>
-      <p class="suggest-desc">Is there a situation we haven't covered yet? Let us know and we'll consider it for a future tool.</p>
-      <textarea
-        class="suggest-textarea"
-        id="suggestInput"
-        aria-label="Suggest a tool — describe the situation you needed help with"
-        placeholder="Describe the situation you needed help with…"
-      ></textarea>
-      <button class="suggest-btn" id="suggestBtn" onclick="submitSuggestion()">Send suggestion</button>
-      <p class="suggest-thanks" id="suggestThanks">Thank you — we'll take a look.</p>
-    </div>
 
   </main>
 
-  <footer>
-    <p>Free to use. No sign-up. We don't sell your data. Built to help.</p>
-    <div class="footer-links">
+  <footer class="site-footer">
+    <p>Cut Adrift is free to use and run by TNW Limited in New Zealand.</p>
+    <nav class="footer-links" aria-label="Footer">
       <a href="/about/">About</a>
       <a href="/privacy/">Privacy</a>
       <a href="/terms/">Terms</a>
-      <span style="color: var(--text-dim); user-select: all;">hello@cutadrift.org</span>
-    </div>
+      <a href="mailto:hello@cutadrift.org">hello@cutadrift.org</a>
+    </nav>
   </footer>
 
   <script>
@@ -1070,6 +585,5 @@
         });
     }
   </script>
-
 </body>
 </html>
