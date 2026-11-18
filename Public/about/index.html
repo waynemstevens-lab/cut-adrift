@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Cut Adrift</title>
+  <meta name="description" content="Who builds Cut Adrift, how its guides and plans are kept accurate, and how it is paid for.">
+  <link rel="canonical" href="https://cutadrift.org/about/">
+  <meta property="og:title" content="About Cut Adrift">
+  <meta property="og:description" content="Free, step-by-step help for life's hardest moments. Built and run by one person in New Zealand.">
+  <meta property="og:url" content="https://cutadrift.org/about/">
+  <meta property="og:image" content="https://cutadrift.org/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0c1520;
+      --bg-card:    #111e2c;
+      --border:     rgba(255,255,255,0.07);
+      --text:       #ede8df;
+      --text-muted: rgba(237,232,223,0.75);
+      --text-dim:   rgba(237,232,223,0.5);
+      --amber:      #d2a864;
+      --radius:     12px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(93,158,168,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 95% 100%, rgba(210,168,100,0.04) 0%, transparent 55%);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      width: 100%;
+      max-width: 720px;
+      padding: 36px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text-muted); }
+
+    /* ── Content ── */
+    .content {
+      width: 100%;
+      max-width: 720px;
+      padding-top: 64px;
+    }
+
+    .page-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--amber);
+      margin-top: 40px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      margin-bottom: 0;
+    }
+
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .updated {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    ul.checks { list-style: none; margin: 0 0 14px; }
+    ul.checks li {
+      font-size: 0.95rem; font-weight: 300; line-height: 1.75;
+      color: var(--text-muted); padding-left: 22px; position: relative; margin-bottom: 8px;
+    }
+    ul.checks li::before { content: "—"; position: absolute; left: 0; color: var(--amber); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">Cut Adrift</a>
+  <a href="/" class="nav-back">← Home</a>
+</nav>
+
+<div class="content">
+
+  <div class="page-label">About</div>
+  <h1>Who's behind Cut Adrift</h1>
+  <p class="intro">Cut Adrift is built and run by one person: me, Wayne Stevens, in New Zealand. It's operated by my company, TNW Limited. There's no team, no investors and no advertisers &mdash; just a free tool I keep up to date.</p>
+
+  <h2>Why it exists</h2>
+  <p>When someone dies, gets a serious diagnosis, or can no longer manage their own affairs, the people around them are handed a pile of forms, phone calls and deadlines at the worst possible moment. Most of the information is out there, but it's scattered across dozens of official websites, and none of it tells you what to do first.</p>
+  <p>Cut Adrift puts it in order for your situation and country, and drafts the letters, calls and messages so you don't have to find the words yourself.</p>
+  <p>I built it because a lot of my friends were struggling with these exact issues and didn't know where to turn. My parents aren't getting any younger, and knowing this resource is here is a great comfort to me personally.</p>
+
+  <h2>How the information is kept accurate</h2>
+  <ul class="checks">
+    <li>The guides are written from official government sources in each of the six countries covered: New Zealand, Australia, the United Kingdom, Ireland, Canada and the United States.</li>
+    <li>Every figure the site relies on &mdash; benefit rates, fees, deadlines, agency names and phone numbers &mdash; is recorded with its official source and re-checked every week. When something changes, it's corrected everywhere it appears, including in the tools.</li>
+    <li>Each guide shows the month it was last updated.</li>
+  </ul>
+
+  <h2>How the personalised plans are written</h2>
+  <p>The plans and drafted letters are written by AI (Claude, made by <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic</a>), working from instructions built on those same checked facts. That's what lets it tailor a plan to your exact situation in a minute or two.</p>
+  <p>AI can still get things wrong. Plans point you to the official source for anything important, and for legal or financial decisions you should confirm the details with the agency involved or a professional.</p>
+
+  <h2>What Cut Adrift isn't</h2>
+  <p>It isn't a law firm, a financial adviser or a government agency, and it isn't affiliated with any of them. It's a starting point that helps you know what to do and who to contact &mdash; not a replacement for professional advice.</p>
+
+  <h2>How it's paid for</h2>
+  <p>I pay the running costs myself. There are no ads, no sign-up, and your information is never sold. You can read exactly what happens to what you type on the <a href="/privacy/">privacy page</a>. If any of that ever changes, this page will say so.</p>
+  <p>People in my community and around the world are also finding themselves out of work and under immediate financial pressure, so I built <a href="https://notredundant.com">Not Redundant</a> for them, the same way. Both sites are my gift to the people who need them.</p>
+
+  <h2>For people who support families</h2>
+  <p>If you're a funeral director, hospice or hospital social worker, community adviser or anyone else who helps people through these moments, you're welcome to share Cut Adrift. It's free for everyone, with nothing to sign up for. I'd be glad to hear what would make it more useful to the people you work with.</p>
+
+  <h2>Get in touch</h2>
+  <p>Spotted a mistake, something out of date, or a situation we don't cover? Email <a href="mailto:hello@cutadrift.org">hello@cutadrift.org</a> &mdash; messages come straight to me.</p>
+
+  <p class="updated">Last updated: November 2026</p>
+
+</div>
+
+
+<footer style="border-top:1px solid rgba(210,168,100,0.15);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:'DM Sans',sans-serif;">
+  <span style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:#5a5248;">Cut Adrift</span>
+  <div style="display:flex;gap:24px;">
+    <a href="/" style="font-size:0.82rem;color:#9a9080;text-decoration:none;">Home</a>
+    <a href="/about/" style="font-size:0.82rem;color:#9a9080;text-decoration:none;">About</a>
+    <a href="/privacy/" style="font-size:0.82rem;color:#9a9080;text-decoration:none;">Privacy</a>
+    <a href="/terms/" style="font-size:0.82rem;color:#9a9080;text-decoration:none;">Terms</a>
+    <a href="https://notredundant.com" style="font-size:0.82rem;color:#9a9080;text-decoration:none;">Not Redundant</a>
+  </div>
+</footer>
+</body>
+</html>
