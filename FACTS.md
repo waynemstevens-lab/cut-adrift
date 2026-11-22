@@ -95,7 +95,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** rare
 - **Search pattern:** `0800 55[29]`
 - **Pages:** financial-help-serious-illness-nz, how-to-apply-funeral-grant-nz, nz-surviving-spouse-benefit, serious-illness-work-and-income-nz, what-to-do-after-a-serious-diagnosis-nz, what-to-do-when-someone-dies-nz
-- **worker.js lines:** 223, 250, 655, 842
+- **worker.js lines:** 223, 250, 656, 843
 
 ### Phone: IRD personal
 - **Current value:** 0800 227 774
@@ -111,7 +111,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** rare
 - **Search pattern:** `0800 371 471`
 - **Pages:** —
-- **worker.js lines:** 203, 214, 247, 585, 706, 838
+- **worker.js lines:** 203, 214, 247, 586, 707, 839
 
 ### Phone: Citizens Advice Bureau
 - **Current value:** 0800 367 222
@@ -245,7 +245,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** April
 - **Search pattern:** `£12\.50`
 - **Pages:** what-to-do-when-someone-dies-uk
-- **worker.js lines:** 392
+- **worker.js lines:** 393
 
 ### Statutory Sick Pay
 - **Current value:** £123.25/week, from day one
@@ -264,7 +264,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **worker.js lines:** —
 
 ### Tribunal time limit (Employment Rights Act 2025)
-- **Current value:** 6 months (from 1 Oct 2026); 6-month UD qualifying period expected 1 Jan 2027; statutory bereavement leave expected 2027
+- **Current value:** 6 months (from 1 Oct 2026); 6-month UD qualifying period from 1 Jan 2027 (SI 2026/559); statutory bereavement leave (unpaid, incl. pregnancy loss) expected April 2027, regulations not yet made
 - **Official source:** gov.uk ; acas.org.uk
 - **Changes:** ERA 2025 commencement dates
 - **Search pattern:** `Employment Rights Act 2025`
@@ -285,7 +285,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** ad hoc
 - **Search pattern:** `£92\b|£82\b`
 - **Pages:** —
-- **worker.js lines:** 785
+- **worker.js lines:** 786
 
 ### Private pension access age
 - **Current value:** 57 from 6 April 2028
@@ -312,7 +312,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** rare
 - **Search pattern:** `Bereaved Partner`
 - **Pages:** ireland-bereavement-payments, what-to-do-when-someone-dies-ireland
-- **worker.js lines:** 408
+- **worker.js lines:** 409
 
 ### Capital Acquisitions Tax thresholds A/B/C
 - **Current value:** €420,000 / €44,000 / €22,000 (from 7 Oct 2026), 33%
@@ -320,7 +320,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** October Budget
 - **Search pattern:** `€4[02]0,000`
 - **Pages:** —
-- **worker.js lines:** 419
+- **worker.js lines:** 420
 
 ### Occupational injuries funeral grant
 - **Current value:** €850
@@ -360,7 +360,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** rare
 - **Search pattern:** `0818 07 4000`
 - **Pages:** financial-help-serious-illness-ie, insurance-claims-after-diagnosis-ie, serious-illness-work-and-income-ie, what-to-do-after-a-serious-diagnosis-ie
-- **worker.js lines:** 408
+- **worker.js lines:** 409
 
 
 ## CA
@@ -374,7 +374,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **worker.js lines:** 289, 290, 338
 
 ### EI sickness / regular max weekly; max insurable earnings
-- **Current value:** $729 ; $68,900 (2026)
+- **Current value:** $729 ; $68,900 (2026); $749 ; $70,800 from 1 Jan 2027
 - **Official source:** canada.ca/en/services/benefits/ei
 - **Changes:** January
 - **Search pattern:** `\$729|68,900`
@@ -395,7 +395,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** July (indexation)
 - **Search pattern:** `\$20[04]\b`
 - **Pages:** financial-help-serious-illness-ca, serious-illness-work-and-income-ca, what-to-do-after-a-serious-diagnosis-ca
-- **worker.js lines:** 705
+- **worker.js lines:** 706
 
 ### Federal bereavement leave
 - **Current value:** 10 days (3 paid); 8 weeks on death of a child (since 12 Dec 2025)
@@ -430,10 +430,10 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** rare
 - **Search pattern:** `\$255\b`
 - **Pages:** us-funeral-financial-assistance, us-social-security-survivor-benefits
-- **worker.js lines:** 437
+- **worker.js lines:** 438
 
 ### Social Security COLA
-- **Current value:** 2.8% for 2026
+- **Current value:** 2.8% for 2026; 3.6% from Jan 2027 (announced 14 Oct 2026)
 - **Official source:** ssa.gov/cola
 - **Changes:** October announcement
 - **Search pattern:** `2\.8%`
@@ -449,7 +449,7 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **worker.js lines:** —
 
 ### Medicare Part D out-of-pocket cap
-- **Current value:** $2,100 (2026)
+- **Current value:** $2,100 (2026); $2,400 from 1 Jan 2027
 - **Official source:** medicare.gov
 - **Changes:** October/January
 - **Search pattern:** `\$2,100`
@@ -494,5 +494,5 @@ Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 2
 - **Changes:** rare
 - **Search pattern:** `1-800-772-1213`
 - **Pages:** financial-help-serious-illness-us, serious-illness-work-and-income-us, us-notify-agencies-after-death, us-social-security-survivor-benefits, what-to-do-after-a-serious-diagnosis-us, what-to-do-when-someone-dies-us
-- **worker.js lines:** 437
+- **worker.js lines:** 438
 
