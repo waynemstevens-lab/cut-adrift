@@ -7,7 +7,7 @@ texts={p:p.read_text(encoding='utf-8') for p in pages}
 worker=(repo/'worker.js').read_text(encoding='utf-8').split('\n')
 def slug(p): return p.parent.name if slugmode=='dirs' else p.stem
 out=[f"# {title} — facts register","",
-"Every time-sensitive figure the site and its tool depend on. The weekly check works through this list: verify each **current value** against the **official source**, fix every location listed, then update this file.","",
+"Every time-sensitive figure the site and its tool depend on. The monthly check works through this list: verify each **current value** against the **official source**, fix every location listed, then update this file.","",
 "Locations are found by the search pattern shown; after editing, regenerate or re-search to catch new mentions. Phone numbers marked *rare* only need a spot check.","",
 "Key change dates: NZ 1 April (benefits) and 1 July (ACC); AU 20 March, 1 July, 20 September; UK early April; IE 1 January and the October Budget; CA 1 January and July; US 1 January and 1 October.",""]
 cur=None
