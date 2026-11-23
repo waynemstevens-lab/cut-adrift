@@ -1,6 +1,6 @@
 # Cut Adrift — facts register
 
-Every time-sensitive figure the site and its tool depend on. The weekly check works through this list: verify each **current value** against the **official source**, fix every location listed, then update this file.
+Every time-sensitive figure the site and its tool depend on. The monthly check works through this list: verify each **current value** against the **official source**, fix every location listed, then update this file.
 
 Locations are found by the search pattern shown; after editing, regenerate or re-search to catch new mentions. Phone numbers marked *rare* only need a spot check.
 
